@@ -1,3 +1,3 @@
-### Journal
+# Journal - Team-Pseudo
 
-# 1/22/20, 9:00 AM - Team Meeting
+### 1/22/20, 9:00 AM - Team Meeting
