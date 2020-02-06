@@ -7,3 +7,9 @@ FOR / ENDFOR
 INPUT
 VAR
 ASSIGN
+
+Variable types
+String
+Boolean
+Int
+Real
