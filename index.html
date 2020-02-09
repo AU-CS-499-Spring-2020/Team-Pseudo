@@ -6,11 +6,12 @@
 		<title>Pseudocode Thingie</title>
 
 		<link rel="icon" type="image/ico" href="" />
+		<script src="main.js"></script>
 
 	</head>
    <body>
 		<div class="split split-horizontal" id="IO">
-			
+
 			<!-- input stuff -->
 			<div id="input" class="">
 				<div class="">
@@ -27,10 +28,10 @@
 				</div>
 				<div class="" id="input-wrapper">
 					<div id="input-highlighter" class=""></div>
-					<textarea id="input-text" class="input-text" spellcheck="false" tabindex="1" autofocus></textarea>
+					<textarea id="code" class="input-text" spellcheck="false" tabindex="1" autofocus></textarea>
 				</div>
 			</div>
-			
+
 		<!-- Output stuff -->
 		<div id="output" class="">
 			<div class="">
@@ -44,10 +45,13 @@
 					</button>
 				</span>
 			</div>
-			<div id="output-wrapper">
+			<div id="console">
 				<div class="">
 					<textarea id="output-text" readonly="readonly" spellcheck="false"></textarea>
 				</div>
 			</div>
 		</div>
+
+		<button type="button" id="run" onclick="executeCode(0)" title="Run the code">
+
 	</body>
