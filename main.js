@@ -28,7 +28,7 @@ function executeCode(line) {
     // The fun stuff
     for (var i = line; i < code.length; i++) {
         var current = code[i];
-
+        console.log(variables)
         // Remove any comments that the user puts into the code
         current = current.split("//")[0];
 
@@ -48,7 +48,7 @@ function executeCode(line) {
                     if (var3.startsWith("random(") && endsWith(")")) {
                         var random1 = var3.substring(7);
                     }
-                    variables.push(var2 + "=" + replaceVars(var3));
+                    variables.push([var2,var3]);
                 }
             }
 
@@ -63,11 +63,11 @@ function executeCode(line) {
             var input1 = current.substring(6);
             if (input1 == "") {
                 alert("Syntax Error on line " + (i + 1) + ".");
-            } else { // Need to do a check to see if the variable exists.
+            } else if (checkVariableExistance(input1)) { // Need to do a check to see if the variable exists.
                 var input2 = prompt(); // Need to change from prompt
-                variables.push(input1 + "=" + input2);
-            // } else {
-            //   alert("Error: Variable does not exist")
+                variables.push([input1,input2]);
+            } else {
+               alert("Error: Variable does not exist")
             }
 
         }
@@ -75,4 +75,13 @@ function executeCode(line) {
 
 
     }
+}
+
+function checkVariableExistance(varName) {
+  for (var i = 0; i < variables.length; i++){
+    if (variables[i][0] === varName){
+      return true;
+    }
+  }
+  return false;
 }
