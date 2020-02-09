@@ -28,6 +28,7 @@ function executeCode(line) {
     // The fun stuff
     for (var i = line; i < code.length; i++) {
         var current = code[i];
+        console.log(i)
         console.log(variables)
         // Remove any comments that the user puts into the code
         current = current.split("//")[0];
@@ -44,12 +45,16 @@ function executeCode(line) {
                 var var3 = var1.split("=")[1]; // Var Value
                 if (var2 == "" || var3 == "") {
                     alert("Syntax Error on line " + (i + 1) + ".");
+                } else if ((checkVariableExistance(var1))===false){
+                    alert("Variable already exists")
+                    console.log("Variable already exists")
+                    // Crash program
                 } else {
-                    if (var3.startsWith("random(") && endsWith(")")) {
-                        var random1 = var3.substring(7);
-                    }
                     variables.push([var2,var3]);
                 }
+            } else {
+                var var1 = current.substring(4);
+                variables.push([var1,null])
             }
 
         } else if (current.startsWith("Display ")) {
@@ -65,7 +70,7 @@ function executeCode(line) {
                 alert("Syntax Error on line " + (i + 1) + ".");
             } else if (checkVariableExistance(input1)) { // Need to do a check to see if the variable exists.
                 var input2 = prompt(); // Need to change from prompt
-                variables.push([input1,input2]);
+                updateVariable(input1,input2);
             } else {
                alert("Error: Variable does not exist")
             }
@@ -77,9 +82,21 @@ function executeCode(line) {
     }
 }
 
+function updateVariable(varName, value){
+  for (var i = 0; i < variables.length; i++){
+    if (variables[i][0] === varName) {
+      variables[i][1] = value;
+      return;
+    }
+  }
+  alert("Syntax error: Variable " + varName + " does not exist.");
+  // Crash the program
+}
+
+// If variable exists return true. Otherwise return false
 function checkVariableExistance(varName) {
   for (var i = 0; i < variables.length; i++){
-    if (variables[i][0] === varName){
+    if (variables[i][0] === varName) {
       return true;
     }
   }
