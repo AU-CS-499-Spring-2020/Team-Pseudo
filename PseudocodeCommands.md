@@ -13,3 +13,6 @@ String
 Boolean
 Int
 Real
+
+Current questions:
+How do they do variable declaration? Two statements always?
