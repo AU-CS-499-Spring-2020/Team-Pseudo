@@ -46,14 +46,20 @@ function executeCode(line) {
                 var var3 = var1.split("=")[1]; // Var Value
                 if (var2 == "" || var3 == "") {
                     error("Syntax Error on line " + (i + 1) + ".");
-                } else if ((checkVariableExistance(var1))===false){
+                } else if ((checkVariableExistance(var1))===true){
                     error("Variable already exists");
                 } else {
                     variables.push([var2,var3]);
                 }
             } else {
                 var var1 = current.substring(4);
-                variables.push([var1,null])
+                if (var1 == ""){
+                    error("Syntax Error on line " + (i + 1) + ".");
+                } else if ((checkVariableExistance(var1))===true){
+                    error("Variable already exists");
+                } else {
+                    variables.push([var1,null]);
+                }
             }
 
         } else if (current.startsWith("Display ")) {
@@ -62,6 +68,24 @@ function executeCode(line) {
           document.getElementById('console').append(print1);
 
         } else if (current.startsWith("Assign ")) {
+            if (current.includes("=")) {
+                var var1 = current.substring(7);
+                var1 = var1.replace(" = ", "=");
+                var1 = var1.replace(" =", "=");
+                var1 = var1.replace("= ", "=");
+                var var2 = var1.split("=")[0]; // Var Name
+                var var3 = var1.split("=")[1]; // Var Value
+                if (var2 == "" || var3 == "") {
+                    error("Syntax Error on line " + (i + 1) + ".");
+                } else if ((checkVariableExistance(var1))===false){
+                    updateVariable(var2,var3);
+                } else {
+                    error("Variable does not exist");
+                }
+
+            } else {
+                error("Syntax Error on line " + (i + 1) + ".");
+            }
 
         } else if (current.startsWith("Input ")) {
             var input1 = current.substring(6);
@@ -71,7 +95,7 @@ function executeCode(line) {
                 var input2 = prompt(); // Need to change from prompt
                 updateVariable(input1,input2);
             } else {
-               error("Error: Variable does not exist";)
+               error("Error: Variable does not exist");
             }
 
         }
@@ -93,12 +117,15 @@ function updateVariable(varName, value){
 
 // If variable exists return true. Otherwise return false
 function checkVariableExistance(varName) {
-  for (var i = 0; i < variables.length; i++){
-    if (variables[i][0] === varName) {
-      return true;
+    if (variables.length == 0){
+        return false;
     }
-  }
-  return false;
+    for (var i = 0; i < variables.length; i++){
+        if (variables[i][0] === varName) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // Standard error msg function. Want to convert to a banner.
