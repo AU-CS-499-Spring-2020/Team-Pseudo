@@ -30,6 +30,7 @@ function executeCode(line) {
         var current = code[i];
         console.log(i)
         console.log(variables)
+
         // Remove any comments that the user puts into the code
         current = current.split("//")[0];
 
@@ -44,11 +45,9 @@ function executeCode(line) {
                 var var2 = var1.split("=")[0]; // Var Name
                 var var3 = var1.split("=")[1]; // Var Value
                 if (var2 == "" || var3 == "") {
-                    alert("Syntax Error on line " + (i + 1) + ".");
+                    error("Syntax Error on line " + (i + 1) + ".");
                 } else if ((checkVariableExistance(var1))===false){
-                    alert("Variable already exists")
-                    console.log("Variable already exists")
-                    // Crash program
+                    error("Variable already exists");
                 } else {
                     variables.push([var2,var3]);
                 }
@@ -68,11 +67,11 @@ function executeCode(line) {
             var input1 = current.substring(6);
             if (input1 == "") {
                 alert("Syntax Error on line " + (i + 1) + ".");
-            } else if (checkVariableExistance(input1)) { // Need to do a check to see if the variable exists.
+            } else if (checkVariableExistance(input1)) {
                 var input2 = prompt(); // Need to change from prompt
                 updateVariable(input1,input2);
             } else {
-               alert("Error: Variable does not exist")
+               error("Error: Variable does not exist";)
             }
 
         }
@@ -89,8 +88,7 @@ function updateVariable(varName, value){
       return;
     }
   }
-  alert("Syntax error: Variable " + varName + " does not exist.");
-  // Crash the program
+  error("Syntax error: Variable " + varName + " does not exist.");
 }
 
 // If variable exists return true. Otherwise return false
@@ -101,4 +99,11 @@ function checkVariableExistance(varName) {
     }
   }
   return false;
+}
+
+// Standard error msg function. Want to convert to a banner.
+function error(errorMsg) {
+    alert(errorMsg);
+
+    // Need to crash program
 }
