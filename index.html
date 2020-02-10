@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="en" class="">
+	<head>
+		<meta charset="UTF-8">
+		<title>Pseudocode Thingie</title>
+
+		<link rel="icon" type="image/ico" href="" />
+		<script src="main.js"></script>
+
+	</head>
+   <body>
+		<div class="split split-horizontal" id="IO">
+
+			<!-- input stuff -->
+			<div id="input" class="">
+				<div class="">
+					<label for="input-text">Input</label>
+					<span class="">
+						<button type="button" class="btn btn-primary bmd-btn-icon" id="btn-open-file" data-toggle="tooltip" title="Open file as input">
+							<i class="material-icons">input</i>
+							<input type="file" id="open-file" style="display: none" multiple>
+						</button>
+						<button type="button" class="btn btn-primary bmd-btn-icon" id="clr-io" data-toggle="tooltip" title="Clear input and output">
+							<i class="material-icons">delete</i>
+						</button>
+					</span>
+				</div>
+				<div class="" id="input-wrapper">
+					<div id="input-highlighter" class=""></div>
+					<textarea id="code" class="input-text" spellcheck="false" tabindex="1" autofocus></textarea>
+				</div>
+			</div>
+
+		<!-- Output stuff -->
+		<div id="output" class="">
+			<div class="">
+				<label for="output-text">Output</label>
+				<span class="float-right">
+					<button type="button" class="btn btn-primary bmd-btn-icon" id="save-to-file" data-toggle="tooltip" title="Save output to file">
+						<i class="material-icons">save</i>
+					</button>
+					<button type="button" class="btn btn-primary bmd-btn-icon" id="copy-output" data-toggle="tooltip" title="Copy raw output to the clipboard">
+						<i class="material-icons">content_copy</i>
+					</button>
+				</span>
+			</div>
+			<div id="console">
+				<div class="">
+					<textarea id="output-text" readonly="readonly" spellcheck="false"></textarea>
+				</div>
+			</div>
+		</div>
+
+		<button type="button" id="run" onclick="executeCode(0)" title="Run the code">
+
+	</body>
