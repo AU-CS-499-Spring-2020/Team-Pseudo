@@ -5,3 +5,6 @@ Met as a team to begin work on the prospectus paper and discuss our goals for th
 
 ### 1/29/20, 9:00 AM - 10:00 AM: Team Meeting
 Met as a team to write the feasability study and URCA abstract.
+
+### 2/14/20, 9:00 AM - 10:00 AM: Team Meeting
+Met as a team to assign people to frontend and backend tasks and set up the project board.
