@@ -62,10 +62,76 @@ function executeCode(line) {
                 }
             }
 
-        } else if (current.toLowerCase().startsWith("display ")) {
+        } 
+        //Display pseudocode has strings use quotation marks, variable names use no
+        //Quotation marks, and concatinates strings with commas
+        else if (current.toLowerCase().startsWith("display ")) {
           var print1 = current.substring(8);
-          print1 = print1.replace("\\n", "<br/>");
-          document.getElementById('console').innerHTML += replaceVariables(print1) + '<br/>';
+          //Tracks if we're currently within a string in quotes
+          var isString = false;
+          for (var i=0; i < print1.length; i++) {
+            //Checks for spaces
+            if (print1.charAt(i) == " ") {
+                console.log("space")
+                //Prints the space if we're in the middle of a string
+                if (isString)
+                    document.getElementById('console').innerHTML += print1.charAt(i);
+                //pass
+            }
+            //Checks for commas
+            else if (print1.charAt(i) == ",") {
+                console.log("comma")
+                //Prints the comma if we're in the middle of a string
+                if (isString)
+                    document.getElementById('console').innerHTML += print1.charAt(i);
+                //pass
+            }
+            //Checks for quotes
+            else if (print1.charAt(i) == "\"") {
+                console.log("quote")
+                if (isString == false)
+                    isString = true;
+                else
+                    isString = false;
+            }
+            //Checks for anything else, meaning a variable name has started
+            else {
+                console.log("nothing")
+                //If it's in a quoted string, print it
+                if (isString)
+                    document.getElementById('console').innerHTML += print1.charAt(i);
+                else {
+                    //Find the index where the variable ends
+                    var spaceIndex = print1.substring(i,print1.length).indexOf(",")
+                    console.log(print1.substring(i,print1.length))
+                    console.log("Space" + spaceIndex)
+                    //Checks if the line ends after this variable
+                    if (spaceIndex <= 0)
+                        spaceIndex = print1.length - i;
+                    console.log("Space" + spaceIndex)
+
+                    //Grabs the variable name from current point to the comma/end of line
+                    var VariableName = print1.substring(i,(i + spaceIndex))
+                    console.log(VariableName)
+                    console.log(VariableName.length)
+                    //Move i forward to the end of the variable name
+                    i = i + VariableName.length
+                    console.log("V: "+ VariableName)
+                    console.log(VariableName.length)
+                    VariableName = VariableName.trim()
+                    console.log("V: "+ VariableName)
+                    console.log(VariableName.length)
+                    console.log(i)
+                    if (checkVariableExistance(VariableName)) {
+                        //Getting the variable needs to be updated
+                        document.getElementById('console').innerHTML += getVariable(VariableName);
+                    } else {
+                        error("Variable \"" + VariableName +"\" does not exist");
+                    }
+                }
+            }
+          }
+          document.getElementById('console').innerHTML += '<br/>';
 
         } else if (current.toLowerCase().startsWith("assign ")) {
             if (current.includes("=")) {
