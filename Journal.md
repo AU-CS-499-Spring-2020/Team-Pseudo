@@ -8,4 +8,6 @@ Met as a team to write the feasability study and URCA abstract.
 
 ### 2/14/20, 9:00 AM - 10:00 AM: Team Meeting
 Dear Diary,
+
+
 Met as a team to assign people to frontend and backend tasks and set up the project board.
