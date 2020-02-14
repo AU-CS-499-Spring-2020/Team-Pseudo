@@ -64,15 +64,13 @@ function executeCode(line) {
 
         } else if (current.startsWith("Display ")) {
           var print1 = current.substring(8);
-          print1 = print1.replace("\\n", "<br>");
-          document.getElementById('console').append(print1);
+          print1 = print1.replace("\\n", "<br/>");
+          document.getElementById('console').innerHTML += replaceVariables(print1) + '<br/>';
 
         } else if (current.startsWith("Assign ")) {
             if (current.includes("=")) {
                 var var1 = current.substring(7);
-                var1 = var1.replace(" = ", "=");
-                var1 = var1.replace(" =", "=");
-                var1 = var1.replace("= ", "=");
+                var1 = formatEquals(var1);
                 var var2 = var1.split("=")[0]; // Var Name
                 var var3 = var1.split("=")[1]; // Var Value
                 if (var2 == "" || var3 == "") {
@@ -105,6 +103,20 @@ function executeCode(line) {
     }
 }
 
+function replaceVariables(string) {
+    // Need to work on this
+    return string
+}
+
+function getVariable(varName) {
+    for (var i = 0; i < variables.length; i++) {
+        if (variables[i][0] == varName){
+            return variables[i][1];
+        }
+    }
+    error("The variable " + varName + " is not declared.");
+}
+
 function updateVariable(varName, value){
   for (var i = 0; i < variables.length; i++){
     if (variables[i][0] === varName) {
@@ -133,4 +145,11 @@ function error(errorMsg) {
     alert(errorMsg);
 
     // Need to crash program
+}
+
+function formatEquals(var1) {
+    var1 = var1.replace(" = ", "=");
+    var1 = var1.replace(" =", "=");
+    var1 = var1.replace("= ", "=");
+    return var1
 }
