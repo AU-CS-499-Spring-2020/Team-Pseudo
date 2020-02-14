@@ -36,9 +36,9 @@ function executeCode(line) {
 
         if (current == ""){
             // Do nothing
-        } else if (current.startsWith("var ")) {
+        } else if (current.toLowerCase().startsWith("declare ")) {
             if (current.includes("=")) {
-                var var1 = current.substring(4);
+                var var1 = current.substring(8);
                 var1 = var1.replace(" = ", "=");
                 var1 = var1.replace(" =", "=");
                 var1 = var1.replace("= ", "=");
@@ -52,7 +52,7 @@ function executeCode(line) {
                     variables.push([var2,var3]);
                 }
             } else {
-                var var1 = current.substring(4);
+                var var1 = current.substring(8);
                 if (var1 == ""){
                     error("Syntax Error on line " + (i + 1) + ".");
                 } else if ((checkVariableExistance(var1))===true){
@@ -62,12 +62,12 @@ function executeCode(line) {
                 }
             }
 
-        } else if (current.startsWith("Display ")) {
+        } else if (current.toLowerCase().startsWith("display ")) {
           var print1 = current.substring(8);
           print1 = print1.replace("\\n", "<br/>");
           document.getElementById('console').innerHTML += replaceVariables(print1) + '<br/>';
 
-        } else if (current.startsWith("Assign ")) {
+        } else if (current.toLowerCase().startsWith("assign ")) {
             if (current.includes("=")) {
                 var var1 = current.substring(7);
                 var1 = formatEquals(var1);
@@ -85,7 +85,7 @@ function executeCode(line) {
                 error("Syntax Error on line " + (i + 1) + ".");
             }
 
-        } else if (current.startsWith("Input ")) {
+        } else if (current.toLowerCase().startsWith("input ")) {
             var input1 = current.substring(6);
             if (input1 == "") {
                 alert("Syntax Error on line " + (i + 1) + ".");
@@ -95,11 +95,7 @@ function executeCode(line) {
             } else {
                error("Error: Variable does not exist");
             }
-
         }
-
-
-
     }
 }
 
