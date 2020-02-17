@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="en" class="">
+	<head>
+		<meta charset="UTF-8">
+		<title>Pseudocode Thingie</title>
+
+		<link rel="icon" type="image/ico" href="" />
+		<script src="main.js"></script>
+
+		<title></title>
+		<style>
+			@font-face {
+				font-family: Blazed;
+				src: url('./blazed.ttf');
+			}
+			h1 {
+				font-family: Blazed;
+				font-weight: normal;
+				background: linear-gradient(red 20%, yellow 80%);
+				background-clip: text;
+				-webkit-background-clip: text;
+				color: transparent;
+			}
+			#logo {
+                display:inline-block;
+			}
+			#logo > h1 {
+				display:inline-block;
+				padding:0px 10px 0px 0px;
+				-webkit-text-stroke: 1px black;
+				font-size:50px;
+				line-height:50px;
+				letter-spacing: 4px;
+			}
+			#logo > span {
+				display: inline-block;
+				vertical-align: -60px;
+				background-image: url('madguy.svg');
+				width: 150px;
+				height: 150px;
+				background-size:100%;
+				background-repeat:no-repeat;
+				background-position:center;
+			}
+			#madguy {
+				color:red;
+			}
+		</style>
+
+    </head>
+   <body>
+       <div id="logo">
+			<span></span>
+			<h1>Pseudocode Pscrutinizer</h1>
+		</div>
+		<div class="split split-horizontal" id="IO">
+
+			<!-- input stuff -->
+			<div id="input" class="">
+				<div class="">
+					<label for="input-text">Input</label>
+					<span class="">
+						<button type="button" class="btn btn-primary bmd-btn-icon" id="btn-open-file" data-toggle="tooltip" title="Open file as input">
+							<i class="material-icons">input</i>
+							<input type="file" id="open-file" style="display: none" multiple>
+						</button>
+						<button type="button" class="btn btn-primary bmd-btn-icon" id="clr-io" data-toggle="tooltip" title="Clear input and output">
+							<i class="material-icons">delete</i>
+						</button>
+					</span>
+				</div>
+				<div class="" id="input-wrapper">
+					<div id="input-highlighter" class=""></div>
+					<textarea rows="25" cols="50" id="code" class="input-text" spellcheck="false" tabindex="1" autofocus></textarea>
+				</div>
+			</div>
+
+		<!-- Output stuff -->
+		<div id="output" class="">
+			<div class="">
+				<label for="output-text">Output</label>
+				<span class="float-right">
+					<button type="button" class="btn btn-primary bmd-btn-icon" id="save-to-file" data-toggle="tooltip" title="Save output to file">
+						<i class="material-icons">save</i>
+					</button>
+					<button type="button" class="btn btn-primary bmd-btn-icon" id="copy-output" data-toggle="tooltip" title="Copy raw output to the clipboard">
+						<i class="material-icons">content_copy</i>
+					</button>
+				</span>
+			</div>
+			<div id="console">
+				<div class="">
+					<textarea rows="25" cols="50" id="output-text" readonly="readonly" spellcheck="false"></textarea>
+				</div>
+			</div>
+		</div>
+
+		<button type="button" id="run" onclick="executeCode(0)" title="Run the code"> <i class="material-icons">Run</i> </button>
+
+	</body>
