@@ -14,3 +14,6 @@ Jonathan started working on the interpreter for the Puesdocode.  He started impl
 
 ### 2/14/20, 5:00pm - Worked on Logo 
 Camryn worked on the Logo for the webpage
+
+### 2/18/20, 10:00pm - Worked Webpage Layout
+Camryn worked on the Layout for the webpage
