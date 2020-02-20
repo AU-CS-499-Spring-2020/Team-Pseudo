@@ -8,11 +8,6 @@ INPUT
 VAR
 ASSIGN
 
-Variable types
-String
-Boolean
-Int
-Real
 
 
 Implement Boolean?
