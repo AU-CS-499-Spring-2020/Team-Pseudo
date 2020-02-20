@@ -20,3 +20,6 @@ Cleaned up the testing console logs in Display. Rewrote the Display keyword to m
 
 ### 2/14/20, 5:00pm - Worked on Logo
 Camryn worked on the Logo for the webpage
+
+### 2/17/20, 6:00pm - Worked on Documentation
+Ryan created a draft for the documentation
