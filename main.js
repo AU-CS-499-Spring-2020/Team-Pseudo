@@ -28,7 +28,7 @@ function executeCode(line) {
     // The fun stuff
     for (var i = line; i < code.length; i++) {
         var current = code[i];
-        console.log(i)
+        console.log("Line " + (i+1))
         console.log(variables)
 
         // Remove any comments that the user puts into the code
@@ -37,32 +37,75 @@ function executeCode(line) {
         if (current == ""){
             // Do nothing
         } else if (current.toLowerCase().startsWith("declare ")) {
+            // Where we declare variables
+            var var1 = current.substring(8);
+            var varType = var1.split(" ")[0];
+            if (varType == "Integer") {
+                varType = 0;
+                var1 = var1.substring(8);
+            } else if (varType == "Real") {
+                varType = 1;
+                var1 = var1.substring(5);
+            } else if (varType == "String") {
+                varType = 2;
+                var1 = var1.substring(7);
+            } else if (varType == "Character") {
+                varType = 3;
+                var1 = var1.substring(10);
+            } else {
+                error("invalid variable type")
+            }
+
             if (current.includes("=")) {
-                var var1 = current.substring(8);
                 var1 = var1.replace(" = ", "=");
                 var1 = var1.replace(" =", "=");
                 var1 = var1.replace("= ", "=");
                 var var2 = var1.split("=")[0]; // Var Name
                 var var3 = var1.split("=")[1]; // Var Value
+                console.log("name " + var2);
+                console.log("value " + var3);
                 if (var2 == "" || var3 == "") {
                     error("Syntax Error on line " + (i + 1) + ".");
                 } else if ((checkVariableExistance(var1))===true){
                     error("Variable already exists");
                 } else {
-                    variables.push([var2,var3]);
+                    if (varType == 0) {
+                        if (isInteger(var3) || isReal(var3)) {
+                            var3 = var3.split(".")[0];
+                            variables.push([var2,var3,varType]);
+                        } else {
+                            error(var2 + " is not an Integer value")
+                        }
+                    } else if (varType == 1) {
+                        if (isReal(var3)) {
+                            variables.push([var2,var3,varType]);
+                        } else if (isInteger(var3)){
+                            var3 = var3 + "."
+                            variables.push([var2,var3,varType]);
+                        } else {
+                            error(var2 + " is not a Real value")
+                        }
+                    } else if (varType == 2) {
+                        variables.push([var2,var3,varType]);
+                    } else if (varType == 3) {
+                        //I dont like the autonarrowing
+                        var3 = var3.charAt(0);
+                        variables.push([var2,var3,varType]);
+                    } else {
+                        error("You should never reach here");
+                    }
                 }
             } else {
-                var var1 = current.substring(8);
                 if (var1 == ""){
                     error("Syntax Error on line " + (i + 1) + ".");
                 } else if ((checkVariableExistance(var1))===true){
                     error("Variable already exists");
                 } else {
-                    variables.push([var1,null]);
+                    variables.push([var1,null,varType]);
                 }
             }
 
-        } 
+        }
         //Display pseudocode has strings use quotation marks, variable names use no
         //Quotation marks, and concatinates strings with commas
         else if (current.toLowerCase().startsWith("display ")) {
@@ -166,13 +209,37 @@ function getVariable(varName) {
 }
 
 function updateVariable(varName, value){
-  for (var i = 0; i < variables.length; i++){
-    if (variables[i][0] === varName) {
-      variables[i][1] = value;
-      return;
+    for (var i = 0; i < variables.length; i++){
+        if (variables[i][0] === varName) {
+            if (variables[i][2] == 0) {
+                if (isInteger(value) || isReal(value)) {
+                    value = value.split(".")[0];
+                    variables[i][1] = value;
+                } else {
+                    error(varName + " is not an Integer value.") //mention what line number we are on?
+                }
+            } else if (variables[i][2] == 1) {
+                if (isReal(value)) {
+                    variables[i][1] = value;
+                } else if (isInteger(value)){
+                    value = value + "."
+                    variables[i][1] = value;
+                } else {
+                    error(varName + " is not a Real value") //mention what line number we are on?
+                }
+            } else if (variables[i][2] == 2) {
+                variables[i][1] = value;
+            } else if (variables[i][2] == 3) {
+                value = value.charAt(0);
+                variables[i][1] = value;
+            } else {
+                error("You should never get this. Error in updateVariable function.")
+            }
+            return;
+
+        }
     }
-  }
-  error("Syntax error: Variable " + varName + " does not exist.");
+    error("Syntax error: Variable " + varName + " does not exist.");
 }
 
 // If variable exists return true. Otherwise return false
@@ -200,4 +267,37 @@ function formatEquals(var1) {
     var1 = var1.replace(" =", "=");
     var1 = var1.replace("= ", "=");
     return var1
+}
+
+function isInteger(var1) {
+    for (var i = 0; i < var1.length; i++){
+        if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
+            //Do nothing
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
+function isReal(var1) {
+    var numOfDots = 0;
+    for (var i = 0; i < var1.length; i++){
+        if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
+            //Do nothing
+        } else if (var1[i] === "."){
+            if (numOfDots < 1){
+                numOfDots = numOfDots + 1;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    if (numOfDots == 1) {
+        return true;
+    } else {
+        return false;
+    }
 }
