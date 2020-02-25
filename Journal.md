@@ -15,6 +15,9 @@ Jonathan started working on the interpreter for the Puesdocode.  He started impl
 ### 2/14/20, 5:00pm - Worked on Logo
 Camryn worked on the Logo for the webpage
 
+### 2/18/20, 10:00pm - Worked Webpage Layout
+Camryn worked on the Layout for the webpage
+
 ### 2/20/20, 3:00pm - Added variable typing
 Dear Diary,
 Jonathan worked on the adding variable types for the different variables that we have.  He made sure to have the interpreter not be able to change variable types and added in auto widening and narrowing so that integers and reals can be changed around.
