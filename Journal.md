@@ -15,11 +15,14 @@ Jonathan started working on the interpreter for the Pseudocode. He started imple
 ### 2/14/20, 9:00 AM - 10:00 AM: Team Meeting
 Met as a team to assign people to frontend and backend tasks and set up the project board.
 
-### 2/14/20, 11:00 AM - 1:00 PM: Individual Work - Josiah
-Cleaned up the testing console logs in Display. Rewrote the Display keyword to match pseudocode Made commands not case sensitive, changed "var" keyword to "declare". Changed default textbox size
+### 2/14/20, 11:00 AM - 1:00 PM: Created Display Function
+Josiah cleaned up the testing console logs in Display. Rewrote the Display keyword to match pseudocode Made commands not case sensitive, changed "var" keyword to "declare". Changed default textbox size
 
 ### 2/14/20, 5:00pm - Worked on Logo
 Camryn worked on the Logo for the webpage
 
 ### 2/17/20, 6:00pm - Worked on Documentation
 Ryan created a draft for the documentation
+
+### 2/14/20, 7:00 PM - 11:30 PM: Phrase Evaluation
+Josiah implemented phrase evaluation. The arithmetic phrases follow the order of operations, use type checking, etc. String concatination has also been added as phrases that can be evaluated.
