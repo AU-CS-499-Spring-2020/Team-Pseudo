@@ -12,7 +12,7 @@ function executeCode(line) {
     loops = [];
     ifs = [];
 
-    // Read in all the lines of code and split on new line.    No one line programs
+    // Read in all the lines of code and split on new line. No one line programs
     // are allowed.
     var code = document.getElementById('code').value.split("\n");
 
@@ -64,6 +64,9 @@ function executeCode(line) {
                 var var3 = var1.split("=")[1]; // Var Value
                 console.log("name " + var2);
                 console.log("value " + var3);
+                if(/^[a-zA-Z0-9]*$/.test(var2) == false){
+                    error(var2 + " contains a special character that variable names cannot contain")
+                }
                 if (var2 == "" || var3 == "") {
                     error("Syntax Error on line " + (i + 1) + ".");
                 } else if ((checkVariableExistance(var1))===true){
@@ -151,6 +154,7 @@ function executeCode(line) {
                     //Move i forward to the end of the variable name
                     i = i + VariableName.length
                     VariableName = VariableName.trim()
+                    //document.getElementById('console').innerHTML += evaluatePhrase(phrase);
                     if (checkVariableExistance(VariableName)) {
                         //Getting the variable needs to be updated
                         document.getElementById('console').innerHTML += getVariable(VariableName);
@@ -300,4 +304,9 @@ function isReal(var1) {
     } else {
         return false;
     }
+}
+
+//This method evaluates phrases that use operators such as +, -, *, /, mod, etc.
+function evaluatePhrase(phrase) {
+    
 }
