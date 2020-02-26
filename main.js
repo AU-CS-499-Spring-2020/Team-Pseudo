@@ -115,23 +115,23 @@ function executeCode(line) {
             var print1 = current.substring(8);
             //Tracks if we're currently within a string in quotes
             var isString = false;
-            for (var i = 0; i < print1.length; i++) {
+            for (var x = 0; x < print1.length; x++) {
                 //Checks for spaces
-                if (print1.charAt(i) == " ") {
+                if (print1.charAt(x) == " ") {
                     //Prints the space if we're in the middle of a string
                     if (isString)
-                        document.getElementById('console').innerHTML += print1.charAt(i);
+                        document.getElementById('console').innerHTML += print1.charAt(x);
                     //pass
                 }
                 //Checks for commas
-                else if (print1.charAt(i) == ",") {
+                else if (print1.charAt(x) == ",") {
                     //Prints the comma if we're in the middle of a string
                     if (isString)
-                        document.getElementById('console').innerHTML += print1.charAt(i);
+                        document.getElementById('console').innerHTML += print1.charAt(x);
                     //pass
                 }
                 //Checks for quotes
-                else if (print1.charAt(i) == "\"") {
+                else if (print1.charAt(x) == "\"") {
                     if (isString == false)
                         isString = true;
                     else
@@ -141,18 +141,19 @@ function executeCode(line) {
                 else {
                     //If it's in a quoted string, print it
                     if (isString)
-                        document.getElementById('console').innerHTML += print1.charAt(i);
+                        document.getElementById('console').innerHTML += print1.charAt(x);
                     else {
                         //Find the index where the variable ends
-                        var spaceIndex = print1.substring(i, print1.length).indexOf(",")
+                        var spaceIndex = print1.substring(x, print1.length).indexOf(",")
                         //Checks if the line ends after this variable
                         if (spaceIndex <= 0)
-                            spaceIndex = print1.length - i;
+                            spaceIndex = print1.length - x;
 
                         //Grabs the variable name from current point to the comma/end of line
-                        var phrase = print1.substring(i, (i + spaceIndex))
-                        //Move i forward to the end of the variable name
-                        i = i + phrase.length
+                        var phrase = print1.substring(x, (x + spaceIndex))
+                        console.log(phrase)
+                        //Move x forward to the end of the variable name
+                        x = x + phrase.length
                         phrase = phrase.trim()
                         document.getElementById('console').innerHTML += evaluatePhrase(phrase);
                     }
@@ -264,10 +265,12 @@ function checkVariableExistance(varName) {
 }
 
 // Standard error msg function. Want to convert to a banner.
+// Should add the line the error crashed on as an arguement
 function error(errorMsg) {
     alert(errorMsg);
 
-    // Need to crash program
+    //Stops the program on an error. Needs testing.
+    throw new Error();
 }
 
 function formatEquals(var1) {
@@ -416,6 +419,9 @@ function evaluatePhrase(phrase) {
             }
             else if (parts[i] == '+') {
                 //pass
+            }
+            else if (parts[i].charAt[0] != "\"") {
+                error("The variable " + parts[i] + " does not exist.")
             }
             else {
                 parts[i] = parts[i].replace("\"","")
