@@ -420,9 +420,10 @@ function evaluatePhrase(phrase) {
             else if (parts[i] == '+') {
                 //pass
             }
-            else if (parts[i].charAt[0] != "\"") {
-                error("The variable " + parts[i] + " does not exist.")
-            }
+            //Need to fix
+            // else if (parts[i].charAt[0] != "\"") {
+            //     error("The variable " + parts[i] + " does not exist.")
+            // }
             else {
                 parts[i] = parts[i].replace("\"","")
                 parts[i] = parts[i].replace("\"","")
