@@ -24,5 +24,10 @@ Camryn worked on the Logo for the webpage
 ### 2/17/20, 6:00pm - Worked on Documentation
 Ryan created a draft for the documentation
 
-### 2/14/20, 7:00 PM - 11:30 PM: Phrase Evaluation
+### 2/25/20, 7:00 PM - 11:30 PM: Phrase Evaluation
 Josiah implemented phrase evaluation. The arithmetic phrases follow the order of operations, use type checking, etc. String concatination has also been added as phrases that can be evaluated.
+
+### 2/28/20, 2:00 PM - 4:30 PM: Phrase Evaluation Continued
+Josiah implemented exponents in phrase evaluation, added recursive parenthesis evaluations in the order of operations, and added negative number support
+
+
