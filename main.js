@@ -1,3 +1,4 @@
+
 var variables = []
 var loops = []
 var ifs = []
@@ -321,6 +322,9 @@ function evaluatePhrase(phrase) {
     var str = "";
     var expNext = false
     var i = 0;
+    var temp = 0;
+    var tempPos = 0;
+
 
     var parts = phrase.split(" ")
     while (i < parts.length && isNumPhrase) {
@@ -338,7 +342,9 @@ function evaluatePhrase(phrase) {
                     str += getVariable(parts[i]) + ") "
                 }
                 else {
-                    str += getVariable(parts[i])
+                    temp = getVariable(parts[i])
+                    tempPos = str.length
+                    str += temp
                 }
 
             }
@@ -349,7 +355,11 @@ function evaluatePhrase(phrase) {
         }
         else if (parts[i] == '^') {
             expNext = true
-            str += " Math.pow("
+            console.log(tempPos)
+            console.log(temp)
+            console.log(str)
+            str = str.slice(0,tempPos) 
+            str += " Math.pow(" + temp + ","
         }
         else if (parts[i] == "MOD") {
             str += "%"
@@ -357,8 +367,11 @@ function evaluatePhrase(phrase) {
         else if (isInteger(parts[i]) || isReal(parts[i])) {
             if (expNext) {
                 str += parts[i] + ") "
+                expNext = false
             }
             else {
+                temp = parts[i]
+                tempPos = str.length
                 str += parts[i]
             }
         }
@@ -374,7 +387,7 @@ function evaluatePhrase(phrase) {
     //Evaluates the arithmetic phrase
     if (isNumPhrase) {
         console.log(str)
-        console.log(eval(str))
+        console.log(eval(Math.pow(2,2)))
         return (eval(str))
 
     }
