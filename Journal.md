@@ -16,7 +16,7 @@ Jonathan started working on the interpreter for the Pseudocode. He started imple
 Met as a team to assign people to frontend and backend tasks and set up the project board.
 
 ### 2/14/20, 11:00 AM - 1:00 PM: Created Display Function
-Josiah cleaned up the testing console logs in Display. Rewrote the Display keyword to match pseudocode Made commands not case sensitive, changed "var" keyword to "declare". Changed default textbox size
+Josiah cleaned up the testing console logs in Display. Rewrote the Display keyword to match pseudocode Made commands not case sensitive, changed "var" keyword to "declare". Changed default textbox size.
 
 ### 2/14/20, 5:00pm - Worked on Logo
 Camryn worked on the Logo for the webpage
@@ -27,7 +27,10 @@ Ryan created a draft for the documentation
 ### 2/25/20, 7:00 PM - 11:30 PM: Phrase Evaluation
 Josiah implemented phrase evaluation. The arithmetic phrases follow the order of operations, use type checking, etc. String concatination has also been added as phrases that can be evaluated.
 
+### 2/25/20, 6:00 PM - 7:00 PM: Bug Fixes
+Josiah fixed a bug where multiple displays lines wouldn't evaluate. Also made error messages now stop the program.
+
 ### 2/28/20, 2:00 PM - 4:30 PM: Phrase Evaluation Continued
-Josiah implemented exponents in phrase evaluation, added recursive parenthesis evaluations in the order of operations, and added negative number support
+Josiah implemented exponents in phrase evaluation, added recursive parenthesis evaluations in the order of operations, and added negative number support.
 
 
