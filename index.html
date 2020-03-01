@@ -5,7 +5,6 @@
         <title>Pseudocode Thingie</title>
         <link rel="icon" type="image/ico" href=""/>
         <script src="main.js"></script>
-        </script>
         <title></title>
         <style>
             @font-face {
@@ -76,7 +75,7 @@
                 <span class="inline-block margin-10">
                     <div class="margin-10">
                         <label for="input-text">Input</label>
-                        <button type="button" id="btn-open-file" data-toggle="tooltip" title="Open file as input">
+                        <button type="button" id="btn-open-file" onclick="openFile(dispFile)" data-toggle="tooltip" title="Open file as input">
                             <i class="material-icons">input</i>
                             <input type="file" id="open-file" style="display: none" multiple>
                         </button>
