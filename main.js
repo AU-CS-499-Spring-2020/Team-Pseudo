@@ -1,3 +1,4 @@
+
 var variables = []
 var loops = []
 var ifs = []
@@ -282,7 +283,11 @@ function formatEquals(var1) {
 
 function isInteger(var1) {
     for (var i = 0; i < var1.length; i++) {
-        if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
+        console.log()
+        if(var1[0] == "-")
+            i++
+        if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9")
+        {
             //Do nothing
         } else {
             return false;
@@ -294,8 +299,13 @@ function isInteger(var1) {
 function isReal(var1) {
     var numOfDots = 0;
     for (var i = 0; i < var1.length; i++) {
+        if(var1[0] == "-")
+        i++
         if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
             //Do nothing
+            if(var1[i] === "-0" || var1[i] === "-1" || var1[i] === "-2" || var1[i] === "-3" || var1[i] === "-4" || var1[i] === "-5" || var1[i] === "-6" || var1[i] === "-7" || var1[i] === "-8" || var1[i] === "-9" && !leftSide) {
+                error("You cannot have a negative in the decimal spot")
+            }
         } else if (var1[i] === ".") {
             if (numOfDots < 1) {
                 numOfDots = numOfDots + 1;
@@ -314,17 +324,82 @@ function isReal(var1) {
 }
 
 //This method evaluates phrases that use operators such as +, -, *, /, mod, etc.
-//TO DO: Fix Math.Pow exponent functionality, add parenthesis checking
+//TO DO: add arithmetic with spaces, add negative numbers
 function evaluatePhrase(phrase) {
+    //phrase = phrase.replace(" ","")
     console.log("P: " + phrase)
     var isNumPhrase = true
     var str = "";
     var expNext = false
     var i = 0;
+    var x = 0;
+    var temp = 0;
+    var tempPos = 0;
+    var leftPar = false;
+    var leftParPos = null;
+    var tempPhrase = ""
+
+    //Add quotation checking
+    for (x = 0; x < phrase.length; x++) {
+        if (phrase[x] == "(") {
+            console.log("( found")
+            leftPar = true;
+            leftParPos = x
+        }
+        else if (phrase[x] == ")") {
+            console.log(") found")
+            if (leftPar) {
+                evalPhrase = evaluatePhrase(phrase.slice(leftParPos + 1, x))
+                var start = 0
+                if (phrase[0] == "(")
+                    start = 1
+                console.log(phrase.slice(0, leftParPos))
+                phrase = phrase.slice(0, leftParPos) + " " + evalPhrase + " " + phrase.slice(x + 2, phrase.length)
+                phrase = phrase.replace(/\s{2,}/g, ' ');
+                console.log(evalPhrase)
+                console.log("New P: " + phrase)
+                leftPar = false
+            }
+            else
+                error("Error: you cannot have a right parenthesis before a left one")
+        }
+    }
 
     var parts = phrase.split(" ")
+
     while (i < parts.length && isNumPhrase) {
         console.log(parts[i])
+        console.log(str)
+
+        // try {
+        //     if(parts[i].contains("\"") || parts[i].contains("\'"))
+        //         isNumPhrase = false
+        //         console.log("Has quotes")
+        // }
+        // catch (error) {
+        //     //pass
+        // }
+
+        // if (parts[i][0]=="(" && isNumPhrase) {
+        //     console.log(parts[i] + " has (")
+        //     str += " ("
+        //     if (parts[i].length = 1)
+        //         i++
+        //     else
+        //         parts[i] = parts[i].replace("(","")
+        //     console.log(parts[i])
+        // }
+        // if (parts[i][parts[i].length]=="(" && isNumPhrase) {
+        //     console.log(parts[i] + "has )")
+        //     str += ") "
+        //     if (parts[i].length = 1)
+        //         i++
+        //     else
+        //         parts[i] = parts[i].replace(")","")
+        //     console.log(parts[i])
+        // }
+
+
         //Makes sure each piece of the phrase is valid
         if (checkVariableExistance(parts[i])) {
             //Checks if all the variables used in the phrase are numbers
@@ -338,27 +413,36 @@ function evaluatePhrase(phrase) {
                     str += getVariable(parts[i]) + ") "
                 }
                 else {
-                    str += getVariable(parts[i])
+                    temp = getVariable(parts[i])
+                    tempPos = str.length
+                    str += temp
                 }
 
             }
         }
         //Checks if the other pieces of the phrase are valid operators
         else if (parts[i] == '+' || parts[i] == '-' || parts[i] == '*' || parts[i] == '/') {
-            str += parts[i]
+            str += " " + parts[i] + " "
         }
         else if (parts[i] == '^') {
             expNext = true
-            str += " Math.pow("
+            console.log(tempPos)
+            console.log(temp)
+            console.log(str)
+            str = str.slice(0, tempPos)
+            str += " Math.pow(" + temp + ","
         }
         else if (parts[i] == "MOD") {
-            str += "%"
+            str += " % "
         }
         else if (isInteger(parts[i]) || isReal(parts[i])) {
             if (expNext) {
                 str += parts[i] + ") "
+                expNext = false
             }
             else {
+                temp = parts[i]
+                tempPos = str.length
                 str += parts[i]
             }
         }
@@ -374,7 +458,6 @@ function evaluatePhrase(phrase) {
     //Evaluates the arithmetic phrase
     if (isNumPhrase) {
         console.log(str)
-        console.log(eval(str))
         return (eval(str))
 
     }
@@ -385,12 +468,11 @@ function evaluatePhrase(phrase) {
         var myRegexp = /[^\s"]+|"([^"]*)"/gi;
         var myString = phrase;
         var parts = [];
-        
+
         do {
             //Each call to exec returns the next regex match as an array
             var match = myRegexp.exec(myString);
-            if (match != null)
-            {
+            if (match != null) {
                 //Index 1 in the array is the captured group if it exists
                 //Index 0 is the matched text, which we use if no captured group exists
                 parts.push(match[1] ? match[1] : match[0]);
@@ -425,36 +507,37 @@ function evaluatePhrase(phrase) {
             //     error("The variable " + parts[i] + " does not exist.")
             // }
             else {
-                parts[i] = parts[i].replace("\"","")
-                parts[i] = parts[i].replace("\"","")
-                parts[i] = parts[i].replace("\'","")
-                parts[i] = parts[i].replace("\'","")
+                parts[i] = parts[i].replace("\"", "")
+                parts[i] = parts[i].replace("\"", "")
+                parts[i] = parts[i].replace("\'", "")
+                parts[i] = parts[i].replace("\'", "")
                 console.log(parts[i])
             }
 
             i++
         }
 
+        //Fix Bugs
         i = 0
         str = parts[0]
         while (i < parts.length) {
             if (parts[i] == '+') {
-                if(i > 0) {
+                if (i > 0) {
                     //pass
                 }
                 else
                     error("The + operator should not be used at the beginning of the expression")
-                if(i+1<parts.length) {
-                    console.log(parts[i+1])
-                    str += parts[i+1]
-            }
+                if (i + 1 < parts.length) {
+                    console.log(parts[i + 1])
+                    str += parts[i + 1]
+                }
                 else
                     error("The + operator should not be used at the end of the expression")
             }
             i++
         }
         console.log(str)
-        return(str)
+        return (str)
     }
 
 }
