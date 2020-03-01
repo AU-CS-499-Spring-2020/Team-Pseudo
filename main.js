@@ -160,7 +160,7 @@ function executeCode(line) {
                     }
                 }
             }
-            document.getElementById('console').innerHTML += '<br/>';
+            document.getElementById('console').innerHTML += '\n';
 
         } else if (current.toLowerCase().startsWith("assign ")) {
             if (current.includes("=")) {
