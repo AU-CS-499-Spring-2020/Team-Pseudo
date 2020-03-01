@@ -191,6 +191,23 @@ function executeCode(line) {
                 error("Error: Variable does not exist");
             }
         }
+
+        // Output the Current variables and their respective types and values
+        document.getElementById('variables').innerHTML = "";
+        for (var j = 0; j < variables.length; j++) {
+            if (variables[j][2] == 0) {
+                var temp = "Integer: "  + variables[j][0] + " = " + variables[j][1] + "\n"
+            } else if (variables[j][2] == 1) {
+                var temp = "Real: "  + variables[j][0] + " = " + variables[j][1] + "\n"
+            } else if (variables[j][2] == 2) {
+                var temp = "String: "  + variables[j][0] + " = " + variables[j][1] + "\n"
+            } else if (variables[j][2] == 3) {
+                var temp = "Character: "  + variables[j][0] + " = " + variables[j][1] + "\n"
+            }
+
+            document.getElementById('variables').innerHTML += temp;
+
+        }
     }
 }
 
