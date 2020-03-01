@@ -12,8 +12,70 @@ body {
 }
 
 .sidepanel,
-.button {
+.toggle {
   display: inline;
+}
+
+body.night
+{
+    background: #121212;
+    color: white;
+}
+.toggle
+{
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    background: #fff;
+    border: 2px solid black;
+    width: 45px;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 0.5s;
+}
+.toggle.active
+{
+    background: #121212;
+    border: 2px solid #fff;
+}
+.toggle:before
+{
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: black;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+.toggle.active:before
+{
+    left: 27px;
+    background: #fff;
+}
+.content
+{
+    margin: 100px auto;
+    width: 1000px;
+}
+
+body.night .content h1,
+body.night .content p
+{
+    color: #fff;
+}
+
+.ta1.night{
+background-color: #2c2c2c;
+color: #ffff;
+}
+
+.ta2.night{
+  background-color: #2c2c2c;
+  color: #ffff;
 }
 
 .button {
@@ -34,13 +96,17 @@ body {
   float: right;
 }
 
-.instagram {
+.colors {
   text-align: center;
   border-radius: 50px;
   padding: 5px;
   color: white;
   background: #2b2d2f;
   transition: all 0.2s ease-out 0s;
+}
+
+::placeholder{
+  color: black;
 }
 
 .ta1 {
@@ -65,12 +131,8 @@ body {
   height: auto;
   width: 450px;
   overflow-y: scroll;
-}
-
-/*Dark Mode*/
-.dark-mode {
-  background-color: black;
-  color: white;
+  padding-left: 35px;
+  padding-top: 12px;
 }
 
 @font-face {
@@ -109,6 +171,10 @@ h1 {
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+#logo.night{
+  display: none;
 }
 
 #madguy {
@@ -174,6 +240,15 @@ h1 {
   margin-bottom: 10px;
 }
 
+.openbtn.night{
+  color: #111;
+  background-color: white;
+}
+
+.openbtn:hover.night{
+  background-color: white;
+}
+
 .openbtn:hover {
   background-color: #444;
 }
@@ -193,7 +268,7 @@ h1 {
 /*Run Button*/
 .button-three {
   position: relative;
-  background-color: #add8e6;
+  background-color: #000000;
   border: none;
   padding: 20px;
   width: 180px;
@@ -205,7 +280,8 @@ h1 {
   overflow: hidden;
   margin: auto;
   font-size: 20px;
-  font-style: oblique;
+  font-style: normal;
+  color: #ffffff;
 }
 
 .button-three:hover {
