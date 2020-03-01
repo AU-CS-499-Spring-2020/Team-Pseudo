@@ -1,0 +1,235 @@
+body {
+  font-family: "Lato", sans-serif;
+  font-size: 22px;
+  padding: 25px;
+  background-color: white;
+  color: black;
+  font-size: 25px;
+}
+
+.container1 {
+  text-align: center;
+}
+
+.sidepanel,
+.button {
+  display: inline;
+}
+
+.button {
+  display: block;
+  width: 100px;
+  margin: 0 auto;
+  margin-bottom: 0;
+  overflow: hidden;
+  position: absolute;
+  transform: translatez(0);
+  text-decoration: none;
+  box-sizing: border-box;
+  font-size: 15px;
+  font-weight: normal;
+  box-shadow: 0 9px 18px rgba(0, 0, 0, 0.2);
+  margin-top: 0px;
+  margin-left: 87%;
+  float: right;
+}
+
+.instagram {
+  text-align: center;
+  border-radius: 50px;
+  padding: 5px;
+  color: white;
+  background: #2b2d2f;
+  transition: all 0.2s ease-out 0s;
+}
+
+.ta1 {
+  border: 2px solid #61cdd3;
+  border-radius: 6px;
+  outline-color: #61cdd3;
+  height: auto;
+  width: 450px;
+  overflow-y: scroll;
+  background: url(http://i.imgur.com/2cOaJ.png);
+  background-attachment: local;
+  background-repeat: no-repeat;
+  padding-left: 35px;
+  padding-top: 12px;
+  border-color: #61cdd3;
+}
+
+.ta2 {
+  border: 2px solid #90EE90;
+  border-radius: 5px;
+  outline-color: #90EE90;
+  height: auto;
+  width: 450px;
+  overflow-y: scroll;
+}
+
+/*Dark Mode*/
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+@font-face {
+  font-family: Blazed;
+  src: url('./blazed.ttf');
+}
+
+h1 {
+  font-family: Blazed;
+  font-weight: normal;
+  background: linear-gradient(red 20%, yellow 80%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+#logo {
+  display: inline-block;
+}
+
+#logo>h1 {
+  display: inline-block;
+  padding: 0px 10px 0px 0px;
+  -webkit-text-stroke: 1px black;
+  font-size: 50px;
+  line-height: 50px;
+  letter-spacing: 4px;
+}
+
+#logo>span {
+  display: inline-block;
+  vertical-align: -60px;
+  background-image: url('madguy.svg');
+  width: 150px;
+  height: 150px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#madguy {
+  color: red;
+}
+
+.center {
+  text-align: center;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.margin-10 {
+  margin: 10px;
+}
+
+.sidepanel {
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  height: 225px;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 30px;
+  display: inline-block;
+  float: left;
+}
+
+.sidepanel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.sidepanel a:hover {
+  color: #f1f1f1;
+}
+
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700italic);
+
+.main {
+  width: 100%;
+}
+
+.sub-main {
+  width: 30%;
+  margin: 22px;
+  float: left;
+}
+
+/*Run Button*/
+.button-three {
+  position: relative;
+  background-color: #add8e6;
+  border: none;
+  padding: 20px;
+  width: 180px;
+  text-align: center;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  margin: auto;
+  font-size: 20px;
+  font-style: oblique;
+}
+
+.button-three:hover {
+  background: #fff;
+  box-shadow: 0px 2px 10px 5px #d4ebf2;
+  color: #000;
+}
+
+.button-three:after {
+  content: "";
+  background: #e8f4f8;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.button-three:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}

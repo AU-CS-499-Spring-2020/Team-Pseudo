@@ -21,3 +21,8 @@ Camryn worked on the Layout for the webpage
 ### 2/20/20, 3:00pm - Added variable typing
 Dear Diary,
 Jonathan worked on the adding variable types for the different variables that we have.  He made sure to have the interpreter not be able to change variable types and added in auto widening and narrowing so that integers and reals can be changed around.
+
+### 3/1/2020, 1:00am - Added menu, links, stylized layout, lined input
+Kurtis added a menu with links to other pages on the site, including, Documentation, Examples, and Help. He also stylized some elements of the layout.
+He added a toggle button for a light/dark mode. He lined the input box and added a vertical scroll bar. He put added a examples from the CS 101 book to the examples page.
+He also created stylized sheets for each web page. 
