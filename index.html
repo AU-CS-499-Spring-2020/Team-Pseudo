@@ -79,7 +79,7 @@
                             <i class="material-icons">input</i>
                             <input type="file" id="open-file" style="display: none" multiple>
                         </button>
-                        <button type="button" id="clr-io" data-toggle="tooltip" title="Clear input and output">
+                        <button type="button" id="clr-io" onclick="clearAll()" data-toggle="tooltip" title="Clear input and output">
                             <i class="material-icons">delete</i>
                         </button>
                     </div>
@@ -100,13 +100,14 @@
                                 <i class="material-icons">content_copy</i>
                             </button>
                         </div>
-                        <div id="console">
+                        <div id="output-text">
                             <div>
-                                <textarea rows="25" cols="50" id="output-text" readonly="readonly" spellcheck="false"></textarea>
+                                <textarea rows="25" cols="50" id="console" readonly="readonly" spellcheck="false"></textarea>
                             </div>
                         </div>
                     </div>
                 </span>
+
                 <div>
                     <button type="button" id="run" onclick="executeCode(0)" title="Run the code">
                         <i class="material-icons">Run</i>

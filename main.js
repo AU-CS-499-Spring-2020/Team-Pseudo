@@ -556,26 +556,32 @@ function openFile(func) {
 		var reader = new FileReader();
 		reader.onload = function(e) {
 			var contents = e.target.result;
-			fileInput.func(contents)
-			document.body.removeChild(fileInput)
+			fileInput.func(contents);
+			document.body.removeChild(fileInput);
 		}
-		reader.readAsText(file)
+		reader.readAsText(file);
 	}
-	fileInput = document.createElement("input")
-	fileInput.type='file'
-	fileInput.style.display='none'
-	fileInput.onchange=readFile
-	fileInput.func=func
-	document.body.appendChild(fileInput)
-	clickElem(fileInput)
+	fileInput = document.createElement("input");
+	fileInput.type='file';
+	fileInput.style.display='none';
+	fileInput.onchange=readFile;
+	fileInput.func=func;
+	document.body.appendChild(fileInput);
+	clickElem(fileInput);
 }
 
 function dispFile(contents) {
-  document.getElementById('code').innerHTML=contents
+  document.getElementById('code').innerHTML=contents;
 }
 
 function clickElem(elem) {
-	var eventMouse = document.createEvent("MouseEvents")
-	eventMouse.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
-	elem.dispatchEvent(eventMouse)
+	var eventMouse = document.createEvent("MouseEvents");
+	eventMouse.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+	elem.dispatchEvent(eventMouse);
+}
+
+//Code to save code contents
+function clearAll(){
+    document.getElementById('code').innerHTML = "";
+    document.getElementById('console').innerHTML = "";
 }
