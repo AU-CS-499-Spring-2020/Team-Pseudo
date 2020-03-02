@@ -37,7 +37,7 @@ function executeCode(line) {
 
         if (current == "") {
             // Do nothing
-        } else if (current.toLowerCase().startsWith("declare ")) {
+        } else if (current.startsWith("Declare ")) {
             // Where we declare variables
             var var1 = current.substring(8);
             var varType = var1.split(" ")[0];
@@ -112,7 +112,7 @@ function executeCode(line) {
         }
         //Display pseudocode has strings use quotation marks, variable names use no
         //Quotation marks, and concatinates strings with commas
-        else if (current.toLowerCase().startsWith("display ")) {
+        else if (current.startsWith("Display ")) {
             var print1 = current.substring(8);
             //Tracks if we're currently within a string in quotes
             var isString = false;
@@ -162,7 +162,7 @@ function executeCode(line) {
             }
             document.getElementById('console').innerHTML += '\n';
 
-        } else if (current.toLowerCase().startsWith("assign ")) {
+        } else if (current.startsWith("Assign ")) {
             if (current.includes("=")) {
                 var var1 = current.substring(7);
                 var1 = formatEquals(var1);
@@ -180,7 +180,7 @@ function executeCode(line) {
                 error("Syntax Error on line " + (i + 1) + ".");
             }
 
-        } else if (current.toLowerCase().startsWith("input ")) {
+        } else if (current.startsWith("Input ")) {
             var input1 = current.substring(6);
             if (input1 == "") {
                 alert("Syntax Error on line " + (i + 1) + ".");
