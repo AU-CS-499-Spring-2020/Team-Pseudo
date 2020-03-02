@@ -25,4 +25,8 @@ Jonathan worked on the adding variable types for the different variables that we
 ### 3/1/2020, 1:00am - Added menu, links, stylized layout, lined input
 Kurtis added a menu with links to other pages on the site, including, Documentation, Examples, and Help. He also stylized some elements of the layout.
 He added a toggle button for a light/dark mode. He lined the input box and added a vertical scroll bar. He added examples from the CS 101 book to the examples page.
-He also created stylized sheets for each web page. 
+He also created stylized sheets for each web page.
+
+### 3/1/2020, 5:00pm - Fixed output text and added Dark/Light Toggle
+Kurtis fixed the output text after the editor runs.
+He also added functionality to the Dark/Light toggle.
