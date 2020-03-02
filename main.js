@@ -541,3 +541,47 @@ function evaluatePhrase(phrase) {
     }
 
 }
+
+
+
+// Code for front end features only below here.
+
+// Code to choose which file we will open into the code box
+function openFile(func) {
+	readFile = function(e) {
+		var file = e.target.files[0];
+		if (!file) {
+			return;
+		}
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			var contents = e.target.result;
+			fileInput.func(contents);
+			document.body.removeChild(fileInput);
+		}
+		reader.readAsText(file);
+	}
+	fileInput = document.createElement("input");
+	fileInput.type='file';
+	fileInput.style.display='none';
+	fileInput.onchange=readFile;
+	fileInput.func=func;
+	document.body.appendChild(fileInput);
+	clickElem(fileInput);
+}
+
+function dispFile(contents) {
+  document.getElementById('code').innerHTML=contents;
+}
+
+function clickElem(elem) {
+	var eventMouse = document.createEvent("MouseEvents");
+	eventMouse.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+	elem.dispatchEvent(eventMouse);
+}
+
+//Code to save code contents
+function clearAll(){
+    document.getElementById('code').innerHTML = "";
+    document.getElementById('console').innerHTML = "";
+}
