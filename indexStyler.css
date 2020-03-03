@@ -61,6 +61,11 @@ color: #ffff;
   color: #ffff;
 }
 
+.ta3.night{
+  background-color: #2c2c2c;
+  color: #ffff;
+}
+
 .outputSpec{
   font: 400 12.3333px Arial;
 }
@@ -121,6 +126,24 @@ color: #ffff;
   padding-left: 35px;
   padding-top: 12px;
 }
+
+.ta3{
+  border: 2px solid #8B0000;
+  border-radius: 5px;
+  outline-color: #8B0000;
+  height: auto;
+  width: 450px;
+  overflow-y: scroll;
+  padding-left: 35px;
+  padding-top: 12px;
+}
+
+  .textSize
+  {
+    font-size: 25px;
+  }
+
+
 
 @font-face {
   font-family: Blazed;

@@ -64,34 +64,30 @@
               <i class="material-icons">content_copy</i>
             </button>
           </div>
-          <div id="console" class = "outputSpec">
+          <div id="console" class="outputSpec">
             <div>
               <textarea class="ta2" rows="25" cols="50" id="output-text" readonly="readonly" spellcheck="false"></textarea>
-
+            </div>
+          </div>
+        </div>
+          </span>
                 <!-- Variable stuff -->
                 <span class="inline-block margin-10">
                     <div id="variable">
                         <div class="margin-10">
-                            <label for="output-text">Variable watch</label>
+                            <label for="output-text" class="textSize">Variable Watch</label>
                         </div>
                         <div id="varOutput">
                             <div>
-                                <textarea rows="25" cols="50" id="variables" readonly="readonly" spellcheck="false"></textarea>
+                                <textarea class="ta3" rows="25" cols="50" id="variables" readonly="readonly" spellcheck="false"></textarea>
                             </div>
                         </div>
                     </div>
                 </span>
-                <div>
-                    <button type="button" id="run" onclick="executeCode(0)" title="Run the code">
-                        <i class="material-icons">Run</i>
-                    </button>
-                </div>
 
-          
-            </div>
-          </div>
-        </div>
-      </span>
+
+
+
       <div>
         <button class="button-three" id="run" onclick="executeCode(0)" title="Run the code">
           <em>Run</em>

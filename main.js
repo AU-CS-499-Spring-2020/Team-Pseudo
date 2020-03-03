@@ -619,6 +619,7 @@ $(document).ready(function(){
            $('body').toggleClass('night')
            $('.ta1').toggleClass('night')
            $('.ta2').toggleClass('night')
+           $('.ta3').toggleClass('night')
            $('#logo').toggleClass('night')
            $('.openbtn').toggleClass('night')
            $('.openbtn:hover').toggleClass('night')
