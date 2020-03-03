@@ -39,11 +39,11 @@
       <span class="inline-block margin-10">
         <div class="margin-10">
           <label for="input-text">Input</label>
-          <button type="button" id="btn-open-file" onclick="openFile(dispFile)" data-toggle="tooltip" title="Open file as input">
+          <button type="button" id="btn-open-file" data-toggle="tooltip" title="Open file as input">
             <i class="material-icons">input</i>
             <input type="file" id="open-file" style="display: none" multiple>
           </button>
-          <button type="button" id="clr-io" onclick="clearAll()" data-toggle="tooltip" title="Clear input and output">
+          <button type="button" id="clr-io" data-toggle="tooltip" title="Clear input and output">
             <i class="material-icons">delete</i>
           </button>
         </div>
@@ -67,27 +67,6 @@
           <div id="console" class = "outputSpec">
             <div>
               <textarea class="ta2" rows="25" cols="50" id="output-text" readonly="readonly" spellcheck="false"></textarea>
-
-                <!-- Variable stuff -->
-                <span class="inline-block margin-10">
-                    <div id="variable">
-                        <div class="margin-10">
-                            <label for="output-text">Variable watch</label>
-                        </div>
-                        <div id="varOutput">
-                            <div>
-                                <textarea rows="25" cols="50" id="variables" readonly="readonly" spellcheck="false"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </span>
-                <div>
-                    <button type="button" id="run" onclick="executeCode(0)" title="Run the code">
-                        <i class="material-icons">Run</i>
-                    </button>
-                </div>
-
-          
             </div>
           </div>
         </div>
