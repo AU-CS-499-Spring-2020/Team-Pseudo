@@ -37,7 +37,7 @@ function executeCode(line) {
 
         if (current == "") {
             // Do nothing
-        } else if (current.toLowerCase().startsWith("declare ")) {
+        } else if (current.startsWith("Declare ")) {
             // Where we declare variables
             var var1 = current.substring(8);
             var varType = var1.split(" ")[0];
@@ -112,7 +112,7 @@ function executeCode(line) {
         }
         //Display pseudocode has strings use quotation marks, variable names use no
         //Quotation marks, and concatinates strings with commas
-        else if (current.toLowerCase().startsWith("display ")) {
+        else if (current.startsWith("Display ")) {
             var print1 = current.substring(8);
             //Tracks if we're currently within a string in quotes
             var isString = false;
@@ -160,9 +160,9 @@ function executeCode(line) {
                     }
                 }
             }
-            document.getElementById('console').innerHTML += '<br/>';
+            document.getElementById('console').innerHTML += '\n';
 
-        } else if (current.toLowerCase().startsWith("assign ")) {
+        } else if (current.startsWith("Assign ")) {
             if (current.includes("=")) {
                 var var1 = current.substring(7);
                 var1 = formatEquals(var1);
@@ -180,7 +180,7 @@ function executeCode(line) {
                 error("Syntax Error on line " + (i + 1) + ".");
             }
 
-        } else if (current.toLowerCase().startsWith("input ")) {
+        } else if (current.startsWith("Input ")) {
             var input1 = current.substring(6);
             if (input1 == "") {
                 alert("Syntax Error on line " + (i + 1) + ".");
@@ -190,6 +190,23 @@ function executeCode(line) {
             } else {
                 error("Error: Variable does not exist");
             }
+        }
+
+        // Output the Current variables and their respective types and values
+        document.getElementById('variables').innerHTML = "";
+        for (var j = 0; j < variables.length; j++) {
+            if (variables[j][2] == 0) {
+                var temp = "Integer: "  + variables[j][0] + " = " + variables[j][1] + "\n"
+            } else if (variables[j][2] == 1) {
+                var temp = "Real: "  + variables[j][0] + " = " + variables[j][1] + "\n"
+            } else if (variables[j][2] == 2) {
+                var temp = "String: "  + variables[j][0] + " = " + variables[j][1] + "\n"
+            } else if (variables[j][2] == 3) {
+                var temp = "Character: "  + variables[j][0] + " = " + variables[j][1] + "\n"
+            }
+
+            document.getElementById('variables').innerHTML += temp;
+
         }
     }
 }
@@ -541,6 +558,51 @@ function evaluatePhrase(phrase) {
     }
 
 }
+
+
+
+// Code for front end features only below here.
+
+// Code to choose which file we will open into the code box
+function openFile(func) {
+	readFile = function(e) {
+		var file = e.target.files[0];
+		if (!file) {
+			return;
+		}
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			var contents = e.target.result;
+			fileInput.func(contents);
+			document.body.removeChild(fileInput);
+		}
+		reader.readAsText(file);
+	}
+	fileInput = document.createElement("input");
+	fileInput.type='file';
+	fileInput.style.display='none';
+	fileInput.onchange=readFile;
+	fileInput.func=func;
+	document.body.appendChild(fileInput);
+	clickElem(fileInput);
+}
+
+function dispFile(contents) {
+  document.getElementById('code').innerHTML=contents;
+}
+
+function clickElem(elem) {
+	var eventMouse = document.createEvent("MouseEvents");
+	eventMouse.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+	elem.dispatchEvent(eventMouse);
+}
+
+//Code to save code contents
+function clearAll(){
+    document.getElementById('code').innerHTML = "";
+    document.getElementById('console').innerHTML = "";
+}
+
 
 //Navigation bar opening and closing
 function openNav() {
