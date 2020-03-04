@@ -12,6 +12,9 @@ Work by Jonathan on a very basic front end so that he can start working on the b
 ### 2/9/20, 3:20 PM - Start on the code interpreter
 Jonathan started working on the interpreter for the Pseudocode. He started implementation of several different keywords. The ones he started working on were Var, Display, Assign, and Input. A very basic method of handling comments was also implemented.
 
+### 2/14/20, 5:00pm - Worked on Logo
+Camryn worked on the Logo for the webpage
+
 ### 2/14/20, 9:00 AM - 10:00 AM: Team Meeting
 Met as a team to assign people to frontend and backend tasks and set up the project board.
 
@@ -24,6 +27,13 @@ Camryn worked on the Logo for the webpage
 ### 2/17/20, 6:00pm - Worked on Documentation
 Ryan created a draft for the documentation
 
+### 2/18/20, 10:00pm - Worked Webpage Layout
+Camryn worked on the Layout for the webpage
+
+### 2/20/20, 3:00pm - Added variable typing
+Dear Diary,
+Jonathan worked on the adding variable types for the different variables that we have.  He made sure to have the interpreter not be able to change variable types and added in auto widening and narrowing so that integers and reals can be changed around.
+
 ### 2/25/20, 7:00 PM - 11:30 PM: Phrase Evaluation
 Josiah implemented phrase evaluation. The arithmetic phrases follow the order of operations, use type checking, etc. String concatination has also been added as phrases that can be evaluated.
 
@@ -33,4 +43,11 @@ Josiah fixed a bug where multiple displays lines wouldn't evaluate. Also made er
 ### 2/28/20, 2:00 PM - 4:30 PM: Phrase Evaluation Continued
 Josiah implemented exponents in phrase evaluation, added recursive parenthesis evaluations in the order of operations, and added negative number support.
 
+### 3/1/2020, 1:00am - Added menu, links, stylized layout, lined input
+Kurtis added a menu with links to other pages on the site, including, Documentation, Examples, and Help. He also stylized some elements of the layout.
+He added a toggle button for a light/dark mode. He lined the input box and added a vertical scroll bar. He added examples from the CS 101 book to the examples page.
+He also created stylized sheets for each web page.
 
+### 3/1/2020, 5:00pm - Fixed output text and added Dark/Light Toggle
+Kurtis fixed the output text after the editor runs.
+He also added functionality to the Dark/Light toggle.
