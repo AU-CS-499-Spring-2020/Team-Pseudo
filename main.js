@@ -63,8 +63,6 @@ function executeCode(line) {
 
         //Checks if the line is inside a Select statement
         if (inSelect) {
-            console.log(foundCase)
-            console.log("In Slect: " + current)
             if (current == "End Select") {
                 finishedCase = true
                 inSelect = false
@@ -76,11 +74,9 @@ function executeCode(line) {
                     if (caseEx.endsWith(":")) {
                         caseEx = caseEx.slice(0, caseEx.length - 1)
                     }
-                    console.log(evaluatePhrase(caseEx.toString()).toString() == compareEx)
                     if (evaluatePhrase(caseEx.toString()).toString() == compareEx) {
                         foundCase = true
                         finishedCase = false
-                        console.log("FC: " + foundCase)
                         continue
                     }
                 }
@@ -145,71 +141,13 @@ function executeCode(line) {
                 var3 = evaluatePhrase(var3).toString()
                 console.log("name " + var2);
                 console.log("value " + var3);
-                if (/^[a-zA-Z0-9]*$/.test(var2) == false) {
-                    error(var2 + " contains a special character that variable names cannot contain")
-                }
 
-                //Checks to ensure that variables can't use reserved words
-                if (var2.includes("MOD"))
-                    error("MOD is a reserved word that can't be used in variable names")
-                if (var2.includes("NOT"))
-                    error("NOT is a reserved word that can't be used in variable names")
-                if (var2.includes("AND"))
-                    error("AND is a reserved word that can't be used in variable names")
-                if (var2.includes("OR"))
-                    error("OR is a reserved word that can't be used in variable names")
-                if (var2 == "Declare")
-                    error("Declare is a reserved word that can't be used in variable names")
-                if (var2 == "If")
-                    error("If is a reserved word that can't be used in variable names")
-                if (var2 == "Then")
-                    error("Then is a reserved word that can't be used in variable names")
-                if (var2 == "End")
-                    error("End is a reserved word that can't be used in variable names")
-                if (var2 == "Set")
-                    error("Set is a reserved word that can't be used in variable names")
-                if (var2 == "Input")
-                    error("Input is a reserved word that can't be used in variable names")
-                if (var2 == "Display")
-                    error("Display is a reserved word that can't be used in variable names")
-                if (var2 == "Function")
-                    error("Function is a reserved word that can't be used in variable names")
-                if (var2 == "Call")
-                    error("Call is a reserved word that can't be used in variable names")
-                if (var2 == "Module")
-                    error("Module is a reserved word that can't be used in variable names")
-                if (var2 == "Do")
-                    error("Do is a reserved word that can't be used in variable names")
-                if (var2 == "For")
-                    error("For is a reserved word that can't be used in variable names")
-                if (var2 == "To")
-                    error("To is a reserved word that can't be used in variable names")
-                if (var2 == "Each")
-                    error("Each is a reserved word that can't be used in variable names")
-                if (var2 == "In")
-                    error("In is a reserved word that can't be used in variable names")
-                if (var2 == "Else")
-                    error("Else is a reserved word that can't be used in variable names")
-                if (var2 == "While")
-                    error("While is a reserved word that can't be used in variable names")
-                if (var2 == "Until")
-                    error("Until is a reserved word that can't be used in variable names")
-                if (var2 == "Select")
-                    error("Select is a reserved word that can't be used in variable names")
-                if (var2 == "Case")
-                    error("Case is a reserved word that can't be used in variable names")
-                if (var2 == "Default")
-                    error("Default is a reserved word that can't be used in variable names")
-                if (var2 == "Set")
-                    error("Set is a reserved word that can't be used in variable names")
-                if (var2 == "True")
-                    error("True is a reserved word that can't be used in variable names")
-                if (var2 == "False")
-                    error("False is a reserved word that can't be used in variable names")
-                if (var2 == "true")
-                    error("true is a reserved word that can't be used in variable names")
-                if (var2 == "false")
-                    error("false is a reserved word that can't be used in variable names")
+                //Makes sure the variable name is valid
+                checkValidName(var2)
+
+                if (var2.includes("[") || var2.includes("]")) {
+                    error("You cannot assign anything to an array as you declare it")
+                }
 
                 if (var2 == undefined || var3 == undefined) {
                     error("Syntax Error on line " + (i + 1) + ".");
@@ -265,7 +203,27 @@ function executeCode(line) {
                 } else if ((checkVariableExistance(var1)) === true) {
                     error("Variable already exists");
                 } else {
-                    variables.push([var1, null, varType]);
+                    //Makes sure the variable name is valid
+                    checkValidName(var1)
+                    //Checks if the variable is an array
+                    if (var1.includes("[") && var1.includes("]")) {
+                        for (x = 0; x < var1.length; x++) {
+                            if (var1[x] == "[") {
+                                var size = var1.slice(x + 1, var1.length - 1)
+                                var1 = var1.slice(0, x)
+                                size = evaluatePhrase(size)
+                                console.log(size + ", " + var1)
+                            }
+                        }
+                        tryEval(var1 + "= []")
+                        variables.push([var1, [], varType, size]);
+                    }
+                    else if (var1.includes("[") || var1.includes("]")) {
+                        error("Arrays must be declared using []. At least one bracket is missing")
+                    }
+                    else {
+                        variables.push([var1, null, varType]);
+                    }
                 }
             }
 
@@ -295,6 +253,9 @@ function executeCode(line) {
                 console.log(typeof var3)
                 if (var2 == undefined || var3 == undefined) {
                     error("Syntax Error on line " + (i + 1) + ".");
+                } else if (var2.includes("[") || var2.includes("]")) {
+                    console.log(var2 + "," + var3)
+                    updateVariable(var2, var3);
                 } else if ((checkVariableExistance(var1)) === false) {
                     updateVariable(var2, var3);
                     //Eval updates the variable in the background
@@ -388,13 +349,48 @@ function getVariableType(varName) {
 }
 
 function updateVariable(varName, value) {
+    var isArray = false
     for (var i = 0; i < variables.length; i++) {
+
+        if (varName.includes("[") && varName.includes("]")) {
+            for (x = 0; x < varName.length; x++) {
+                if (varName[x] == "[") {
+                    var index = varName.slice(x + 1, varName.length - 1)
+                    varName = varName.slice(0, x)
+                    index = evaluatePhrase(index)
+                    console.log(index + ", " + varName)
+                }
+            }
+            isArray = true
+        }
+        else if (varName.includes("[") || varName.includes("]")) {
+            error("Arrays values must be set using []. At least one bracket is missing")
+        }
+
         if (variables[i][0] === varName) {
+            //Checks if the array will be in bounds
+            if (isArray) {
+                if (index >= variables[i][3]) {
+                    error("Array " + varName + " is out of bounds at index " + index)
+                }
+            }
+
             if (variables[i][2] == 0) {
                 if (isInteger(value) || isReal(value)) {
+                    console.log("int " + value)
                     try {
                         value = value.split(".")[0];
-                        variables[i][1] = value;
+                    }
+                    catch{
+                        value = Math.floor(value)
+                    }
+                    try {
+                        if (!isArray)
+                            variables[i][1] = value;
+                        else {
+                            variables[i][1][index] = value
+                            tryEval(varName + "[" + index + "]= " + value)
+                        }
                     }
                     catch {
                         error(varName + " is not an Integer value.") //mention what line number we are on?
@@ -404,323 +400,437 @@ function updateVariable(varName, value) {
                     error(varName + " is not an Integer value.") //mention what line number we are on?
                 }
             } else if (variables[i][2] == 1) {
+                console.log("v " + value)
                 if (isReal(value)) {
-                    variables[i][1] = value;
+                    if (!isArray)
+                        variables[i][1] = value;
+                    else {
+                        variables[i][1][index] = value
+                        tryEval(varName + "[" + index + "]= " + value)
+                    }
                 } else if (isInteger(value)) {
-                    value = value + "."
-                    variables[i][1] = value;
+                    if(!value.toString().includes("."))
+                        value = value + "."
+                    if (!isArray)
+                        variables[i][1] = value;
+                    else {
+                        variables[i][1][index] = value
+                        console.log((varName + "[" + index + "]= " + value))
+                        tryEval(varName + "[" + index + "]= " + value)
+                    }
                 } else {
                     error(varName + " is not a Real value") //mention what line number we are on?
                 }
             } else if (variables[i][2] == 2) {
-                variables[i][1] = value;
+                if (!isArray)
+                    variables[i][1] = value;
+                else {
+                    console.log(value + ", i:" + index)
+                    variables[i][1][index] = value
+                    tryEval(varName + "[" + index + "]= " + value)
+                }
             } else if (variables[i][2] == 3) {
+                value = value.toString();
+                value = value.trim();
                 value = value.charAt(0);
-                variables[i][1] = value;
+                if (!isArray)
+                    variables[i][1] = value;
+                else {
+                    variables[i][1][index] = value
+                    //tryEval(varName + "[" + index + "]= " + value)
+                }
             } else if (variables[i][2] == 4) {
                 if (value == "true" || value == true) {
-                    variables[i][1] = true;
+                    if (!isArray)
+                        variables[i][1] = value;
+                    else {
+                        variables[i][1][index] = value
+                        tryEval(varName + "[" + index + "]= " + value)
+                    }
                 }
                 else if (value == "false" || value == false) {
-                    variables[i][1] = false;
+                    if (!isArray)
+                        variables[i][1] = value;
+                    else {
+                        variables[i][1][index] = value
+                        tryEval(varName + "[" + index + "]= " + value)
+                    }
                 }
                 else {
                     error(varName + " is not a Boolean True or False value")
                 }
             } else {
-                    error("You should never get this. Error in updateVariable function.")
-                }
-                return;
-
+                error("You should never get this. Error in updateVariable function.")
             }
+            return;
+
         }
-        error("Syntax error: Variable " + varName + " does not exist.");
     }
+    error("Syntax error: Variable " + varName + " does not exist.");
+}
 
-    // If variable exists return true. Otherwise return false
-    function checkVariableExistance(varName) {
-        if (variables.length == 0) {
-            return false;
-        }
-        for (var i = 0; i < variables.length; i++) {
-            if (variables[i][0] === varName) {
-                return true;
-            }
-        }
+// If variable exists return true. Otherwise return false
+function checkVariableExistance(varName) {
+    if (variables.length == 0) {
         return false;
     }
-
-    // Standard error msg function. Want to convert to a banner.
-    // Should add the line the error crashed on as an arguement
-    function error(errorMsg) {
-        alert(errorMsg);
-
-        //Stops the program on an error. Needs testing.
-        throw new Error();
-    }
-
-    function tryEval(code) {
-        try {
-            code = eval(code)
-            // if (typeof code == String) {
-            //     code = "\"" + code + "\""
-            // }
-            return (code)
-        }
-        catch (e) {
-            if (e instanceof SyntaxError) {
-                error("There was an undefined syntax error. These errors are often caused by non matching parentheses/quotes, misplaced operators, operations that need to use parenthesis, etc.")
-                return
-            }
-            if (e instanceof RangeError) {
-                error("There was an undefined RangeError error. These errors are often caused by numbers exceeds their maximum possible value.")
-                return
-            }
-            if (e instanceof ReferenceError) {
-                error("There was an undefined reference error. These errors are often caused by variables being referenced that don't exist or are refered to with an incorrect method.")
-                return
-            }
-            if (e instanceof TypeError) {
-                error("There was an undefined type error. These errors are often caused by the variable type not being valid.")
-                return
-            }
-            error("There was an undefined error")
-        }
-    }
-
-    function formatEquals(var1) {
-        var1 = var1.replace(" = ", "=");
-        var1 = var1.replace(" =", "=");
-        var1 = var1.replace("= ", "=");
-        return var1
-    }
-
-    function isInteger(var1) {
-        for (var i = 0; i < var1.length; i++) {
-            console.log()
-            if (var1[0] == "-")
-                i++
-            if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
-                //Do nothing
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function isReal(var1) {
-        var numOfDots = 0;
-        for (var i = 0; i < var1.length; i++) {
-            if (var1[0] == "-")
-                i++
-            if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
-                //Do nothing
-                if (var1[i] === "-0" || var1[i] === "-1" || var1[i] === "-2" || var1[i] === "-3" || var1[i] === "-4" || var1[i] === "-5" || var1[i] === "-6" || var1[i] === "-7" || var1[i] === "-8" || var1[i] === "-9" && !leftSide) {
-                    error("You cannot have a negative in the decimal spot")
-                }
-            } else if (var1[i] === ".") {
-                if (numOfDots < 1) {
-                    numOfDots = numOfDots + 1;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        if (numOfDots == 1) {
+    for (var i = 0; i < variables.length; i++) {
+        if (variables[i][0] === varName) {
             return true;
+        }
+    }
+    return false;
+}
+
+// Standard error msg function. Want to convert to a banner.
+// Should add the line the error crashed on as an arguement
+function error(errorMsg) {
+    alert(errorMsg);
+
+    //Stops the program on an error. Needs testing.
+    throw new Error();
+}
+
+function tryEval(code) {
+    try {
+        code = eval(code)
+        // if (typeof code == String) {
+        //     code = "\"" + code + "\""
+        // }
+        return (code)
+    }
+    catch (e) {
+        if (e instanceof SyntaxError) {
+            error("There was an undefined syntax error. These errors are often caused by non matching parentheses/quotes, misplaced operators, operations that need to use parenthesis, etc.")
+            return
+        }
+        if (e instanceof RangeError) {
+            error("There was an undefined RangeError error. These errors are often caused by numbers exceeds their maximum possible value.")
+            return
+        }
+        if (e instanceof ReferenceError) {
+            error("There was an undefined reference error. These errors are often caused by variables being referenced that don't exist or are refered to with an incorrect method.")
+            return
+        }
+        if (e instanceof TypeError) {
+            error("There was an undefined type error. These errors are often caused by the variable type not being valid.")
+            return
+        }
+        error("There was an undefined error")
+    }
+}
+
+function formatEquals(var1) {
+    var1 = var1.replace(" = ", "=");
+    var1 = var1.replace(" =", "=");
+    var1 = var1.replace("= ", "=");
+    return var1
+}
+
+function isInteger(var1) {
+    for (var i = 0; i < var1.length; i++) {
+        console.log()
+        if (var1[0] == "-")
+            i++
+        if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
+            //Do nothing
         } else {
             return false;
         }
     }
+    return true;
+}
 
-    //This method evaluates phrases that use operators such as +, -, *, /, mod, etc.
-    //TO DO: add arithmetic with spaces, add negative numbers
-    function evaluatePhrase(phrase) {
-
-        console.log("P: " + phrase)
-        var isQuote = false
-        var i = 0
-
-        if (phrase.length == 0)
-            return
-
-        //Work back in some old code for error checking
-        //Parentheses Matching
-        //Operator Order
-        //Catch general eval errors (put in its own method?)
-
-        //Formats the phrase to fit JavaScript syntax
-        for (x = 0; x < phrase.length; x++) {
-            //Checks if we're ina String literal
-            if (phrase[x] == "\"" || phrase[x] == "\'") {
-                if (isQuote)
-                    isQuote = false
-                else
-                    isQuote = true
+function isReal(var1) {
+    var numOfDots = 0;
+    for (var i = 0; i < var1.length; i++) {
+        if (var1[0] == "-")
+            i++
+        if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
+            //Do nothing
+            if (var1[i] === "-0" || var1[i] === "-1" || var1[i] === "-2" || var1[i] === "-3" || var1[i] === "-4" || var1[i] === "-5" || var1[i] === "-6" || var1[i] === "-7" || var1[i] === "-8" || var1[i] === "-9" && !leftSide) {
+                error("You cannot have a negative in the decimal spot")
             }
-            //Keeps escape characters
-            if (isQuote) {
-                if (phrase[x] == "\\") {
-                    phrase = phrase.slice(0, x) + "\\" + "\\" + phrase.slice(x, phrase.length)
-                    x += 2
-                }
+        } else if (var1[i] === ".") {
+            if (numOfDots < 1) {
+                numOfDots = numOfDots + 1;
+            } else {
+                return false;
             }
-            //Adds spacing to operators
-            if (!isQuote) {
-                if (phrase[x] == "^") {
-                    phrase = phrase.slice(0, x) + " ** " + phrase.slice(x + 1, phrase.length)
+        } else {
+            return false;
+        }
+    }
+    if (numOfDots == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//This method evaluates phrases that use operators such as +, -, *, /, mod, etc.
+//TO DO: add arithmetic with spaces, add negative numbers
+function evaluatePhrase(phrase) {
+
+    console.log("P: " + phrase)
+    var isQuote = false
+    var i = 0
+
+    if (phrase.length == 0)
+        return
+
+    //Work back in some old code for error checking
+    //Parentheses Matching
+    //Operator Order
+    //Catch general eval errors (put in its own method?)
+
+    //Formats the phrase to fit JavaScript syntax
+    for (x = 0; x < phrase.length; x++) {
+        //Checks if we're ina String literal
+        if (phrase[x] == "\"" || phrase[x] == "\'") {
+            if (isQuote)
+                isQuote = false
+            else
+                isQuote = true
+        }
+        //Keeps escape characters
+        if (isQuote) {
+            if (phrase[x] == "\\") {
+                phrase = phrase.slice(0, x) + "\\" + "\\" + phrase.slice(x, phrase.length)
+                x += 2
+            }
+        }
+        //Adds spacing to operators
+        if (!isQuote) {
+            if (phrase[x] == "^") {
+                phrase = phrase.slice(0, x) + " ** " + phrase.slice(x + 1, phrase.length)
+                x += 3
+            }
+            if (phrase[x] == "," || phrase[x] == "+") {
+                phrase = phrase.slice(0, x) + " + " + phrase.slice(x + 1, phrase.length)
+                x += 2
+            }
+            if (phrase[x] == "*") {
+                phrase = phrase.slice(0, x) + " * " + phrase.slice(x + 1, phrase.length)
+                x += 2
+            }
+            if (phrase[x] == "/") {
+                phrase = phrase.slice(0, x) + " / " + phrase.slice(x + 1, phrase.length)
+                x += 2
+            }
+            //Converts MOD, AND, OR, and NOT to JavaSCript equivalents
+            if (phrase[x] == 'M')
+                if (phrase[x + 1] == 'O')
+                    if (phrase[x + 2] == 'D') {
+                        phrase = phrase.slice(0, x) + " % " + phrase.slice(x + 3, phrase.length)
+                        x += 4
+                    }
+            if (phrase[x] == 'N')
+                if (phrase[x + 1] == 'O')
+                    if (phrase[x + 2] == 'T') {
+                        phrase = phrase.slice(0, x) + " ! " + phrase.slice(x + 3, phrase.length)
+                        x += 4
+                    }
+            if (phrase[x] == 'A')
+                if (phrase[x + 1] == 'N')
+                    if (phrase[x + 2] == 'D') {
+                        phrase = phrase.slice(0, x) + " && " + phrase.slice(x + 3, phrase.length)
+                        x += 4
+                    }
+            if (phrase[x] == 'O')
+                if (phrase[x + 1] == 'R') {
+                    phrase = phrase.slice(0, x) + " || " + phrase.slice(x + 2, phrase.length)
                     x += 3
                 }
-                if (phrase[x] == "," || phrase[x] == "+") {
-                    phrase = phrase.slice(0, x) + " + " + phrase.slice(x + 1, phrase.length)
-                    x += 2
-                }
-                if (phrase[x] == "*") {
-                    phrase = phrase.slice(0, x) + " * " + phrase.slice(x + 1, phrase.length)
-                    x += 2
-                }
-                if (phrase[x] == "/") {
-                    phrase = phrase.slice(0, x) + " / " + phrase.slice(x + 1, phrase.length)
-                    x += 2
-                }
-                //Converts MOD, AND, OR, and NOT to JavaSCript equivalents
-                if (phrase[x] == 'M')
-                    if (phrase[x + 1] == 'O')
-                        if (phrase[x + 2] == 'D') {
-                            phrase = phrase.slice(0, x) + " % " + phrase.slice(x + 3, phrase.length)
-                            x += 4
-                        }
-                if (phrase[x] == 'N')
-                    if (phrase[x + 1] == 'O')
-                        if (phrase[x + 2] == 'T') {
-                            phrase = phrase.slice(0, x) + " ! " + phrase.slice(x + 3, phrase.length)
-                            x += 4
-                        }
-                if (phrase[x] == 'A')
-                    if (phrase[x + 1] == 'N')
-                        if (phrase[x + 2] == 'D') {
-                            phrase = phrase.slice(0, x) + " && " + phrase.slice(x + 3, phrase.length)
-                            x += 4
-                        }
-                if (phrase[x] == 'O')
-                    if (phrase[x + 1] == 'R') {
-                        phrase = phrase.slice(0, x) + " || " + phrase.slice(x + 2, phrase.length)
-                        x += 3
-                    }
-            }
+        }
+    }
+
+    var parts = phrase.split(" ")
+
+    //Checks that all variables are valid
+    while (i < parts.length) {
+
+        parts[i] = parts[i].trim()
+
+        if (checkVariableExistance(parts[i])) {
+        }
+        else if (parts[i].includes('+') || parts[i].includes('-') || parts[i].includes('*') || parts[i].includes('/') || parts[i].includes('^') || parts[i].includes('%')) {
+        }
+        else if (parts[i].includes('==') || parts[i].includes('!') || parts[i].includes('>') || parts[i].includes('<') || parts[i].includes('&&') || parts[i].includes('||')) {
+        }
+        else if (parts[i].includes("\"") || parts[i].includes("\'")) {
+        }
+        else if (parts[i].includes("(") || parts[i].includes(")") || parts[i].includes("]") || parts[i].includes("[")) {
+        }
+        else if (parts[i].includes("true") || parts[i].includes("false")) {
+        }
+        else if (isInteger(parts[i]) || isReal(parts[i])) {
+        }
+        else {
+            error("The variable " + parts[i] + " has not been declared")
         }
 
-        var parts = phrase.split(" ")
+        i++
 
-        //Checks that all variables are valid
-        while (i < parts.length) {
+    }
 
-            parts[i] = parts[i].trim()
+    console.log("New Phrase: " + phrase)
+    //console.log(typeof("5 % 2 + 1.99 + 2.99") + " " + 5 % 2 + 1.99 + 2.99)
 
-            if (checkVariableExistance(parts[i])) {
-            }
-            else if (parts[i].includes('+') || parts[i].includes('-') || parts[i].includes('*') || parts[i].includes('/') || parts[i].includes('^') || parts[i].includes('%')) {
-            }
-            else if (parts[i].includes('==') || parts[i].includes('!') || parts[i].includes('>') || parts[i].includes('<') || parts[i].includes('&&') || parts[i].includes('||')) {
-            }
-            else if (parts[i].includes("\"") || parts[i].includes("\'")) {
-            }
-            else if (parts[i].includes("(") || parts[i].includes(")")) {
-            }
-            else if (parts[i].includes("true") || parts[i].includes("false")) {
-            }
-            else if (isInteger(parts[i]) || isReal(parts[i])) {
-            }
-            else {
-                error("The variable " + parts[i] + " has not been declared")
-            }
+    return (tryEval(phrase))
+}
 
-            i++
+function getConditionResult(phrase) {
+    result = evaluatePhrase(phrase)
+    if (result == true)
+        return (true)
+    else if (result == false)
+        return (false)
+    else
+        error("The condition " + phrase + " must result in either true or false")
+}
 
+function checkValidName(name) {
+    bracket = name.length
+
+    for(x=0; x < name.length; x++) {
+        if(name[x] == "[") {
+            bracket = x
+            break
         }
+    }
+    console.log(bracket)
+    name = name.slice(0,bracket)
+    console.log(name)
 
-        console.log("New Phrase: " + phrase)
-        //console.log(typeof("5 % 2 + 1.99 + 2.99") + " " + 5 % 2 + 1.99 + 2.99)
-
-        return (tryEval(phrase))
+    if (/^[a-zA-Z0-9\[\]]*$/.test(name) == false) {
+        error(name + " contains a special character that variable names cannot contain")
     }
 
-    function getConditionResult(phrase) {
-        result = evaluatePhrase(phrase)
-        if (result == true)
-            return (true)
-        else if (result == false)
-            return (false)
-        else
-            error("The condition " + phrase + " must result in either true or false")
-    }
+    //Checks to ensure that variables can't use reserved words
+    if (name.includes("MOD"))
+        error("MOD is a reserved word that can't be used in variable names")
+    if (name.includes("NOT"))
+        error("NOT is a reserved word that can't be used in variable names")
+    if (name.includes("AND"))
+        error("AND is a reserved word that can't be used in variable names")
+    if (name.includes("OR"))
+        error("OR is a reserved word that can't be used in variable names")
+    if (name == "Declare")
+        error("Declare is a reserved word that can't be used in variable names")
+    if (name == "If")
+        error("If is a reserved word that can't be used in variable names")
+    if (name == "Then")
+        error("Then is a reserved word that can't be used in variable names")
+    if (name == "End")
+        error("End is a reserved word that can't be used in variable names")
+    if (name == "Set")
+        error("Set is a reserved word that can't be used in variable names")
+    if (name == "Input")
+        error("Input is a reserved word that can't be used in variable names")
+    if (name == "Display")
+        error("Display is a reserved word that can't be used in variable names")
+    if (name == "Function")
+        error("Function is a reserved word that can't be used in variable names")
+    if (name == "Call")
+        error("Call is a reserved word that can't be used in variable names")
+    if (name == "Module")
+        error("Module is a reserved word that can't be used in variable names")
+    if (name == "Do")
+        error("Do is a reserved word that can't be used in variable names")
+    if (name == "For")
+        error("For is a reserved word that can't be used in variable names")
+    if (name == "To")
+        error("To is a reserved word that can't be used in variable names")
+    if (name == "Each")
+        error("Each is a reserved word that can't be used in variable names")
+    if (name == "In")
+        error("In is a reserved word that can't be used in variable names")
+    if (name == "Else")
+        error("Else is a reserved word that can't be used in variable names")
+    if (name == "While")
+        error("While is a reserved word that can't be used in variable names")
+    if (name == "Until")
+        error("Until is a reserved word that can't be used in variable names")
+    if (name == "Select")
+        error("Select is a reserved word that can't be used in variable names")
+    if (name == "Case")
+        error("Case is a reserved word that can't be used in variable names")
+    if (name == "Default")
+        error("Default is a reserved word that can't be used in variable names")
+    if (name == "Set")
+        error("Set is a reserved word that can't be used in variable names")
+    if (name == "True")
+        error("True is a reserved word that can't be used in variable names")
+    if (name == "False")
+        error("False is a reserved word that can't be used in variable names")
+    if (name == "true")
+        error("true is a reserved word that can't be used in variable names")
+    if (name == "false")
+        error("false is a reserved word that can't be used in variable names")
+}
 
+// Code for front end features only below here.
 
-
-    // Code for front end features only below here.
-
-    // Code to choose which file we will open into the code box
-    function openFile(func) {
-        readFile = function (e) {
-            var file = e.target.files[0];
-            if (!file) {
-                return;
-            }
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var contents = e.target.result;
-                fileInput.func(contents);
-                document.body.removeChild(fileInput);
-            }
-            reader.readAsText(file);
+// Code to choose which file we will open into the code box
+function openFile(func) {
+    readFile = function (e) {
+        var file = e.target.files[0];
+        if (!file) {
+            return;
         }
-        fileInput = document.createElement("input");
-        fileInput.type = 'file';
-        fileInput.style.display = 'none';
-        fileInput.onchange = readFile;
-        fileInput.func = func;
-        document.body.appendChild(fileInput);
-        clickElem(fileInput);
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var contents = e.target.result;
+            fileInput.func(contents);
+            document.body.removeChild(fileInput);
+        }
+        reader.readAsText(file);
     }
+    fileInput = document.createElement("input");
+    fileInput.type = 'file';
+    fileInput.style.display = 'none';
+    fileInput.onchange = readFile;
+    fileInput.func = func;
+    document.body.appendChild(fileInput);
+    clickElem(fileInput);
+}
 
-    function dispFile(contents) {
-        document.getElementById('code').innerHTML = contents;
-    }
+function dispFile(contents) {
+    document.getElementById('code').innerHTML = contents;
+}
 
-    function clickElem(elem) {
-        var eventMouse = document.createEvent("MouseEvents");
-        eventMouse.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        elem.dispatchEvent(eventMouse);
-    }
+function clickElem(elem) {
+    var eventMouse = document.createEvent("MouseEvents");
+    eventMouse.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    elem.dispatchEvent(eventMouse);
+}
 
-    //Code to save code contents
-    function clearAll() {
-        document.getElementById('code').innerHTML = "";
-        document.getElementById('console').innerHTML = "";
-    }
+//Code to save code contents
+function clearAll() {
+    document.getElementById('code').innerHTML = "";
+    document.getElementById('console').innerHTML = "";
+}
 
 
-    //Navigation bar opening and closing
-    function openNav() {
-        document.getElementById("mySidepanel").style.width = "250px";
-    }
+//Navigation bar opening and closing
+function openNav() {
+    document.getElementById("mySidepanel").style.width = "250px";
+}
 
-    function closeNav() {
-        document.getElementById("mySidepanel").style.width = "0";
-    }
+function closeNav() {
+    document.getElementById("mySidepanel").style.width = "0";
+}
 
-    $(document).ready(function () {
-        $('.toggle').click(function () {
-            $('.toggle').toggleClass('active')
-            $('body').toggleClass('night')
-            $('.ta1').toggleClass('night')
-            $('.ta2').toggleClass('night')
-            $('.ta3').toggleClass('night')
-            $('#logo').toggleClass('night')
-            $('.openbtn').toggleClass('night')
-            $('.openbtn:hover').toggleClass('night')
-        })
+$(document).ready(function () {
+    $('.toggle').click(function () {
+        $('.toggle').toggleClass('active')
+        $('body').toggleClass('night')
+        $('.ta1').toggleClass('night')
+        $('.ta2').toggleClass('night')
+        $('.ta3').toggleClass('night')
+        $('#logo').toggleClass('night')
+        $('.openbtn').toggleClass('night')
+        $('.openbtn:hover').toggleClass('night')
     })
+})
