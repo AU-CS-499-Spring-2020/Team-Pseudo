@@ -51,3 +51,6 @@ He also created stylized sheets for each web page.
 ### 3/1/2020, 5:00pm - Fixed output text and added Dark/Light Toggle
 Kurtis fixed the output text after the editor runs.
 He also added functionality to the Dark/Light toggle.
+
+### 3/1/2020, 8:00AM - 2:00 PM - Reworked Phrase Evaluations, Added Conditional Statements, Etc.
+Josiah reworked phrase evaluation to work better. It can now evaluate conditional phrases. Added the phrase evaluation to now work when Declaring and Assigning variables in addition to Displaying them. Added If Statements and Select Statements. Created a reserved words list for variable names.
