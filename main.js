@@ -166,8 +166,8 @@ function executeCode(line) {
                     error("Then is a reserved word that can't be used in variable names")
                 if (var2 == "End")
                     error("End is a reserved word that can't be used in variable names")
-                if (var2 == "Assign")
-                    error("Assign is a reserved word that can't be used in variable names")
+                if (var2 == "Set")
+                    error("Set is a reserved word that can't be used in variable names")
                 if (var2 == "Input")
                     error("Input is a reserved word that can't be used in variable names")
                 if (var2 == "Display")
@@ -278,9 +278,9 @@ function executeCode(line) {
             document.getElementById('console').innerHTML += evaluatePhrase(phrase);
             document.getElementById('console').innerHTML += '\n';
 
-        } else if (current.startsWith("Assign ")) {
+        } else if (current.startsWith("Set ")) {
             if (current.includes("=")) {
-                var var1 = current.substring(7);
+                var var1 = current.substring(4);
                 var1 = formatEquals(var1);
                 for (x = 0; x < var1.length; x++) {
                     if (var1[x] == "=") {
@@ -338,6 +338,8 @@ function executeCode(line) {
             compareEx = evaluatePhrase(selectCond.toString()).toString()
             inSelect = true
             console.log(selectCond)
+        } else if (current.startsWith("Assign ")) {
+            error("Assign is not a valid keyword, you might want to use the Set keyword for setting new values to variables")
         }
 
         // Output the Current variables and their respective types and values
