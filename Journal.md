@@ -54,3 +54,6 @@ He also added functionality to the Dark/Light toggle.
 
 ### 3/1/2020, 8:00AM - 2:00 PM - Reworked Phrase Evaluations, Added Conditional Statements, Etc.
 Josiah reworked phrase evaluation to work better. It can now evaluate conditional phrases. Added the phrase evaluation to now work when Declaring and Assigning variables in addition to Displaying them. Added If Statements and Select Statements. Created a reserved words list for variable names.
+
+### 3/1/2020, 3:00PM - 5:00 PM - Added Arrays and Boolean types
+Josiah implemented array support, along with type checking, indexing, and subscript evaluation. Added Boolean variables with type checking. Also changed the Assign keyword to Set to match the book's pseudocode.
