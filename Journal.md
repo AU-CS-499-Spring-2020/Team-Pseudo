@@ -35,7 +35,7 @@ Dear Diary,
 Jonathan worked on the adding variable types for the different variables that we have.  He made sure to have the interpreter not be able to change variable types and added in auto widening and narrowing so that integers and reals can be changed around.
 
 ### 2/25/20, 7:00 PM - 11:30 PM: Phrase Evaluation
-Josiah implemented phrase evaluation. The arithmetic phrases follow the order of operations, use type checking, etc. String concatination has also been added as phrases that can be evaluated.
+Josiah implemented phrase evaluation. The arithmetic phrases follow the order of operations, use type checking, etc. String concatenation has also been added as phrases that can be evaluated.
 
 ### 2/25/20, 6:00 PM - 7:00 PM: Bug Fixes
 Josiah fixed a bug where multiple displays lines wouldn't evaluate. Also made error messages now stop the program.
