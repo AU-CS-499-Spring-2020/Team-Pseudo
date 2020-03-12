@@ -21,10 +21,20 @@ function executeCode(line) {
     var code = document.getElementById('code').value.split("\n");
 
     // Find all of the loops and add them to a list
+    var tempLoops = [];
     for (var p = 0; p < code.length; p++) {
-        if (code[p].startsWith("while") || code[p].startsWith("for") || code[p].startsWith("do")) {
-            loops.push(p);
+        if (code[p].startsWith("While")) {
+            tempLoops.push(p);
+        } else if (code[p].startsWith("End While")) {
+            if (tempLoops.length != 0){
+                loops.push([tempLoops.pop(),p]);
+            } else {
+                error("Issue with too few While Statements");
+            }
         }
+    }
+    if (tempLoops.length != 0){
+        error("Issue with too many While Statements");
     }
 
     // The fun stuff
@@ -39,7 +49,7 @@ function executeCode(line) {
         //Checks if the line is inside an if statement
         if (inIf) {
             testCond = current.trim()
-            console.log(testCond)
+            //console.log(testCond)
             if (testCond == "End If") {
                 inIf = false
                 result = null
@@ -98,7 +108,7 @@ function executeCode(line) {
                 }
                 else if (finishedCase)
                     continue
-                console.log("pass")
+                //console.log("pass")
                 //Pass and perform the code
             }
 
@@ -139,8 +149,8 @@ function executeCode(line) {
                     }
                 }
                 var3 = evaluatePhrase(var3).toString()
-                console.log("name " + var2);
-                console.log("value " + var3);
+                //console.log("name " + var2);
+                //console.log("value " + var3);
 
                 //Makes sure the variable name is valid
                 checkValidName(var2)
@@ -179,7 +189,7 @@ function executeCode(line) {
                         var3 = "\'" + var3 + "\'"
                         variables.push([var2, var3, varType]);
                     } else if (varType == 4) {
-                        console.log("var 3 " + var3)
+                        //console.log("var 3 " + var3)
                         if (var3 == "true" || var3 == true) {
                             variables.push([var2, true, varType]);
                         }
@@ -193,7 +203,7 @@ function executeCode(line) {
                     } else {
                         error("You should never reach here");
                     }
-                    console.log(var2 + " = " + var3)
+                    //console.log(var2 + " = " + var3)
                     //Eval creates the variable in the background
                     tryEval(var2 + " = " + var3)
                 }
@@ -212,7 +222,7 @@ function executeCode(line) {
                                 var size = var1.slice(x + 1, var1.length - 1)
                                 var1 = var1.slice(0, x)
                                 size = evaluatePhrase(size)
-                                console.log(size + ", " + var1)
+                                //console.log(size + ", " + var1)
                             }
                         }
                         tryEval(var1 + "= []")
@@ -250,11 +260,11 @@ function executeCode(line) {
                 var3 = evaluatePhrase(var3)
                 if (typeof var3 == "string")
                     var3 = "\"" + var3 + "\""
-                console.log(typeof var3)
+                //console.log(typeof var3)
                 if (var2 == undefined || var3 == undefined) {
                     error("Syntax Error on line " + (i + 1) + ".");
                 } else if (var2.includes("[") || var2.includes("]")) {
-                    console.log(var2 + "," + var3)
+                    //console.log(var2 + "," + var3)
                     updateVariable(var2, var3);
                 } else if ((checkVariableExistance(var1)) === false) {
                     updateVariable(var2, var3);
@@ -284,9 +294,9 @@ function executeCode(line) {
             if (ifCond.endsWith("Then")) {
                 ifCond = ifCond.slice(0, ifCond.length - 4)
                 inIf = true
-                console.log(ifCond)
+                //console.log(ifCond)
                 ifResult = getConditionResult(ifCond.toString())
-                console.log(ifResult)
+                //console.log(ifResult)
             }
             else {
                 error("If statement conditions must be followed with \"Then\"")
@@ -298,9 +308,24 @@ function executeCode(line) {
             selectCond = current.substring(7).trim()
             compareEx = evaluatePhrase(selectCond.toString()).toString()
             inSelect = true
-            console.log(selectCond)
-        } else if (current.startsWith("Assign ")) {
-            error("Assign is not a valid keyword, you might want to use the Set keyword for setting new values to variables")
+            //console.log(selectCond)
+
+        } else if (current.startsWith("While ")) {
+            evaluate = current.substring(6);
+            //console.log(evaluate);
+            result = tryEval(evaluate);
+            //console.log(result);
+            //console.log(typeof(result))
+            if (result){
+                // Do nothing
+            } else {
+                while (!code[i].startsWith("End While")) {
+                    i++;
+                }
+            }
+        } else if (current.startsWith("End While")) {
+            //temp
+            i = getLoop(i);
         }
 
         // Output the Current variables and their respective types and values
@@ -341,7 +366,7 @@ function getVariable(varName) {
 function getVariableType(varName) {
     for (var i = 0; i < variables.length; i++) {
         if (variables[i][0] == varName) {
-            console.log("Type: " + variables[i][2])
+            //console.log("Type: " + variables[i][2])
             return variables[i][2];
         }
     }
@@ -358,7 +383,7 @@ function updateVariable(varName, value) {
                     var index = varName.slice(x + 1, varName.length - 1)
                     varName = varName.slice(0, x)
                     index = evaluatePhrase(index)
-                    console.log(index + ", " + varName)
+                    //console.log(index + ", " + varName)
                 }
             }
             isArray = true
@@ -377,7 +402,7 @@ function updateVariable(varName, value) {
 
             if (variables[i][2] == 0) {
                 if (isInteger(value) || isReal(value)) {
-                    console.log("int " + value)
+                    //console.log("int " + value)
                     try {
                         value = value.split(".")[0];
                     }
@@ -400,7 +425,7 @@ function updateVariable(varName, value) {
                     error(varName + " is not an Integer value.") //mention what line number we are on?
                 }
             } else if (variables[i][2] == 1) {
-                console.log("v " + value)
+                //console.log("v " + value)
                 if (isReal(value)) {
                     if (!isArray)
                         variables[i][1] = value;
@@ -415,7 +440,7 @@ function updateVariable(varName, value) {
                         variables[i][1] = value;
                     else {
                         variables[i][1][index] = value
-                        console.log((varName + "[" + index + "]= " + value))
+                        //console.log((varName + "[" + index + "]= " + value))
                         tryEval(varName + "[" + index + "]= " + value)
                     }
                 } else {
@@ -425,7 +450,7 @@ function updateVariable(varName, value) {
                 if (!isArray)
                     variables[i][1] = value;
                 else {
-                    console.log(value + ", i:" + index)
+                    //console.log(value + ", i:" + index)
                     variables[i][1][index] = value
                     tryEval(varName + "[" + index + "]= " + value)
                 }
@@ -491,6 +516,8 @@ function error(errorMsg) {
     throw new Error();
 }
 
+
+//Flag
 function tryEval(code) {
     try {
         code = eval(code)
@@ -529,7 +556,7 @@ function formatEquals(var1) {
 
 function isInteger(var1) {
     for (var i = 0; i < var1.length; i++) {
-        console.log()
+        //console.log()
         if (var1[0] == "-")
             i++
         if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
@@ -572,7 +599,7 @@ function isReal(var1) {
 //TO DO: add arithmetic with spaces, add negative numbers
 function evaluatePhrase(phrase) {
 
-    console.log("P: " + phrase)
+    //console.log("P: " + phrase)
     var isQuote = false
     var i = 0
 
@@ -674,7 +701,7 @@ function evaluatePhrase(phrase) {
 
     }
 
-    console.log("New Phrase: " + phrase)
+    //console.log("New Phrase: " + phrase)
     //console.log(typeof("5 % 2 + 1.99 + 2.99") + " " + 5 % 2 + 1.99 + 2.99)
 
     return (tryEval(phrase))
@@ -699,9 +726,9 @@ function checkValidName(name) {
             break
         }
     }
-    console.log(bracket)
+    //console.log(bracket)
     name = name.slice(0,bracket)
-    console.log(name)
+    //console.log(name)
 
     if (/^[a-zA-Z0-9\[\]]*$/.test(name) == false) {
         error(name + " contains a special character that variable names cannot contain")
@@ -768,6 +795,20 @@ function checkValidName(name) {
         error("true is a reserved word that can't be used in variable names")
     if (name == "false")
         error("false is a reserved word that can't be used in variable names")
+}
+
+function getLoop(i) {
+    var p = 0;
+    while (p < loops.length) {
+        if (loops[p][1]==i) {
+            var temp = ((loops[p][0]) - 1);
+            console.log("This is loop number " + temp);
+            return temp;
+        }
+        p++;
+        console.log("This is temporary");
+    }
+    error("Loop return point not found.");
 }
 
 // Code for front end features only below here.
