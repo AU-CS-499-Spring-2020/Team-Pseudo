@@ -802,11 +802,9 @@ function getLoop(i) {
     while (p < loops.length) {
         if (loops[p][1]==i) {
             var temp = ((loops[p][0]) - 1);
-            console.log("This is loop number " + temp);
             return temp;
         }
         p++;
-        console.log("This is temporary");
     }
     error("Loop return point not found.");
 }
