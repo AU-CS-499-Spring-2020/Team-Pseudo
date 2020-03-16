@@ -23,6 +23,7 @@ function executeCode(line) {
     // Find all of the loops and add them to a list
     var tempLoops = [];
     for (var p = 0; p < code.length; p++) {
+        code[p] = code[p].trim();
         if (code[p].startsWith("While")) {
             tempLoops.push(p);
         } else if (code[p].startsWith("End While")) {
@@ -40,6 +41,8 @@ function executeCode(line) {
     // The fun stuff
     for (var i = line; i < code.length; i++) {
         var current = code[i].replace(/^\s+/g, ''); //Removes white space from the left side for indentation
+        console.log("Line " + (i + 1))
+        console.log(variables)
         console.log("Line " + (i + 1))
         console.log(variables)
 
@@ -326,6 +329,8 @@ function executeCode(line) {
         } else if (current.startsWith("End While")) {
             //temp
             i = getLoop(i);
+        } else {
+            error("Line " + (i + 1) + " has invalid syntax.");
         }
 
         // Output the Current variables and their respective types and values
