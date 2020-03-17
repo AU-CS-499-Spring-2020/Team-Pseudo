@@ -57,3 +57,6 @@ Josiah reworked phrase evaluation to work better. It can now evaluate conditiona
 
 ### 3/1/2020, 3:00PM - 5:00 PM - Added Arrays and Boolean types
 Josiah implemented array support, along with type checking, indexing, and subscript evaluation. Added Boolean variables with type checking. Also changed the Assign keyword to Set to match the book's pseudocode.
+
+### 3/16/2020, 7:30PM - 8:30 PM - Back End Meeting
+Josiah and Jonathan held a Zoom meeting. We troubleshooted some issues with While loops not ending when using certain variable names such as "i". This was due to the method in the script that performed phrase evaluation using the variable "i" as well.
