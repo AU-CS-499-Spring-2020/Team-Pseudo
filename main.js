@@ -317,8 +317,8 @@ function executeCode(line) {
             evaluate = current.substring(6);
             //console.log(evaluate);
             result = tryEval(evaluate);
-            //console.log(result);
-            //console.log(typeof(result))
+            console.log(result);
+            console.log(typeof(result))
             if (result){
                 // Do nothing
             } else {
@@ -602,13 +602,13 @@ function isReal(var1) {
 
 //This method evaluates phrases that use operators such as +, -, *, /, mod, etc.
 //TO DO: add arithmetic with spaces, add negative numbers
-function evaluatePhrase(phrase) {
+function evaluatePhrase(teamPseudoPhrase) {
 
-    //console.log("P: " + phrase)
-    var isQuote = false
-    var i = 0
+    //console.log("P: " + teamPseudoPhrase)
+    var teamPseudoIsQuote = false
+    var teamPseudoI = 0
 
-    if (phrase.length == 0)
+    if (teamPseudoPhrase.length == 0)
         return
 
     //Work back in some old code for error checking
@@ -616,100 +616,100 @@ function evaluatePhrase(phrase) {
     //Operator Order
     //Catch general eval errors (put in its own method?)
 
-    //Formats the phrase to fit JavaScript syntax
-    for (x = 0; x < phrase.length; x++) {
-        //Checks if we're ina String literal
-        if (phrase[x] == "\"" || phrase[x] == "\'") {
-            if (isQuote)
-                isQuote = false
+    //Formats the teamPseudoPhrase to fit JavaScript syntax
+    for (teamPseudoX = 0; teamPseudoX < teamPseudoPhrase.length; teamPseudoX++) {
+        //Checks if we're in a String literal
+        if (teamPseudoPhrase[teamPseudoX] == "\"" || teamPseudoPhrase[teamPseudoX] == "\'") {
+            if (teamPseudoIsQuote)
+                teamPseudoIsQuote = false
             else
-                isQuote = true
+                teamPseudoIsQuote = true
         }
         //Keeps escape characters
-        if (isQuote) {
-            if (phrase[x] == "\\") {
-                phrase = phrase.slice(0, x) + "\\" + "\\" + phrase.slice(x, phrase.length)
-                x += 2
+        if (teamPseudoIsQuote) {
+            if (teamPseudoPhrase[teamPseudoX] == "\\") {
+                teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + "\\" + "\\" + teamPseudoPhrase.slice(teamPseudoX, teamPseudoPhrase.length)
+                teamPseudoX += 2
             }
         }
         //Adds spacing to operators
-        if (!isQuote) {
-            if (phrase[x] == "^") {
-                phrase = phrase.slice(0, x) + " ** " + phrase.slice(x + 1, phrase.length)
-                x += 3
+        if (!teamPseudoIsQuote) {
+            if (teamPseudoPhrase[teamPseudoX] == "^") {
+                teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + " ** " + teamPseudoPhrase.slice(teamPseudoX + 1, teamPseudoPhrase.length)
+                teamPseudoX += 3
             }
-            if (phrase[x] == "," || phrase[x] == "+") {
-                phrase = phrase.slice(0, x) + " + " + phrase.slice(x + 1, phrase.length)
-                x += 2
+            if (teamPseudoPhrase[teamPseudoX] == "," || teamPseudoPhrase[teamPseudoX] == "+") {
+                teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + " + " + teamPseudoPhrase.slice(teamPseudoX + 1, teamPseudoPhrase.length)
+                teamPseudoX += 2
             }
-            if (phrase[x] == "*") {
-                phrase = phrase.slice(0, x) + " * " + phrase.slice(x + 1, phrase.length)
-                x += 2
+            if (teamPseudoPhrase[teamPseudoX] == "*") {
+                teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + " * " + teamPseudoPhrase.slice(teamPseudoX + 1, teamPseudoPhrase.length)
+                teamPseudoX += 2
             }
-            if (phrase[x] == "/") {
-                phrase = phrase.slice(0, x) + " / " + phrase.slice(x + 1, phrase.length)
-                x += 2
+            if (teamPseudoPhrase[teamPseudoX] == "/") {
+                teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + " / " + teamPseudoPhrase.slice(teamPseudoX + 1, teamPseudoPhrase.length)
+                teamPseudoX += 2
             }
             //Converts MOD, AND, OR, and NOT to JavaSCript equivalents
-            if (phrase[x] == 'M')
-                if (phrase[x + 1] == 'O')
-                    if (phrase[x + 2] == 'D') {
-                        phrase = phrase.slice(0, x) + " % " + phrase.slice(x + 3, phrase.length)
-                        x += 4
+            if (teamPseudoPhrase[teamPseudoX] == 'M')
+                if (teamPseudoPhrase[teamPseudoX + 1] == 'O')
+                    if (teamPseudoPhrase[teamPseudoX + 2] == 'D') {
+                        teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + " % " + teamPseudoPhrase.slice(teamPseudoX + 3, teamPseudoPhrase.length)
+                        teamPseudoX += 4
                     }
-            if (phrase[x] == 'N')
-                if (phrase[x + 1] == 'O')
-                    if (phrase[x + 2] == 'T') {
-                        phrase = phrase.slice(0, x) + " ! " + phrase.slice(x + 3, phrase.length)
-                        x += 4
+            if (teamPseudoPhrase[teamPseudoX] == 'N')
+                if (teamPseudoPhrase[teamPseudoX + 1] == 'O')
+                    if (teamPseudoPhrase[teamPseudoX + 2] == 'T') {
+                        teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + " ! " + teamPseudoPhrase.slice(teamPseudoX + 3, teamPseudoPhrase.length)
+                        teamPseudoX += 4
                     }
-            if (phrase[x] == 'A')
-                if (phrase[x + 1] == 'N')
-                    if (phrase[x + 2] == 'D') {
-                        phrase = phrase.slice(0, x) + " && " + phrase.slice(x + 3, phrase.length)
-                        x += 4
+            if (teamPseudoPhrase[teamPseudoX] == 'A')
+                if (teamPseudoPhrase[teamPseudoX + 1] == 'N')
+                    if (teamPseudoPhrase[teamPseudoX + 2] == 'D') {
+                        teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + " && " + teamPseudoPhrase.slice(teamPseudoX + 3, teamPseudoPhrase.length)
+                        teamPseudoX += 4
                     }
-            if (phrase[x] == 'O')
-                if (phrase[x + 1] == 'R') {
-                    phrase = phrase.slice(0, x) + " || " + phrase.slice(x + 2, phrase.length)
-                    x += 3
+            if (teamPseudoPhrase[teamPseudoX] == 'O')
+                if (teamPseudoPhrase[teamPseudoX + 1] == 'R') {
+                    teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + " || " + teamPseudoPhrase.slice(teamPseudoX + 2, teamPseudoPhrase.length)
+                    teamPseudoX += 3
                 }
         }
     }
 
-    var parts = phrase.split(" ")
+    var teamPseudoParts = teamPseudoPhrase.split(" ")
 
     //Checks that all variables are valid
-    while (i < parts.length) {
+    while (teamPseudoI < teamPseudoParts.length) {
 
-        parts[i] = parts[i].trim()
+        teamPseudoParts[teamPseudoI] = teamPseudoParts[teamPseudoI].trim()
 
-        if (checkVariableExistance(parts[i])) {
+        if (checkVariableExistance(teamPseudoParts[teamPseudoI])) {
         }
-        else if (parts[i].includes('+') || parts[i].includes('-') || parts[i].includes('*') || parts[i].includes('/') || parts[i].includes('^') || parts[i].includes('%')) {
+        else if (teamPseudoParts[teamPseudoI].includes('+') || teamPseudoParts[teamPseudoI].includes('-') || teamPseudoParts[teamPseudoI].includes('*') || teamPseudoParts[teamPseudoI].includes('/') || teamPseudoParts[teamPseudoI].includes('^') || teamPseudoParts[teamPseudoI].includes('%')) {
         }
-        else if (parts[i].includes('==') || parts[i].includes('!') || parts[i].includes('>') || parts[i].includes('<') || parts[i].includes('&&') || parts[i].includes('||')) {
+        else if (teamPseudoParts[teamPseudoI].includes('==') || teamPseudoParts[teamPseudoI].includes('!') || teamPseudoParts[teamPseudoI].includes('>') || teamPseudoParts[teamPseudoI].includes('<') || teamPseudoParts[teamPseudoI].includes('&&') || teamPseudoParts[teamPseudoI].includes('||')) {
         }
-        else if (parts[i].includes("\"") || parts[i].includes("\'")) {
+        else if (teamPseudoParts[teamPseudoI].includes("\"") || teamPseudoParts[teamPseudoI].includes("\'")) {
         }
-        else if (parts[i].includes("(") || parts[i].includes(")") || parts[i].includes("]") || parts[i].includes("[")) {
+        else if (teamPseudoParts[teamPseudoI].includes("(") || teamPseudoParts[teamPseudoI].includes(")") || teamPseudoParts[teamPseudoI].includes("]") || teamPseudoParts[teamPseudoI].includes("[")) {
         }
-        else if (parts[i].includes("true") || parts[i].includes("false")) {
+        else if (teamPseudoParts[teamPseudoI].includes("true") || teamPseudoParts[teamPseudoI].includes("false")) {
         }
-        else if (isInteger(parts[i]) || isReal(parts[i])) {
+        else if (isInteger(teamPseudoParts[teamPseudoI]) || isReal(teamPseudoParts[teamPseudoI])) {
         }
         else {
-            error("The variable " + parts[i] + " has not been declared")
+            error("The variable " + teamPseudoParts[teamPseudoI] + " has not been declared")
         }
 
-        i++
+        teamPseudoI++
 
     }
 
-    //console.log("New Phrase: " + phrase)
+    //console.log("New Phrase: " + teamPseudoPhrase)
     //console.log(typeof("5 % 2 + 1.99 + 2.99") + " " + 5 % 2 + 1.99 + 2.99)
 
-    return (tryEval(phrase))
+    return (tryEval(teamPseudoPhrase))
 }
 
 function getConditionResult(phrase) {
