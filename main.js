@@ -24,9 +24,9 @@ function executeCode(line) {
     var tempLoops = [];
     for (var p = 0; p < code.length; p++) {
         code[p] = code[p].trim();
-        if (code[p].startsWith("While")) {
+        if (code[p].startsWith("While") || code[p].startsWith("Do")) {
             tempLoops.push(p);
-        } else if (code[p].startsWith("End While")) {
+        } else if (code[p].startsWith("End While") || code[p].startsWith("End Do While")) {
             if (tempLoops.length != 0){
                 loops.push([tempLoops.pop(),p]);
             } else {
@@ -329,6 +329,17 @@ function executeCode(line) {
         } else if (current.startsWith("End While")) {
             //temp
             i = getLoop(i);
+
+        } else if (current.startsWith("Do")) {
+            //Nothing
+        } else if (current.startsWith("End Do While")) {
+            evaluate = current.substring(13);
+            result = tryEval(evaluate);
+            console.log(result);
+            console.log(typeof(result))
+            if (result){
+                i = getLoop(i);
+            }
         } else {
             error("Line " + (i + 1) + " has invalid syntax.");
         }
@@ -352,6 +363,7 @@ function executeCode(line) {
 
         }
     }
+    console.log("Done")
 }
 
 function replaceVariables(string) {
