@@ -60,3 +60,6 @@ Josiah implemented array support, along with type checking, indexing, and subscr
 
 ### 3/12/2020, 11:00AM - 2:30PM - Added While Loops
 Jonathan implemented while loops and did extensive testing of them.
+
+### 3/17/2020, 11:00AM - 2:30PM - Fixed Variable evaluation Issue and Do While Loops Were Added.
+Issue was discovered by Jonathan and Josiah where variables could be modified during evaluation.  A mini fix was implemented.  Do While Loops were also added.
