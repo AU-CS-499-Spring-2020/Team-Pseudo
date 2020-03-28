@@ -65,4 +65,7 @@ Josiah and Jonathan held a Zoom meeting. We troubleshooted some issues with Whil
 Camryn overhauled the front end. Cleaned up the style, rearranged the text boxes and made them fill the webpage. Added a question button to replace the menu bar. Documentation will display overtop of the webpage instead of redirecting to make it easier for students to reference it. Got rid of the examples page and help page, and might move examples to the documentation page. Got rid of the light/dark theme because it is unnecessary. Made the clear button only clear the output box. Will add line numbers back to input box later.
 
 ### 3/28/2020, 6:30 AM - Added Lined Input Box
-Kurtis added numbered lines to the input box. All notable browsers were tested except Safari. 
+Kurtis added numbered lines to the input box. All notable browsers were tested except Safari.
+
+### 3/28/2020, 7:00 PM - Fixed Spacing and Implemented Copy Button
+Kurtis fixed some spacing in the input box, implemented the copy button for the output box, and made so random elements cannot be highlighted. 
