@@ -816,3 +816,10 @@ function clearAll() {
 $(function() {
   $(".lined").linedtextarea();
 });
+
+//Copies contents of output box
+function copy() {
+  let textarea = document.getElementById("console");
+  textarea.select();
+  document.execCommand("copy");
+}

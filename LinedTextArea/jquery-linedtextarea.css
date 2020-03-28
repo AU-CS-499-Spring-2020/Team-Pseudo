@@ -16,9 +16,9 @@
 }
 
 .linedtextarea textarea, .linedwrap .codelines .lineno {
-	font-size: 14pt;
+	font-size: 18px;
 	font-family: 'Ubuntu Mono', monospace;
-	line-height: normal !important;
+	line-height: 28px !important;
 }
 
 .linedtextarea textarea {
@@ -38,6 +38,12 @@
 	overflow: hidden;
 	border-right: 1px solid #c0c0c0;
 	margin-right: 10px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none; 
 }
 
 .linedwrap .codelines {
