@@ -6,6 +6,8 @@
         <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <link rel="icon" type="image/ico" href=""/>
         <link rel="stylesheet" href="indexStyler.css"/>
+        <script src="LinedTextArea/jquery-linedtextarea.js"></script>
+        <link href="LinedTextArea/jquery-linedtextarea.css" rel="stylesheet">
         <script src="main.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono&display=swap" rel="stylesheet">
         <body>
@@ -24,12 +26,12 @@
                         <button class="button-three" id="run" onclick="executeCode(0)" title="Run the code">🏃‍♀️ Run</button>
                         <button id="btn-open-file" onclick="openFile(dispFile)" title="Open file as input">📝 Import</button>
                     </div>
-                    <textarea rows="25" cols="50" id="code" spellcheck="false" tabindex="1" autofocus></textarea>
+                    <textarea class="lined" id="code" spellcheck="false" tabindex="1" autofocus></textarea>
                 </div>
                 <div class="panel">
                     <div class="bar">
                         <span>Output
-                        
+
                     </span>
                         <button id="clr-io" onclick="clearAll()" title="Clear output">❌ Clear</button>
                         <button type="button" id="save-to-file" data-toggle="tooltip" title="Save output to file">💾 Save</button>
@@ -48,14 +50,3 @@
         </body>
 </html>
 <input type="file" id="open-file" style="display: none" multiple>
-<!--<div class="center">
-                <div class="toggle"></div>
-            </div>-->
-<!--<div id="mySidepanel" class="sidepanel">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-                <a href="index.html">Code Editor</a>
-                <a href="documentation.html">Documentation</a>
-                <a href="examples.html">Examples</a>
-                <a href="#">Help</a>
-            </div>
-            <button class="openbtn" onclick="openNav()">☰ Menu</button>-->
