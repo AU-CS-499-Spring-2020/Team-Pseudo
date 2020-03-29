@@ -894,31 +894,20 @@ function clickElem(elem) {
     elem.dispatchEvent(eventMouse);
 }
 
-//Code to save code contents
+//Code to clear contents
 function clearAll() {
     document.getElementById('code').innerHTML = "";
     document.getElementById('console').innerHTML = "";
 }
 
+//Creates lined textarea
+$(function() {
+  $(".lined").linedtextarea();
+});
 
-//Navigation bar opening and closing
-function openNav() {
-    document.getElementById("mySidepanel").style.width = "250px";
+//Copies contents of output box
+function copy() {
+  let textarea = document.getElementById("console");
+  textarea.select();
+  document.execCommand("copy");
 }
-
-function closeNav() {
-    document.getElementById("mySidepanel").style.width = "0";
-}
-
-$(document).ready(function () {
-    $('.toggle').click(function () {
-        $('.toggle').toggleClass('active')
-        $('body').toggleClass('night')
-        $('.ta1').toggleClass('night')
-        $('.ta2').toggleClass('night')
-        $('.ta3').toggleClass('night')
-        $('#logo').toggleClass('night')
-        $('.openbtn').toggleClass('night')
-        $('.openbtn:hover').toggleClass('night')
-    })
-})
