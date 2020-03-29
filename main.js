@@ -331,6 +331,8 @@ function executeCode(line) {
             console.log(selectCond)
         } else if (current.startsWith("Assign ")) {
             error("Assign is not a valid keyword, you might want to use the Set keyword for setting new values to variables")
+        } else if (current.startsWith("End Module")) {
+            return();
         }
 
         // Output the Current variables and their respective types and values
