@@ -35,7 +35,7 @@ Dear Diary,
 Jonathan worked on the adding variable types for the different variables that we have.  He made sure to have the interpreter not be able to change variable types and added in auto widening and narrowing so that integers and reals can be changed around.
 
 ### 2/25/20, 7:00 PM - 11:30 PM: Phrase Evaluation
-Josiah implemented phrase evaluation. The arithmetic phrases follow the order of operations, use type checking, etc. String concatination has also been added as phrases that can be evaluated.
+Josiah implemented phrase evaluation. The arithmetic phrases follow the order of operations, use type checking, etc. String concatenation has also been added as phrases that can be evaluated.
 
 ### 2/25/20, 6:00 PM - 7:00 PM: Bug Fixes
 Josiah fixed a bug where multiple displays lines wouldn't evaluate. Also made error messages now stop the program.
@@ -57,3 +57,9 @@ Josiah reworked phrase evaluation to work better. It can now evaluate conditiona
 
 ### 3/1/2020, 3:00PM - 5:00 PM - Added Arrays and Boolean types
 Josiah implemented array support, along with type checking, indexing, and subscript evaluation. Added Boolean variables with type checking. Also changed the Assign keyword to Set to match the book's pseudocode.
+
+### 3/12/2020, 11:00AM - 2:30PM - Added While Loops
+Jonathan implemented while loops and did extensive testing of them.
+
+### 3/17/2020, 11:00AM - 2:30PM - Fixed Variable evaluation Issue and Do While Loops Were Added.
+Issue was discovered by Jonathan and Josiah where variables could be modified during evaluation.  A mini fix was implemented.  Do While Loops were also added.
