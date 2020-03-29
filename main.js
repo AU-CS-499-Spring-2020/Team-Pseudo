@@ -1,11 +1,41 @@
 
 var variables = []
 var loops = []
+var functions = []
+
+function main() {
+    document.getElementById('console').innerHTML = "";
+
+    var start = -1;
+
+    // Find all of the loops and add them to a list
+    for (var p = 0; p < code.length; p++) {
+        if (code[p].startsWith("Module ")) {
+            var temp = code[p].substring(7);
+            temp = temp.split("(")[0];
+            temp = temp.trim();
+            loops.push([temp, p+1]);
+        }
+    }
+
+    for (var p = 0; p < funtions.length; p++) {
+        if (funtions[p][0].startsWith("main")){
+            start = functions[p][1];
+        }
+    }
+
+    if (start != -1){
+        executeCode(start);
+    } else {
+        error("Your program does not have a main method.");
+    }
+
+}
 
 function executeCode(line) {
 
     // Clear output of the console
-    document.getElementById('console').innerHTML = "";
+    // document.getElementById('console').innerHTML = "";
 
     // Reset variables, loops, and ifs everytime the program is run.
     variables = [];
@@ -21,7 +51,7 @@ function executeCode(line) {
     var code = document.getElementById('code').value.split("\n");
 
     // Find all of the loops and add them to a list
-    for (var p = 0; p < code.length; p++) {
+    for (var p = line; p < code.length; p++) {
         if (code[p].startsWith("while") || code[p].startsWith("for") || code[p].startsWith("do")) {
             loops.push(p);
         }
