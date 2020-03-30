@@ -372,6 +372,8 @@ function executeCode(line) {
             }
         } else if (current.startsWith("End Module")) {
             return;
+        } else if (current.startsWith("Module ")) {
+            //Do nothing
         } else {
             error("Line " + (i + 1) + " has invalid syntax.");
         }
