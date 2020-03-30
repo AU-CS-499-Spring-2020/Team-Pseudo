@@ -371,7 +371,7 @@ function executeCode(line) {
                 i = getLoop(i);
             }
         } else if (current.startsWith("End Module")) {
-            return();
+            return;
         } else {
             error("Line " + (i + 1) + " has invalid syntax.");
         }
