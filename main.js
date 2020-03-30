@@ -17,7 +17,7 @@ function main() {
             loops.push([temp, p+1]);
         }
     }
-
+    console.log(functions)
     for (var p = 0; p < functions.length; p++) {
         if (functions[p][0].startsWith("main")){
             start = functions[p][1];
