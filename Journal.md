@@ -61,6 +61,9 @@ Josiah implemented array support, along with type checking, indexing, and subscr
 ### 3/16/2020, 7:30PM - 8:30 PM - Back End Meeting
 Josiah and Jonathan held a Zoom meeting. We troubleshooted some issues with While loops not ending when using certain variable names such as "i". This was due to the method in the script that performed phrase evaluation using the variable "i" as well.
 
+### 3/26/2020, 4:00PM - 5:30 PM - Documentation Meeting
+Ryan and Josiah had to meeting to go over the documentation. Plans were made to revamp the documentation both in terms of visuals and content. Ryan began work on formatting the documentation better, as well as updating it to better fit the new syntax of the program in its current form.
+
 ### 3/26/2020, 10:00PM - 2:30 AM - Front End Work
 Camryn overhauled the front end. Cleaned up the style, rearranged the text boxes and made them fill the webpage. Added a question button to replace the menu bar. Documentation will display overtop of the webpage instead of redirecting to make it easier for students to reference it. Got rid of the examples page and help page, and might move examples to the documentation page. Got rid of the light/dark theme because it is unnecessary. Made the clear button only clear the output box. Will add line numbers back to input box later.
 
