@@ -898,7 +898,6 @@ function clickElem(elem) {
 
 //Code to clear contents
 function clearAll() {
-    document.getElementById('code').innerHTML = "";
     document.getElementById('console').innerHTML = "";
 }
 
