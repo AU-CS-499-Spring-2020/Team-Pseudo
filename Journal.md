@@ -72,3 +72,6 @@ Kurtis added numbered lines to the input box. All notable browsers were tested e
 
 ### 3/28/2020, 7:00 PM - Fixed Spacing and Implemented Copy Button
 Kurtis fixed some spacing in the input box, implemented the copy button for the output box, and made so random elements cannot be highlighted. 
+
+### 3/30/2020 4:00 PM - 7:00 PM - Cleaned up documentation and examples pages
+Ryan cleaned up the html of the documentation and examples pages and made the two have their own .html pages.
