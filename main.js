@@ -15,7 +15,7 @@ function main() {
             var temp = code[p].substring(7);
             temp = temp.split("(")[0];
             temp = temp.trim();
-            loops.push([temp, p+1]);
+            functions.push([temp, p+1]);
             console.log([temp, p+1]);
         }
         console.log("p = " + p)
