@@ -15,6 +15,7 @@ function main() {
             temp = temp.split("(")[0];
             temp = temp.trim();
             loops.push([temp, p+1]);
+            console.log([temp, p+1]);
         }
     }
     console.log(functions)
