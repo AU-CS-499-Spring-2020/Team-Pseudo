@@ -16,16 +16,13 @@ function main() {
             temp = temp.split("(")[0];
             temp = temp.trim();
             functions.push([temp, p+1]);
-            console.log([temp, p+1]);
         }
-        console.log("p = " + p)
     }
-    console.log(functions)
+
     for (var p = 0; p < functions.length; p++) {
         if (functions[p][0].startsWith("main")){
             start = functions[p][1];
         }
-        console.log("function named " + functions[p][0]);
     }
 
     if (start != -1){
