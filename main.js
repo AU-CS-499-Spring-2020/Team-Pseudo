@@ -18,8 +18,8 @@ function main() {
         }
     }
 
-    for (var p = 0; p < funtions.length; p++) {
-        if (funtions[p][0].startsWith("main")){
+    for (var p = 0; p < functions.length; p++) {
+        if (functions[p][0].startsWith("main")){
             start = functions[p][1];
         }
     }
