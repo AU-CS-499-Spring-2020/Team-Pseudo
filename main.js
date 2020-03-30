@@ -383,8 +383,8 @@ function executeCode(line) {
 
             var start = -1;
 
-            for (var p = 0; p < funtions.length; p++) {
-                if (funtions[p][0].startsWith(current)){
+            for (var p = 0; p < functions.length; p++) {
+                if (functions[p][0].startsWith(current)){
                     start = functions[p][1];
                     break;
                 }
