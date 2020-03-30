@@ -25,6 +25,7 @@ function main() {
         if (functions[p][0].startsWith("main")){
             start = functions[p][1];
         }
+        console.log("function named " + functions[p][0]);
     }
 
     if (start != -1){
