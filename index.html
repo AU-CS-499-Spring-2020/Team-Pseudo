@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Pseudocode Editor</title>
-        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="jquery-3.3.1.js"></script>
         <link rel="icon" type="image/ico" href=""/>
         <link rel="stylesheet" href="indexStyler.css"/>
         <script src="LinedTextArea/jquery-linedtextarea.js"></script>
@@ -23,9 +23,10 @@
                 <div class="panel">
                     <div class="bar">
                         <span>Input</span>
-                        <button id="run" onclick="executeCode(0)" title="Run the code">🏃‍♀️ Run</button>
+                        <button id="run" onclick="main()" title="Run the code">🏃‍♀️ Run</button>
                         <button id="btn-open-file" onclick="openFile(dispFile)" title="Open file as input">📝 Import</button>
                     </div>
+
                     <textarea class="lined" id="code" spellcheck="false" tabindex="1" autofocus></textarea>
                 </div>
                 <div class="panel">
