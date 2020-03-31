@@ -276,7 +276,7 @@ function executeCode(line) {
         //Quotation marks, and concatinates strings with commas
         else if (current.startsWith("Display ")) {
             var print1 = current.substring(8);
-            phrase = print1.trim()
+            var phrase = print1.trim()
             document.getElementById('console').innerHTML += evaluatePhrase(phrase);
             document.getElementById('console').innerHTML += '\n';
 
