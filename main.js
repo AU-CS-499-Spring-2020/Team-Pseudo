@@ -683,36 +683,25 @@ function isReal(var1) {
 }
 
 //This method evaluates phrases that use operators such as +, -, *, /, mod, etc.
-//TO DO: add arithmetic with spaces, add negative numbers
 function evaluatePhrase(teamPseudoPhrase) {
 
-    //console.log("P: " + teamPseudoPhrase)
+    console.log("P: " + teamPseudoPhrase)
     var teamPseudoIsQuote = false
     var teamPseudoI = 0
+    var teamPseudoHadQuote = false
 
     if (teamPseudoPhrase.length == 0)
         return
-
-    //Work back in some old code for error checking
-    //Parentheses Matching
-    //Operator Order
-    //Catch general eval errors (put in its own method?)
 
     //Formats the teamPseudoPhrase to fit JavaScript syntax
     for (teamPseudoX = 0; teamPseudoX < teamPseudoPhrase.length; teamPseudoX++) {
         //Checks if we're in a String literal
         if (teamPseudoPhrase[teamPseudoX] == "\"" || teamPseudoPhrase[teamPseudoX] == "\'") {
+            teamPseudoHadQuote = true;
             if (teamPseudoIsQuote)
                 teamPseudoIsQuote = false
             else
                 teamPseudoIsQuote = true
-        }
-        //Keeps escape characters
-        if (teamPseudoIsQuote) {
-            if (teamPseudoPhrase[teamPseudoX] == "\\") {
-                teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + "\\" + "\\" + teamPseudoPhrase.slice(teamPseudoX, teamPseudoPhrase.length)
-                teamPseudoX += 2
-            }
         }
         //Adds spacing to operators
         if (!teamPseudoIsQuote) {
@@ -759,7 +748,10 @@ function evaluatePhrase(teamPseudoPhrase) {
         }
     }
 
-    var teamPseudoParts = teamPseudoPhrase.split(" ")
+    console.log("After ops: " + teamPseudoPhrase)
+    var teamPseudoParts = teamPseudoPhrase.split(/('.*?'|".*?"|\S+)/)
+
+    console.log("parts: " + teamPseudoParts)
 
     //Checks that all variables are valid
     while (teamPseudoI < teamPseudoParts.length) {
@@ -778,10 +770,13 @@ function evaluatePhrase(teamPseudoPhrase) {
         }
         else if (teamPseudoParts[teamPseudoI].includes("true") || teamPseudoParts[teamPseudoI].includes("false")) {
         }
-        else if (isInteger(teamPseudoParts[teamPseudoI]) || isReal(teamPseudoParts[teamPseudoI])) {
+        else if (!teamPseudoHadQuote) {
+            (isInteger(teamPseudoParts[teamPseudoI]) || isReal(teamPseudoParts[teamPseudoI]))
+        }
+        else if (teamPseudoParts[teamPseudoI] == "" || teamPseudoParts[teamPseudoI] == " ") {
         }
         else {
-            error("The variable " + teamPseudoParts[teamPseudoI] + " has not been declared")
+            error("The variable " + teamPseudoParts[teamPseudoI] + " has not been declared. If you meant to print out this word/number as text, make sure you have quotes around it.")
         }
 
         teamPseudoI++
