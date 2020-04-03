@@ -685,7 +685,7 @@ function isReal(var1) {
 //This method evaluates phrases that use operators such as +, -, *, /, mod, etc.
 function evaluatePhrase(teamPseudoPhrase) {
 
-    console.log("P: " + teamPseudoPhrase)
+    //console.log("P: " + teamPseudoPhrase)
     var teamPseudoIsQuote = false
     var teamPseudoI = 0
     var teamPseudoHadQuote = false
@@ -748,10 +748,10 @@ function evaluatePhrase(teamPseudoPhrase) {
         }
     }
 
-    console.log("After ops: " + teamPseudoPhrase)
+    //console.log("After ops: " + teamPseudoPhrase)
     var teamPseudoParts = teamPseudoPhrase.split(/('.*?'|".*?"|\S+)/)
 
-    console.log("parts: " + teamPseudoParts)
+    //console.log("parts: " + teamPseudoParts)
 
     //Checks that all variables are valid
     while (teamPseudoI < teamPseudoParts.length) {
@@ -783,8 +783,6 @@ function evaluatePhrase(teamPseudoPhrase) {
 
     }
 
-    //console.log("New Phrase: " + teamPseudoPhrase)
-    //console.log(typeof("5 % 2 + 1.99 + 2.99") + " " + 5 % 2 + 1.99 + 2.99)
 
     return (tryEval(teamPseudoPhrase))
 }
