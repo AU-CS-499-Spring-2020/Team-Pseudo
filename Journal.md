@@ -81,3 +81,9 @@ Kurtis fixed some spacing in the input box, implemented the copy button for the 
 
 ### 3/30/2020 4:00 PM - 7:00 PM - Cleaned up documentation and examples pages
 Ryan cleaned up the html of the documentation and examples pages and made the two have their own .html pages.
+
+### 4/2/2020 9:00 PM - 9:30 PM - Team Presentation Meeting
+Team Pseudo met as a team via Zoom to plan out the third group presentation.
+
+### 4/3/2020 1:00 AM - 9:30 PM - Fixed String Manipulation and Made Other Improvements
+Josiah updated a couple parts of the documentation to reflect the syntax of the current program.

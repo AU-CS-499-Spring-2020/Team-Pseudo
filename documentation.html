@@ -32,6 +32,7 @@
   
     <h3><center>
       <a href="examples.html">Jump to Examples</a><br><br><br>
+      <a href="#main">Main Method</a><br><br><br>
       <a href="#datatypes">Data Types</a><br><br><br>
       <a href="#variables">Variables</a><br><br><br>
       <a href="#constants">Named Constants</a><br><br><br>
@@ -44,12 +45,25 @@
   </div TOC>
 
   <div >
+    <br><br><h2 id="main">Main Method</h2>
+    <p>
+      <b>Each program must have a main method surrounding it:</b><br>
+      Module main()<br>
+      <i>&emsp;statement</i><br>
+      <i>&emsp;statement</i><br>
+      <i>&emsp;statement</i><br>
+      End Module<br>
+    </p>
+  </div>
+
+  <div >
     <br><br><h2 id="datatypes">Data Types</h2>
     <p>
-      Integer<br>
-      Real<br>
-      String<br>
-      Character<br>
+      <b>Integer</b><br>
+      <b>Real</b><br>
+      <b>String</b><br>
+      <b>Character</b><br>
+      <b>Boolean</b><br>
     </p>
   </div>
 
@@ -70,9 +84,9 @@
   <div >
     <br><h2 id="arrays">Arrays</h2>
     <b>To declare an array:</b><br>
-    Declare <i>DataType ArrayName[Size]</i>
-    <br><br>To declare a two-dimensional array:<br>
-    Declare <i>DataType ArrayName[Rows][Columns]</i> 
+    Declare <i>DataType ArrayName[Size]</i><br>
+    <b>To set an array element:</b><br>
+    Set arr[<i>index</i>>] = <i>value</i>
   </div>
 
   <div >
@@ -82,6 +96,16 @@
     Display "This text will be displayed as is"<br>
     <br>To read input:
     <br>Input <i>variableName</i>  
+  </div>
+
+  <div >
+    <br><h2 id="operators">Operators</h2>
+    <b>Arithmetic Operators:</b><br>
+    + , - , * , / , ^ , MOD<br>
+    <b>Relational Operators:</b><br>
+    == , < , > , <= , >= <br>
+    <b>Logical Operators:</b><br>
+    AND, OR, NOT<br>
   </div>
 
   <div >
@@ -120,7 +144,7 @@
     <i>&emsp;&emsp;statement</i><br>
     <i>&emsp;&emsp;statement</i><br>
     <i>&emsp;&emsp;etc</i><br>
-    &emsp;End Select<br>
+    End Select<br>
   </div>
 
   <div >
@@ -136,13 +160,13 @@
     <i>&emsp;statement</i><br>
     <i>&emsp;statement</i><br>
     <i>&emsp;etc</i><br>
-    While <i>condition</i><br><br>
-    <b>To create a Do-Until loop:</b><br>
+    End Do While <i>condition</i><br><br>
+    <!-- <b>To create a Do-Until loop:</b><br>
     Do<br>
     <i>&emsp;statement</i><br>
     <i>&emsp;statement</i><br>
     <i>&emsp;etc</i><br>
-    Until <i>condition</i><br><br>
+    Until <i>condition</i><br><br> -->
     <b>To create a For loop:</b><br>
     For <i>counterVariable = startingValue</i> To <i>maxValue</i><br>
     <i>&emsp;statement</i><br>

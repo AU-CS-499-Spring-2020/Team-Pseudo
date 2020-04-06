@@ -15,17 +15,17 @@ function main() {
             var temp = code[p].substring(7);
             temp = temp.split("(")[0];
             temp = temp.trim();
-            functions.push([temp, p+1]);
+            functions.push([temp, p + 1]);
         }
     }
 
     for (var p = 0; p < functions.length; p++) {
-        if (functions[p][0].startsWith("main")){
+        if (functions[p][0].startsWith("main")) {
             start = functions[p][1];
         }
     }
 
-    if (start != -1){
+    if (start != -1) {
         executeCode(start);
     } else {
         error("Your program does not have a main method.");
@@ -58,14 +58,14 @@ function executeCode(line) {
         if (code[p].startsWith("While") || code[p].startsWith("Do")) {
             tempLoops.push(p);
         } else if (code[p].startsWith("End While") || code[p].startsWith("End Do While")) {
-            if (tempLoops.length != 0){
-                loops.push([tempLoops.pop(),p]);
+            if (tempLoops.length != 0) {
+                loops.push([tempLoops.pop(), p]);
             } else {
                 error("Issue with too few While Statements");
             }
         }
     }
-    if (tempLoops.length != 0){
+    if (tempLoops.length != 0) {
         error("Issue with too many While Statements");
     }
 
@@ -272,6 +272,128 @@ function executeCode(line) {
             }
 
         }
+        else if (current.startsWith("Constant ")) {
+            // Where we declare variables
+            var var1 = current.substring(9);
+            var varType = var1.split(" ")[0];
+            if (varType == "Integer") {
+                varType = 0;
+                var1 = var1.substring(8);
+            } else if (varType == "Real") {
+                varType = 1;
+                var1 = var1.substring(5);
+            } else if (varType == "String") {
+                varType = 2;
+                var1 = var1.substring(7);
+            } else if (varType == "Character") {
+                varType = 3;
+                var1 = var1.substring(10);
+            } else if (varType == "Boolean") {
+                varType = 4;
+                var1 = var1.substring(8);
+            } else {
+                error("invalid variable type")
+            }
+
+            if (current.includes("=")) {
+                var1 = formatEquals(var1)
+                for (x = 0; x < var1.length; x++) {
+                    if (var1[x] == "=") {
+                        var var2 = var1.slice(0, x) //Var Name
+                        var var3 = var1.slice(x + 1, var1.length) //Var Value
+                        x = var1.length
+                    }
+                }
+                var3 = evaluatePhrase(var3).toString()
+                //console.log("name " + var2);
+                //console.log("value " + var3);
+
+                //Makes sure the variable name is valid
+                checkValidName(var2)
+
+                if (var2.includes("[") || var2.includes("]")) {
+                    error("You cannot assign anything to an array as you declare it")
+                }
+
+                if (var2 == undefined || var3 == undefined) {
+                    error("Syntax Error on line " + (i + 1) + ".");
+                } else if ((checkVariableExistance(var2)) === true) {
+                    error("Variable " + var2 + " already exists");
+                } else {
+                    if (varType == 0) {
+                        if (isInteger(var3) || isReal(var3)) {
+                            var3 = var3.split(".")[0];
+                            variables.push([var2, var3, varType, , 1]);
+                        } else {
+                            error(var2 + " is not an Integer value")
+                        }
+                    } else if (varType == 1) {
+                        if (isReal(var3)) {
+                            variables.push([var2, var3, varType, , 1]);
+                        } else if (isInteger(var3)) {
+                            var3 = var3 + "."
+                            variables.push([var2, var3, varType, , 1]);
+                        } else {
+                            error(var2 + " is not a Real value")
+                        }
+                    } else if (varType == 2) {
+                        var3 = "\"" + var3 + "\""
+                        variables.push([var2, var3, varType, , 1]);
+                    } else if (varType == 3) {
+                        //I dont like the autonarrowing
+                        var3 = var3.charAt(0);
+                        var3 = "\'" + var3 + "\'"
+                        variables.push([var2, var3, varType, , 1]);
+                    } else if (varType == 4) {
+                        //console.log("var 3 " + var3)
+                        if (var3 == "true" || var3 == true) {
+                            variables.push([var2, true, varType, , 1]);
+                        }
+                        else if (var3 == "false" || var3 == false) {
+                            variables.push([var2, false, varType, , 1]);
+                        }
+                        else {
+                            error(var2 + " is not a Boolean True or False value")
+                        }
+
+                    } else {
+                        error("You should never reach here");
+                    }
+                    //console.log(var2 + " = " + var3)
+                    //Eval creates the variable in the background
+                    tryEval(var2 + " = " + var3)
+                }
+            } else {
+                if (var1 == "") {
+                    error("Syntax Error on line " + (i + 1) + ".");
+                } else if ((checkVariableExistance(var1)) === true) {
+                    error("Variable already exists");
+                } else {
+                    //Makes sure the variable name is valid
+                    checkValidName(var1)
+                    //Checks if the variable is an array
+                    if (var1.includes("[") && var1.includes("]")) {
+                        for (x = 0; x < var1.length; x++) {
+                            if (var1[x] == "[") {
+                                var size = var1.slice(x + 1, var1.length - 1)
+                                var1 = var1.slice(0, x)
+                                size = evaluatePhrase(size)
+                                //console.log(size + ", " + var1)
+                            }
+                        }
+                        tryEval(var1 + "= []")
+                        variables.push([var1, [], varType, size, 1]);
+                    }
+                    else if (var1.includes("[") || var1.includes("]")) {
+                        error("Arrays must be declared using []. At least one bracket is missing")
+                    }
+                    else {
+                        variables.push([var1, null, varType, , 1]);
+                    }
+                }
+            }
+
+        }
         //Display pseudocode has strings use quotation marks, variable names use no
         //Quotation marks, and concatinates strings with commas
         else if (current.startsWith("Display ")) {
@@ -301,9 +423,14 @@ function executeCode(line) {
                     //console.log(var2 + "," + var3)
                     updateVariable(var2, var3);
                 } else if ((checkVariableExistance(var1)) === false) {
-                    updateVariable(var2, var3);
-                    //Eval updates the variable in the background
-                    eval(var2 + " = " + var3)
+                    if (checkConstant(var2)) {
+                        error("You cannot change the value of the constant variable " + var2)
+                    }
+                    else {
+                        updateVariable(var2, var3);
+                        //Eval updates the variable in the background
+                        eval(var2 + " = " + var3)
+                    }
                 } else {
                     error("Variable does not exist");
                 }
@@ -349,8 +476,8 @@ function executeCode(line) {
             //console.log(evaluate);
             result = tryEval(evaluate);
             console.log(result);
-            console.log(typeof(result))
-            if (result){
+            console.log(typeof (result))
+            if (result) {
                 // Do nothing
             } else {
                 while (!code[i].startsWith("End While")) {
@@ -367,8 +494,8 @@ function executeCode(line) {
             evaluate = current.substring(13);
             result = tryEval(evaluate);
             console.log(result);
-            console.log(typeof(result))
-            if (result){
+            console.log(typeof (result))
+            if (result) {
                 i = getLoop(i);
             }
         } else if (current.startsWith("End Module")) {
@@ -384,7 +511,7 @@ function executeCode(line) {
             var start = -1;
 
             for (var p = 0; p < functions.length; p++) {
-                if (functions[p][0].startsWith(current)){
+                if (functions[p][0].startsWith(current)) {
                     start = functions[p][1];
                     break;
                 }
@@ -394,7 +521,7 @@ function executeCode(line) {
 
             if (start != 1) {
                 // Store Variables temporarily in a holding variable
-                for (var p = 0; p < variables.length; p++){
+                for (var p = 0; p < variables.length; p++) {
                     tempVarStorage.push(variables[p]);
                 }
 
@@ -403,7 +530,7 @@ function executeCode(line) {
 
                 // Add Variables back out of temp storage
                 variables = [];
-                for (var p = 0; p < tempVarStorage.length; p++){
+                for (var p = 0; p < tempVarStorage.length; p++) {
                     variables.push(tempVarStorage[p]);
                 }
             } else {
@@ -445,6 +572,21 @@ function getVariable(varName) {
     for (var i = 0; i < variables.length; i++) {
         if (variables[i][0] == varName) {
             return variables[i][1];
+        }
+    }
+    error("The variable " + varName + " is not declared.");
+}
+
+function checkConstant(varName) {
+    console.log("var1 " + varName)
+    for (var i = 0; i < variables.length; i++) {
+        if (variables[i][0] == varName) {
+            if (variables[i][4] == 1) {
+                return true
+            }
+            else {
+                return false
+            }
         }
     }
     error("The variable " + varName + " is not declared.");
@@ -521,7 +663,7 @@ function updateVariable(varName, value) {
                         tryEval(varName + "[" + index + "]= " + value)
                     }
                 } else if (isInteger(value)) {
-                    if(!value.toString().includes("."))
+                    if (!value.toString().includes("."))
                         value = value + "."
                     if (!isArray)
                         variables[i][1] = value;
@@ -683,36 +825,25 @@ function isReal(var1) {
 }
 
 //This method evaluates phrases that use operators such as +, -, *, /, mod, etc.
-//TO DO: add arithmetic with spaces, add negative numbers
 function evaluatePhrase(teamPseudoPhrase) {
 
     //console.log("P: " + teamPseudoPhrase)
     var teamPseudoIsQuote = false
     var teamPseudoI = 0
+    var teamPseudoHadQuote = false
 
     if (teamPseudoPhrase.length == 0)
         return
-
-    //Work back in some old code for error checking
-    //Parentheses Matching
-    //Operator Order
-    //Catch general eval errors (put in its own method?)
 
     //Formats the teamPseudoPhrase to fit JavaScript syntax
     for (teamPseudoX = 0; teamPseudoX < teamPseudoPhrase.length; teamPseudoX++) {
         //Checks if we're in a String literal
         if (teamPseudoPhrase[teamPseudoX] == "\"" || teamPseudoPhrase[teamPseudoX] == "\'") {
+            teamPseudoHadQuote = true;
             if (teamPseudoIsQuote)
                 teamPseudoIsQuote = false
             else
                 teamPseudoIsQuote = true
-        }
-        //Keeps escape characters
-        if (teamPseudoIsQuote) {
-            if (teamPseudoPhrase[teamPseudoX] == "\\") {
-                teamPseudoPhrase = teamPseudoPhrase.slice(0, teamPseudoX) + "\\" + "\\" + teamPseudoPhrase.slice(teamPseudoX, teamPseudoPhrase.length)
-                teamPseudoX += 2
-            }
         }
         //Adds spacing to operators
         if (!teamPseudoIsQuote) {
@@ -759,7 +890,10 @@ function evaluatePhrase(teamPseudoPhrase) {
         }
     }
 
-    var teamPseudoParts = teamPseudoPhrase.split(" ")
+    //console.log("After ops: " + teamPseudoPhrase)
+    var teamPseudoParts = teamPseudoPhrase.split(/('.*?'|".*?"|\S+)/)
+
+    //console.log("parts: " + teamPseudoParts)
 
     //Checks that all variables are valid
     while (teamPseudoI < teamPseudoParts.length) {
@@ -778,18 +912,19 @@ function evaluatePhrase(teamPseudoPhrase) {
         }
         else if (teamPseudoParts[teamPseudoI].includes("true") || teamPseudoParts[teamPseudoI].includes("false")) {
         }
-        else if (isInteger(teamPseudoParts[teamPseudoI]) || isReal(teamPseudoParts[teamPseudoI])) {
+        else if (!teamPseudoHadQuote) {
+            (isInteger(teamPseudoParts[teamPseudoI]) || isReal(teamPseudoParts[teamPseudoI]))
+        }
+        else if (teamPseudoParts[teamPseudoI] == "" || teamPseudoParts[teamPseudoI] == " ") {
         }
         else {
-            error("The variable " + teamPseudoParts[teamPseudoI] + " has not been declared")
+            error("The variable " + teamPseudoParts[teamPseudoI] + " has not been declared. If you meant to print out this word/number as text, make sure you have quotes around it.")
         }
 
         teamPseudoI++
 
     }
 
-    //console.log("New Phrase: " + teamPseudoPhrase)
-    //console.log(typeof("5 % 2 + 1.99 + 2.99") + " " + 5 % 2 + 1.99 + 2.99)
 
     return (tryEval(teamPseudoPhrase))
 }
@@ -807,14 +942,14 @@ function getConditionResult(phrase) {
 function checkValidName(name) {
     bracket = name.length
 
-    for(x=0; x < name.length; x++) {
-        if(name[x] == "[") {
+    for (x = 0; x < name.length; x++) {
+        if (name[x] == "[") {
             bracket = x
             break
         }
     }
     //console.log(bracket)
-    name = name.slice(0,bracket)
+    name = name.slice(0, bracket)
     //console.log(name)
 
     if (/^[a-zA-Z0-9\[\]]*$/.test(name) == false) {
@@ -887,7 +1022,7 @@ function checkValidName(name) {
 function getLoop(i) {
     var p = 0;
     while (p < loops.length) {
-        if (loops[p][1]==i) {
+        if (loops[p][1] == i) {
             var temp = ((loops[p][0]) - 1);
             return temp;
         }
@@ -938,13 +1073,13 @@ function clearAll() {
 }
 
 //Creates lined textarea
-$(function() {
-  $(".lined").linedtextarea();
+$(function () {
+    $(".lined").linedtextarea();
 });
 
 //Copies contents of output box
 function copy() {
-  let textarea = document.getElementById("console");
-  textarea.select();
-  document.execCommand("copy");
+    let textarea = document.getElementById("console");
+    textarea.select();
+    document.execCommand("copy");
 }
