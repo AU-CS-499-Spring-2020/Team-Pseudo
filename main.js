@@ -1083,3 +1083,18 @@ function copy() {
     textarea.select();
     document.execCommand("copy");
 }
+
+function toggleHelp() {
+    var help = document.querySelector("iframe");
+    var question = document.querySelector("#help-btn");
+    if(help.classList.contains("show"))
+    {
+        help.classList.remove("show");
+        question.classList.remove("show");
+    } 
+    else
+    {
+        help.classList.add("show");
+        question.classList.add("show");
+    }
+}
