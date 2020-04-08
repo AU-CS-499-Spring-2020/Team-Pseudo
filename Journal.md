@@ -86,7 +86,7 @@ Ryan cleaned up the html of the documentation and examples pages and made the tw
 Team Pseudo met as a team via Zoom to plan out the third group presentation.
 
 ### 4/3/2020 1:00 AM - 9:30 PM - Fixed String Manipulation and Made Other Improvements
-Josiah updated a couple parts of the documentation to reflect the syntax of the current program.
+Josiah updated a couple parts of the documentation to reflect the syntax of the current program. Added support for constants. Made Text Area display main method at start. Improved string type checking. Fixed a bug where strings couldn't have space in them. Also it now requires users to put quotes around numbers they want to print.
 
 ### 4/7/2020 10:00 PM - 11:30 PM - Added Functionality to Question Button
 Camryn made the question button pull up the documentation and made it possible to navigate the documentation and examples pages through links. Also added an aesthetic blur.
