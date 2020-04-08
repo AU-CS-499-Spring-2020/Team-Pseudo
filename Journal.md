@@ -87,3 +87,6 @@ Team Pseudo met as a team via Zoom to plan out the third group presentation.
 
 ### 4/3/2020 1:00 AM - 9:30 PM - Fixed String Manipulation and Made Other Improvements
 Josiah updated a couple parts of the documentation to reflect the syntax of the current program.
+
+### 4/7/2020 10:00 PM - 11:30 PM - Added Functionality to Question Button
+Camryn made the question button pull up the documentation and made it possible to navigate the documentation and examples pages through links. Also added an aesthetic blur.
