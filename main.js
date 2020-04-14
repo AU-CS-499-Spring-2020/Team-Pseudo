@@ -445,7 +445,17 @@ function executeCode(line) {
                 alert("Syntax Error on line " + (i + 1) + ".");
             } else if (checkVariableExistance(input1)) {
                 var input2 = prompt(); // Need to change from prompt
+                //Remove after URCA
+                input2 = parseInt(input2, 10)
                 updateVariable(input1, input2);
+                console.log("i1 = " + input1 + "i2 =" + input2)
+                if(typeof input2 == "string") {
+                    eval(input1 + " = \"" + input2 + "\"")
+                }
+                else {
+                    eval(input1 + " = " + input2)
+                }
+                
             } else {
                 error("Error: Variable does not exist");
             }
