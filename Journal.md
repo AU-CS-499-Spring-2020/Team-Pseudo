@@ -93,3 +93,9 @@ Camryn made the question button pull up the documentation and made it possible t
 
 ### 4/10/2020 9:00 PM - 9:30 PM - Team Presentation Meeting
 Team Pseudo met as a team via Zoom to plan out the URCA group presentation.
+
+### 4/13/2020 9:00 AM - 9:45 AM - URCA Presentation Practice
+Team Pseudo met as a team with Dr. Wilson via Zoom to practice the URCA group presentation.
+
+### 4/13/2020 8:00 PM - 9:00 PM - URCA Examples Practice
+Josiah and Jonathan met via Zoom to practice the advanced examples that will be used during the URCA presentation, as well as iron out a few minor bugs in the program.
