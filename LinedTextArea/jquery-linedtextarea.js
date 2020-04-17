@@ -42,7 +42,7 @@
 			var linedTextAreaDiv	= textarea.parent().wrap("<div class='linedwrap' style='width:" + originalTextAreaWidth + "px'></div>");
 			var linedWrapDiv 			= linedTextAreaDiv.parent();
 
-			linedWrapDiv.prepend("<div class='lines' style='width:50px'></div>");
+			linedWrapDiv.prepend("<div class='lines' style='width:35px'></div>");
 
 			var linesDiv	= linedWrapDiv.find(".lines");
 			linesDiv.height( textarea.height() + 1000);
