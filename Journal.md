@@ -96,3 +96,7 @@ Team Pseudo met as a team via Zoom to plan out the URCA group presentation.
 
 ### 4/22/2020, 6:00 PM - Implemented Save Button and Updated Line Number Spacing
 Kurtis implemented the save button which now allows users to save output to a txt file with the name of their own making. He also updated the input box line number spacing.
+
+### 4/23/2020, 9:00 PM - 10:00 PM - URCA Presentation Recording
+Met as a group to record and edit the URCA presentation video.
+
