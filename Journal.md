@@ -37,7 +37,7 @@ Jonathan worked on the adding variable types for the different variables that we
 ### 2/25/20, 7:00 PM - 11:30 PM: Phrase Evaluation
 Josiah implemented phrase evaluation. The arithmetic phrases follow the order of operations, use type checking, etc. String concatenation has also been added as phrases that can be evaluated.
 
-### 2/25/20, 6:00 PM - 7:00 PM: Bug Fixes
+### 2/26/20, 6:00 PM - 7:00 PM: Bug Fixes
 Josiah fixed a bug where multiple displays lines wouldn't evaluate. Also made error messages now stop the program.
 
 ### 2/28/20, 2:00 PM - 4:30 PM: Phrase Evaluation Continued
