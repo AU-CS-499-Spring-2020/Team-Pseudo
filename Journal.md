@@ -100,3 +100,6 @@ Kurtis implemented the save button which now allows users to save output to a tx
 ### 4/23/2020, 9:00 PM - 10:00 PM - URCA Presentation Recording
 Met as a group to record and edit the URCA presentation video.
 
+### 4/24/2020, 11:30 PM - 12:30 AM - Fixed Input Type Checking
+Got the Input command working with type checking. Refactored variable names to fix a naming bug in the editor.
+
