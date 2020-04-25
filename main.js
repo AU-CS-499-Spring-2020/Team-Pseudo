@@ -440,22 +440,32 @@ function executeCode(line) {
             }
 
         } else if (current.startsWith("Input ")) {
-            var input1 = current.substring(6);
-            if (input1 == "") {
+            var var2 = current.substring(6);
+            var2 = var2.trim()
+            if (var2 == "") {
                 alert("Syntax Error on line " + (i + 1) + ".");
-            } else if (checkVariableExistance(input1)) {
-                var input2 = prompt(); // Need to change from prompt
-                //Remove after URCA
-                input2 = parseInt(input2, 10)
-                updateVariable(input1, input2);
-                console.log("i1 = " + input1 + "i2 =" + input2)
-                if(typeof input2 == "string") {
-                    eval(input1 + " = \"" + input2 + "\"")
+            }
+            var var3 = prompt(); // Need to change from prompt
+            var3 = evaluatePhrase(var3)
+            console.log("var2 = " + var2)
+            console.log("var3 = " + var3)
+            if (typeof var3 == "string")
+                var3 = "\"" + var3 + "\""
+            //console.log(typeof var3)
+            if (var2 == undefined || var3 == undefined) {
+                error("Syntax Error on line " + (i + 1) + ".");
+            } else if (var2.includes("[") || var2.includes("]")) {
+                //console.log(var2 + "," + var3)
+                updateVariable(var2, var3);
+            } else if ((checkVariableExistance(var2)) != false) {
+                if (checkConstant(var2)) {
+                    error("You cannot change the value of the constant variable " + var2)
                 }
                 else {
-                    eval(input1 + " = " + input2)
+                    updateVariable(var2, var3);
+                    //Eval updates the variable in the background
+                    eval(var2 + " = " + var3)
                 }
-                
             } else {
                 error("Error: Variable does not exist");
             }
@@ -775,7 +785,7 @@ function tryEval(code) {
             return
         }
         if (e instanceof ReferenceError) {
-            error("There was an undefined reference error. These errors are often caused by variables being referenced that don't exist or are refered to with an incorrect method.")
+            error("There was an undefined reference error. These errors are often caused by using Strings without quotation marks or variables being referenced that don't exist or are refered to with an incorrect method.")
             return
         }
         if (e instanceof TypeError) {
@@ -1097,13 +1107,11 @@ function copy() {
 function toggleHelp() {
     var help = document.querySelector("iframe");
     var question = document.querySelector("#help-btn");
-    if(help.classList.contains("show"))
-    {
+    if (help.classList.contains("show")) {
         help.classList.remove("show");
         question.classList.remove("show");
-    } 
-    else
-    {
+    }
+    else {
         help.classList.add("show");
         question.classList.add("show");
     }
