@@ -11,7 +11,7 @@
 	padding: 0px;
 	margin: 0px;
 	padding-top: 3px;
-	padding-left: 50px;
+	padding-left: 45px;
 	height: calc(100% - 62px);
 }
 
@@ -25,15 +25,13 @@
 	padding-right:0.3em;
 	padding-top:0.2em;
 	border: 0;
-	height: 100%;
-	width: calc(100% - 22px);
+	width: calc(100% - 10px);
 	height: calc(100% - 62px);
 	outline: none;
 }
 
 .linedwrap .lines {
 	margin-top: 0px;
-	width: 50px;
 	float: left;
 	overflow: hidden;
 	border-right: 1px solid #c0c0c0;
@@ -43,7 +41,7 @@
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-	user-select: none; 
+	user-select: none;
 }
 
 .linedwrap .codelines {

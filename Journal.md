@@ -37,7 +37,7 @@ Jonathan worked on the adding variable types for the different variables that we
 ### 2/25/20, 7:00 PM - 11:30 PM: Phrase Evaluation
 Josiah implemented phrase evaluation. The arithmetic phrases follow the order of operations, use type checking, etc. String concatenation has also been added as phrases that can be evaluated.
 
-### 2/25/20, 6:00 PM - 7:00 PM: Bug Fixes
+### 2/26/20, 6:00 PM - 7:00 PM: Bug Fixes
 Josiah fixed a bug where multiple displays lines wouldn't evaluate. Also made error messages now stop the program.
 
 ### 2/28/20, 2:00 PM - 4:30 PM: Phrase Evaluation Continued
@@ -77,7 +77,7 @@ Camryn overhauled the front end. Cleaned up the style, rearranged the text boxes
 Kurtis added numbered lines to the input box. All notable browsers were tested except Safari.
 
 ### 3/28/2020, 7:00 PM - Fixed Spacing and Implemented Copy Button
-Kurtis fixed some spacing in the input box, implemented the copy button for the output box, and made so random elements cannot be highlighted. 
+Kurtis fixed some spacing in the input box, implemented the copy button for the output box, and made so random elements cannot be highlighted.
 
 ### 3/30/2020 4:00 PM - 7:00 PM - Cleaned up documentation and examples pages
 Ryan cleaned up the html of the documentation and examples pages and made the two have their own .html pages.
@@ -99,3 +99,12 @@ Team Pseudo met as a team with Dr. Wilson via Zoom to practice the URCA group pr
 
 ### 4/13/2020 8:00 PM - 9:00 PM - URCA Examples Practice
 Josiah and Jonathan met via Zoom to practice the advanced examples that will be used during the URCA presentation, as well as iron out a few minor bugs in the program.
+
+### 4/22/2020, 6:00 PM - Implemented Save Button and Updated Line Number Spacing
+Kurtis implemented the save button which now allows users to save output to a txt file with the name of their own making. He also updated the input box line number spacing.
+
+### 4/23/2020, 9:00 PM - 10:00 PM - URCA Presentation Recording
+Met as a group to record and edit the URCA presentation video.
+
+### 4/24/2020, 11:30 PM - 12:30 AM - Fixed Input Type Checking
+Got the Input command working with type checking. Refactored variable names to fix a naming bug in the editor.
