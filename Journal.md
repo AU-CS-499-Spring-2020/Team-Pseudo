@@ -94,6 +94,12 @@ Camryn made the question button pull up the documentation and made it possible t
 ### 4/10/2020 9:00 PM - 9:30 PM - Team Presentation Meeting
 Team Pseudo met as a team via Zoom to plan out the URCA group presentation.
 
+### 4/13/2020 9:00 AM - 9:45 AM - URCA Presentation Practice
+Team Pseudo met as a team with Dr. Wilson via Zoom to practice the URCA group presentation.
+
+### 4/13/2020 8:00 PM - 9:00 PM - URCA Examples Practice
+Josiah and Jonathan met via Zoom to practice the advanced examples that will be used during the URCA presentation, as well as iron out a few minor bugs in the program.
+
 ### 4/22/2020, 6:00 PM - Implemented Save Button and Updated Line Number Spacing
 Kurtis implemented the save button which now allows users to save output to a txt file with the name of their own making. He also updated the input box line number spacing.
 
@@ -102,4 +108,3 @@ Met as a group to record and edit the URCA presentation video.
 
 ### 4/24/2020, 11:30 PM - 12:30 AM - Fixed Input Type Checking
 Got the Input command working with type checking. Refactored variable names to fix a naming bug in the editor.
-
