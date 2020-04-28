@@ -108,3 +108,6 @@ Met as a group to record and edit the URCA presentation video.
 
 ### 4/24/2020, 11:30 PM - 12:30 AM - Fixed Input Type Checking
 Got the Input command working with type checking. Refactored variable names to fix a naming bug in the editor.
+
+### 4/27/2020, 8:00 PM - 9:00 PM - Back End Zoom Meeting
+Josiah and Jonathan meet over Zoom to plan out finishing If/Else statement and For loop capabilities.
