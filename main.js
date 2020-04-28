@@ -1,32 +1,32 @@
 
-var variables = []
-var loops = []
-var functions = []
+var teamPsuedovariables = []
+var teamPsuedoLoops = []
+var teamPsuedoFunctions = []
 
 function main() {
     document.getElementById('console').innerHTML = "";
 
-    var code = document.getElementById('code').value.split("\n");
-    var start = -1;
+    var teamPsuedocode = document.getElementById('code').value.split("\n");
+    var teamPsuedostart = -1;
 
     // Find all of the loops and add them to a list
-    for (var p = 0; p < code.length; p++) {
-        if (code[p].startsWith("Module ")) {
-            var temp = code[p].substring(7);
-            temp = temp.split("(")[0];
-            temp = temp.trim();
-            functions.push([temp, p + 1]);
+    for (var teamPseudoP = 0; teamPseudoP < teamPsuedocode.length; teamPseudoP++) {
+        if (teamPsuedocode[teamPseudoP].startsWith("Module ")) {
+            var teamPsuedoTemp = teamPsuedocode[teamPseudoP].substring(7);
+            teamPsuedoTemp = teamPsuedoTemp.split("(")[0];
+            teamPsuedoTemp = teamPsuedoTemp.trim();
+            teamPsuedoFunctions.push([teamPsuedoTemp, teamPseudoP + 1]);
         }
     }
 
-    for (var p = 0; p < functions.length; p++) {
-        if (functions[p][0].startsWith("main")) {
-            start = functions[p][1];
+    for (var teamPseudoP = 0; teamPseudoP < teamPsuedoFunctions.length; teamPseudoP++) {
+        if (teamPsuedoFunctions[teamPseudoP][0].startsWith("main")) {
+            teamPsuedostart = teamPsuedoFunctions[teamPseudoP][1];
         }
     }
 
-    if (start != -1) {
-        executeCode(start);
+    if (teamPsuedostart != -1) {
+        executeCode(teamPsuedostart);
     } else {
         error("Your program does not have a main method.");
     }
@@ -39,8 +39,8 @@ function executeCode(line) {
     // document.getElementById('console').innerHTML = "";
 
     // Reset variables, loops, and ifs everytime the program is run.
-    variables = [];
-    loops = [];
+    teamPsuedovariables = [];
+    teamPsuedoLoops = [];
     inIf = false
     inSelect = false
     selectCond = null
@@ -49,17 +49,17 @@ function executeCode(line) {
 
     // Read in all the lines of code and split on new line. No one line programs
     // are allowed.
-    var code = document.getElementById('code').value.split("\n");
+    var teamPsuedoCode = document.getElementById('code').value.split("\n");
 
     // Find all of the loops and add them to a list
     var tempLoops = [];
-    for (var p = 0; p < code.length; p++) {
-        code[p] = code[p].trim();
-        if (code[p].startsWith("While") || code[p].startsWith("Do")) {
-            tempLoops.push(p);
-        } else if (code[p].startsWith("End While") || code[p].startsWith("End Do While")) {
+    for (var teamPsuedoP = 0; teamPsuedoP < teamPsuedoCode.length; teamPsuedoP++) {
+        teamPsuedoCode[teamPsuedoP] = teamPsuedoCode[teamPsuedoP].trim();
+        if (teamPsuedoCode[teamPsuedoP].startsWith("While") || teamPsuedoCode[teamPsuedoP].startsWith("Do")) {
+            tempLoops.push(teamPsuedoP);
+        } else if (teamPsuedoCode[teamPsuedoP].startsWith("End While") || teamPsuedoCode[teamPsuedoP].startsWith("End Do While")) {
             if (tempLoops.length != 0) {
-                loops.push([tempLoops.pop(), p]);
+                teamPsuedoLoops.push([tempLoops.pop(), teamPsuedoP]);
             } else {
                 error("Issue with too few While Statements");
             }
@@ -70,51 +70,51 @@ function executeCode(line) {
     }
 
     // The fun stuff
-    for (var i = line; i < code.length; i++) {
-        var current = code[i].replace(/^\s+/g, ''); //Removes white space from the left side for indentation
-        console.log("Line " + (i + 1))
-        console.log(variables)
-        console.log("Line " + (i + 1))
-        console.log(variables)
+    for (var teamPsuedoI = line; teamPsuedoI < teamPsuedoCode.length; teamPsuedoI++) {
+        var teamPsuedoCurrent = teamPsuedoCode[teamPsuedoI].replace(/^\s+/g, ''); //Removes white space from the left side for indentation
+        console.log("Line " + (teamPsuedoI + 1))
+        console.log(teamPsuedovariables)
+        console.log("Line " + (teamPsuedoI + 1))
+        console.log(teamPsuedovariables)
 
         // Remove any comments that the user puts into the code
-        current = current.split("//")[0];
+        teamPsuedoCurrent = teamPsuedoCurrent.split("//")[0];
 
         //Checks if the line is inside an if statement
         if (inIf) {
-            testCond = current.trim()
+            testCond = teamPsuedoCurrent.trim()
             //console.log(testCond)
             if (testCond == "End If") {
                 inIf = false
-                result = null
+                teamPsuedoResult = null
                 continue
             }
-            else if (testCond == "Else" && result == true) {
-                result = false
+            else if (testCond == "Else" && teamPsuedoResult == true) {
+                teamPsuedoResult = false
                 continue
             }
-            else if (testCond == "Else" && result == false) {
-                result = true
+            else if (testCond == "Else" && teamPsuedoResult == false) {
+                teamPsuedoResult = true
                 continue
             }
-            else if (result == false) {
+            else if (teamPsuedoResult == false) {
                 continue
             }
-            else if (result == true) {
+            else if (teamPsuedoResult == true) {
                 //Pass and perform the code
             }
         }
 
         //Checks if the line is inside a Select statement
         if (inSelect) {
-            if (current == "End Select") {
+            if (teamPsuedoCurrent == "End Select") {
                 finishedCase = true
                 inSelect = false
                 continue
             }
             else if (!foundCase) {
-                if (current.startsWith("Case ")) {
-                    caseEx = current.substring(5)
+                if (teamPsuedoCurrent.startsWith("Case ")) {
+                    caseEx = teamPsuedoCurrent.substring(5)
                     if (caseEx.endsWith(":")) {
                         caseEx = caseEx.slice(0, caseEx.length - 1)
                     }
@@ -124,19 +124,19 @@ function executeCode(line) {
                         continue
                     }
                 }
-                else if (current.startsWith("Default") && !foundCase) {
+                else if (teamPsuedoCurrent.startsWith("Default") && !foundCase) {
                     foundCase = true
                     finishedCase = false
                     continue
                 }
                 continue
             }
-            else if (current.startsWith("Default") && foundCase) {
+            else if (teamPsuedoCurrent.startsWith("Default") && foundCase) {
                 finishedCase = true
                 continue
             }
             else {
-                if (current.startsWith("Case")) {
+                if (teamPsuedoCurrent.startsWith("Case")) {
                     finishedCase = true
                     continue
                 }
@@ -148,90 +148,90 @@ function executeCode(line) {
 
         }
 
-        if (current == "") {
+        if (teamPsuedoCurrent == "") {
             // Do nothing
-        } else if (current.startsWith("Declare ")) {
+        } else if (teamPsuedoCurrent.startsWith("Declare ")) {
             // Where we declare variables
-            var var1 = current.substring(8);
-            var varType = var1.split(" ")[0];
-            if (varType == "Integer") {
-                varType = 0;
-                var1 = var1.substring(8);
-            } else if (varType == "Real") {
-                varType = 1;
-                var1 = var1.substring(5);
-            } else if (varType == "String") {
-                varType = 2;
-                var1 = var1.substring(7);
-            } else if (varType == "Character") {
-                varType = 3;
-                var1 = var1.substring(10);
-            } else if (varType == "Boolean") {
-                varType = 4;
-                var1 = var1.substring(8);
+            var teamPsuedoVar1 = teamPsuedoCurrent.substring(8);
+            var teamPsuedoVarType = teamPsuedoVar1.split(" ")[0];
+            if (teamPsuedoVarType == "Integer") {
+                teamPsuedoVarType = 0;
+                teamPsuedoVar1 = teamPsuedoVar1.substring(8);
+            } else if (teamPsuedoVarType == "Real") {
+                teamPsuedoVarType = 1;
+                teamPsuedoVar1 = teamPsuedoVar1.substring(5);
+            } else if (teamPsuedoVarType == "String") {
+                teamPsuedoVarType = 2;
+                teamPsuedoVar1 = teamPsuedoVar1.substring(7);
+            } else if (teamPsuedoVarType == "Character") {
+                teamPsuedoVarType = 3;
+                teamPsuedoVar1 = teamPsuedoVar1.substring(10);
+            } else if (teamPsuedoVarType == "Boolean") {
+                teamPsuedoVarType = 4;
+                teamPsuedoVar1 = teamPsuedoVar1.substring(8);
             } else {
                 error("invalid variable type")
             }
 
-            if (current.includes("=")) {
-                var1 = formatEquals(var1)
-                for (x = 0; x < var1.length; x++) {
-                    if (var1[x] == "=") {
-                        var var2 = var1.slice(0, x) //Var Name
-                        var var3 = var1.slice(x + 1, var1.length) //Var Value
-                        x = var1.length
+            if (teamPsuedoCurrent.includes("=")) {
+                teamPsuedoVar1 = formatEquals(teamPsuedoVar1)
+                for (teamPsuedoX = 0; teamPsuedoX < teamPsuedoVar1.length; teamPsuedoX++) {
+                    if (teamPsuedoVar1[teamPsuedoX] == "=") {
+                        var teamPsuedoVar2 = teamPsuedoVar1.slice(0, teamPsuedoX) //Var Name
+                        var teamPsuedoVar3 = teamPsuedoVar1.slice(teamPsuedoX + 1, teamPsuedoVar1.length) //Var Value
+                        teamPsuedoX = teamPsuedoVar1.length
                     }
                 }
-                var3 = evaluatePhrase(var3).toString()
+                teamPsuedoVar3 = evaluatePhrase(teamPsuedoVar3).toString()
                 //console.log("name " + var2);
                 //console.log("value " + var3);
 
                 //Makes sure the variable name is valid
-                checkValidName(var2)
+                checkValidName(teamPsuedoVar2)
 
-                if (var2.includes("[") || var2.includes("]")) {
+                if (teamPsuedoVar2.includes("[") || teamPsuedoVar2.includes("]")) {
                     error("You cannot assign anything to an array as you declare it")
                 }
 
-                if (var2 == undefined || var3 == undefined) {
-                    error("Syntax Error on line " + (i + 1) + ".");
-                } else if ((checkVariableExistance(var2)) === true) {
-                    error("Variable " + var2 + " already exists");
+                if (teamPsuedoVar2 == undefined || teamPsuedoVar3 == undefined) {
+                    error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
+                } else if ((checkVariableExistance(teamPsuedoVar2)) === true) {
+                    error("Variable " + teamPsuedoVar2 + " already exists");
                 } else {
-                    if (varType == 0) {
-                        if (isInteger(var3) || isReal(var3)) {
-                            var3 = var3.split(".")[0];
-                            variables.push([var2, var3, varType]);
+                    if (teamPsuedoVarType == 0) {
+                        if (isInteger(teamPsuedoVar3) || isReal(teamPsuedoVar3)) {
+                            teamPsuedoVar3 = teamPsuedoVar3.split(".")[0];
+                            teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType]);
                         } else {
-                            error(var2 + " is not an Integer value")
+                            error(teamPsuedoVar2 + " is not an Integer value")
                         }
-                    } else if (varType == 1) {
-                        if (isReal(var3)) {
-                            variables.push([var2, var3, varType]);
-                        } else if (isInteger(var3)) {
-                            var3 = var3 + "."
-                            variables.push([var2, var3, varType]);
+                    } else if (teamPsuedoVarType == 1) {
+                        if (isReal(teamPsuedoVar3)) {
+                            teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType]);
+                        } else if (isInteger(teamPsuedoVar3)) {
+                            teamPsuedoVar3 = teamPsuedoVar3 + "."
+                            teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType]);
                         } else {
-                            error(var2 + " is not a Real value")
+                            error(teamPsuedoVar2 + " is not a Real value")
                         }
-                    } else if (varType == 2) {
-                        var3 = "\"" + var3 + "\""
-                        variables.push([var2, var3, varType]);
-                    } else if (varType == 3) {
-                        //I dont like the autonarrowing
-                        var3 = var3.charAt(0);
-                        var3 = "\'" + var3 + "\'"
-                        variables.push([var2, var3, varType]);
-                    } else if (varType == 4) {
+                    } else if (teamPsuedoVarType == 2) {
+                        teamPsuedoVar3 = "\"" + teamPsuedoVar3 + "\""
+                        teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType]);
+                    } else if (teamPsuedoVarType == 3) {
+                        //teamPsuedoI dont like the autonarrowing
+                        teamPsuedoVar3 = teamPsuedoVar3.charAt(0);
+                        teamPsuedoVar3 = "\'" + teamPsuedoVar3 + "\'"
+                        teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType]);
+                    } else if (teamPsuedoVarType == 4) {
                         //console.log("var 3 " + var3)
-                        if (var3 == "true" || var3 == true) {
-                            variables.push([var2, true, varType]);
+                        if (teamPsuedoVar3 == "true" || teamPsuedoVar3 == true) {
+                            teamPsuedovariables.push([teamPsuedoVar2, true, teamPsuedoVarType]);
                         }
-                        else if (var3 == "false" || var3 == false) {
-                            variables.push([var2, false, varType]);
+                        else if (teamPsuedoVar3 == "false" || teamPsuedoVar3 == false) {
+                            teamPsuedovariables.push([teamPsuedoVar2, false, teamPsuedoVarType]);
                         }
                         else {
-                            error(var2 + " is not a Boolean True or False value")
+                            error(teamPsuedoVar2 + " is not a Boolean True or False value")
                         }
 
                     } else {
@@ -239,121 +239,121 @@ function executeCode(line) {
                     }
                     //console.log(var2 + " = " + var3)
                     //Eval creates the variable in the background
-                    tryEval(var2 + " = " + var3)
+                    tryEval(teamPsuedoVar2 + " = " + teamPsuedoVar3)
                 }
             } else {
-                if (var1 == "") {
-                    error("Syntax Error on line " + (i + 1) + ".");
-                } else if ((checkVariableExistance(var1)) === true) {
+                if (teamPsuedoVar1 == "") {
+                    error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
+                } else if ((checkVariableExistance(teamPsuedoVar1)) === true) {
                     error("Variable already exists");
                 } else {
                     //Makes sure the variable name is valid
-                    checkValidName(var1)
+                    checkValidName(teamPsuedoVar1)
                     //Checks if the variable is an array
-                    if (var1.includes("[") && var1.includes("]")) {
-                        for (x = 0; x < var1.length; x++) {
-                            if (var1[x] == "[") {
-                                var size = var1.slice(x + 1, var1.length - 1)
-                                var1 = var1.slice(0, x)
+                    if (teamPsuedoVar1.includes("[") && teamPsuedoVar1.includes("]")) {
+                        for (teamPsuedoX = 0; teamPsuedoX < teamPsuedoVar1.length; teamPsuedoX++) {
+                            if (teamPsuedoVar1[teamPsuedoX] == "[") {
+                                var size = teamPsuedoVar1.slice(teamPsuedoX + 1, teamPsuedoVar1.length - 1)
+                                teamPsuedoVar1 = teamPsuedoVar1.slice(0, teamPsuedoX)
                                 size = evaluatePhrase(size)
                                 //console.log(size + ", " + var1)
                             }
                         }
-                        tryEval(var1 + "= []")
-                        variables.push([var1, [], varType, size]);
+                        tryEval(teamPsuedoVar1 + "= []")
+                        teamPsuedovariables.push([teamPsuedoVar1, [], teamPsuedoVarType, size]);
                     }
-                    else if (var1.includes("[") || var1.includes("]")) {
+                    else if (teamPsuedoVar1.includes("[") || teamPsuedoVar1.includes("]")) {
                         error("Arrays must be declared using []. At least one bracket is missing")
                     }
                     else {
-                        variables.push([var1, null, varType]);
+                        teamPsuedovariables.push([teamPsuedoVar1, null, teamPsuedoVarType]);
                     }
                 }
             }
 
         }
-        else if (current.startsWith("Constant ")) {
+        else if (teamPsuedoCurrent.startsWith("Constant ")) {
             // Where we declare variables
-            var var1 = current.substring(9);
-            var varType = var1.split(" ")[0];
-            if (varType == "Integer") {
-                varType = 0;
-                var1 = var1.substring(8);
-            } else if (varType == "Real") {
-                varType = 1;
-                var1 = var1.substring(5);
-            } else if (varType == "String") {
-                varType = 2;
-                var1 = var1.substring(7);
-            } else if (varType == "Character") {
-                varType = 3;
-                var1 = var1.substring(10);
-            } else if (varType == "Boolean") {
-                varType = 4;
-                var1 = var1.substring(8);
+            var teamPsuedoVar1 = teamPsuedoCurrent.substring(9);
+            var teamPsuedoVarType = teamPsuedoVar1.split(" ")[0];
+            if (teamPsuedoVarType == "Integer") {
+                teamPsuedoVarType = 0;
+                teamPsuedoVar1 = teamPsuedoVar1.substring(8);
+            } else if (teamPsuedoVarType == "Real") {
+                teamPsuedoVarType = 1;
+                teamPsuedoVar1 = teamPsuedoVar1.substring(5);
+            } else if (teamPsuedoVarType == "String") {
+                teamPsuedoVarType = 2;
+                teamPsuedoVar1 = teamPsuedoVar1.substring(7);
+            } else if (teamPsuedoVarType == "Character") {
+                teamPsuedoVarType = 3;
+                teamPsuedoVar1 = teamPsuedoVar1.substring(10);
+            } else if (teamPsuedoVarType == "Boolean") {
+                teamPsuedoVarType = 4;
+                teamPsuedoVar1 = teamPsuedoVar1.substring(8);
             } else {
                 error("invalid variable type")
             }
 
-            if (current.includes("=")) {
-                var1 = formatEquals(var1)
-                for (x = 0; x < var1.length; x++) {
-                    if (var1[x] == "=") {
-                        var var2 = var1.slice(0, x) //Var Name
-                        var var3 = var1.slice(x + 1, var1.length) //Var Value
-                        x = var1.length
+            if (teamPsuedoCurrent.includes("=")) {
+                teamPsuedoVar1 = formatEquals(teamPsuedoVar1)
+                for (teamPsuedoX = 0; teamPsuedoX < teamPsuedoVar1.length; teamPsuedoX++) {
+                    if (teamPsuedoVar1[teamPsuedoX] == "=") {
+                        var teamPsuedoVar2 = teamPsuedoVar1.slice(0, teamPsuedoX) //Var Name
+                        var teamPsuedoVar3 = teamPsuedoVar1.slice(teamPsuedoX + 1, teamPsuedoVar1.length) //Var Value
+                        teamPsuedoX = teamPsuedoVar1.length
                     }
                 }
-                var3 = evaluatePhrase(var3).toString()
+                teamPsuedoVar3 = evaluatePhrase(teamPsuedoVar3).toString()
                 //console.log("name " + var2);
                 //console.log("value " + var3);
 
                 //Makes sure the variable name is valid
-                checkValidName(var2)
+                checkValidName(teamPsuedoVar2)
 
-                if (var2.includes("[") || var2.includes("]")) {
+                if (teamPsuedoVar2.includes("[") || teamPsuedoVar2.includes("]")) {
                     error("You cannot assign anything to an array as you declare it")
                 }
 
-                if (var2 == undefined || var3 == undefined) {
-                    error("Syntax Error on line " + (i + 1) + ".");
-                } else if ((checkVariableExistance(var2)) === true) {
-                    error("Variable " + var2 + " already exists");
+                if (teamPsuedoVar2 == undefined || teamPsuedoVar3 == undefined) {
+                    error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
+                } else if ((checkVariableExistance(teamPsuedoVar2)) === true) {
+                    error("Variable " + teamPsuedoVar2 + " already exists");
                 } else {
-                    if (varType == 0) {
-                        if (isInteger(var3) || isReal(var3)) {
-                            var3 = var3.split(".")[0];
-                            variables.push([var2, var3, varType, , 1]);
+                    if (teamPsuedoVarType == 0) {
+                        if (isInteger(teamPsuedoVar3) || isReal(teamPsuedoVar3)) {
+                            teamPsuedoVar3 = teamPsuedoVar3.split(".")[0];
+                            teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType, , 1]);
                         } else {
-                            error(var2 + " is not an Integer value")
+                            error(teamPsuedoVar2 + " is not an Integer value")
                         }
-                    } else if (varType == 1) {
-                        if (isReal(var3)) {
-                            variables.push([var2, var3, varType, , 1]);
-                        } else if (isInteger(var3)) {
-                            var3 = var3 + "."
-                            variables.push([var2, var3, varType, , 1]);
+                    } else if (teamPsuedoVarType == 1) {
+                        if (isReal(teamPsuedoVar3)) {
+                            teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType, , 1]);
+                        } else if (isInteger(teamPsuedoVar3)) {
+                            teamPsuedoVar3 = teamPsuedoVar3 + "."
+                            teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType, , 1]);
                         } else {
-                            error(var2 + " is not a Real value")
+                            error(teamPsuedoVar2 + " is not a Real value")
                         }
-                    } else if (varType == 2) {
-                        var3 = "\"" + var3 + "\""
-                        variables.push([var2, var3, varType, , 1]);
-                    } else if (varType == 3) {
-                        //I dont like the autonarrowing
-                        var3 = var3.charAt(0);
-                        var3 = "\'" + var3 + "\'"
-                        variables.push([var2, var3, varType, , 1]);
-                    } else if (varType == 4) {
+                    } else if (teamPsuedoVarType == 2) {
+                        teamPsuedoVar3 = "\"" + teamPsuedoVar3 + "\""
+                        teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType, , 1]);
+                    } else if (teamPsuedoVarType == 3) {
+                        //teamPsuedoI dont like the autonarrowing
+                        teamPsuedoVar3 = teamPsuedoVar3.charAt(0);
+                        teamPsuedoVar3 = "\'" + teamPsuedoVar3 + "\'"
+                        teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType, , 1]);
+                    } else if (teamPsuedoVarType == 4) {
                         //console.log("var 3 " + var3)
-                        if (var3 == "true" || var3 == true) {
-                            variables.push([var2, true, varType, , 1]);
+                        if (teamPsuedoVar3 == "true" || teamPsuedoVar3 == true) {
+                            teamPsuedovariables.push([teamPsuedoVar2, true, teamPsuedoVarType, , 1]);
                         }
-                        else if (var3 == "false" || var3 == false) {
-                            variables.push([var2, false, varType, , 1]);
+                        else if (teamPsuedoVar3 == "false" || teamPsuedoVar3 == false) {
+                            teamPsuedovariables.push([teamPsuedoVar2, false, teamPsuedoVarType, , 1]);
                         }
                         else {
-                            error(var2 + " is not a Boolean True or False value")
+                            error(teamPsuedoVar2 + " is not a Boolean True or False value")
                         }
 
                     } else {
@@ -361,34 +361,34 @@ function executeCode(line) {
                     }
                     //console.log(var2 + " = " + var3)
                     //Eval creates the variable in the background
-                    tryEval(var2 + " = " + var3)
+                    tryEval(teamPsuedoVar2 + " = " + teamPsuedoVar3)
                 }
             } else {
-                if (var1 == "") {
-                    error("Syntax Error on line " + (i + 1) + ".");
-                } else if ((checkVariableExistance(var1)) === true) {
+                if (teamPsuedoVar1 == "") {
+                    error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
+                } else if ((checkVariableExistance(teamPsuedoVar1)) === true) {
                     error("Variable already exists");
                 } else {
                     //Makes sure the variable name is valid
-                    checkValidName(var1)
+                    checkValidName(teamPsuedoVar1)
                     //Checks if the variable is an array
-                    if (var1.includes("[") && var1.includes("]")) {
-                        for (x = 0; x < var1.length; x++) {
-                            if (var1[x] == "[") {
-                                var size = var1.slice(x + 1, var1.length - 1)
-                                var1 = var1.slice(0, x)
+                    if (teamPsuedoVar1.includes("[") && teamPsuedoVar1.includes("]")) {
+                        for (teamPsuedoX = 0; teamPsuedoX < teamPsuedoVar1.length; teamPsuedoX++) {
+                            if (teamPsuedoVar1[teamPsuedoX] == "[") {
+                                var size = teamPsuedoVar1.slice(teamPsuedoX + 1, teamPsuedoVar1.length - 1)
+                                teamPsuedoVar1 = teamPsuedoVar1.slice(0, teamPsuedoX)
                                 size = evaluatePhrase(size)
                                 //console.log(size + ", " + var1)
                             }
                         }
-                        tryEval(var1 + "= []")
-                        variables.push([var1, [], varType, size, 1]);
+                        tryEval(teamPsuedoVar1 + "= []")
+                        teamPsuedovariables.push([teamPsuedoVar1, [], teamPsuedoVarType, size, 1]);
                     }
-                    else if (var1.includes("[") || var1.includes("]")) {
+                    else if (teamPsuedoVar1.includes("[") || teamPsuedoVar1.includes("]")) {
                         error("Arrays must be declared using []. At least one bracket is missing")
                     }
                     else {
-                        variables.push([var1, null, varType, , 1]);
+                        teamPsuedovariables.push([teamPsuedoVar1, null, teamPsuedoVarType, , 1]);
                     }
                 }
             }
@@ -396,62 +396,82 @@ function executeCode(line) {
         }
         //Display pseudocode has strings use quotation marks, variable names use no
         //Quotation marks, and concatinates strings with commas
-        else if (current.startsWith("Display ")) {
-            var print1 = current.substring(8);
+        else if (teamPsuedoCurrent.startsWith("Display ")) {
+            var print1 = teamPsuedoCurrent.substring(8);
             var phrase = print1.trim()
             document.getElementById('console').innerHTML += evaluatePhrase(phrase);
             document.getElementById('console').innerHTML += '\n';
 
-        } else if (current.startsWith("Set ")) {
-            if (current.includes("=")) {
-                var var1 = current.substring(4);
-                var1 = formatEquals(var1);
-                for (x = 0; x < var1.length; x++) {
-                    if (var1[x] == "=") {
-                        var var2 = var1.slice(0, x) //Var Name
-                        var var3 = var1.slice(x + 1, var1.length) //Var Value
-                        x = var1.length
+        } else if (teamPsuedoCurrent.startsWith("Set ")) {
+            if (teamPsuedoCurrent.includes("=")) {
+                var teamPsuedoVar1 = teamPsuedoCurrent.substring(4);
+                teamPsuedoVar1 = formatEquals(teamPsuedoVar1);
+                for (teamPsuedoX = 0; teamPsuedoX < teamPsuedoVar1.length; teamPsuedoX++) {
+                    if (teamPsuedoVar1[teamPsuedoX] == "=") {
+                        var teamPsuedoVar2 = teamPsuedoVar1.slice(0, teamPsuedoX) //Var Name
+                        var teamPsuedoVar3 = teamPsuedoVar1.slice(teamPsuedoX + 1, teamPsuedoVar1.length) //Var Value
+                        teamPsuedoX = teamPsuedoVar1.length
                     }
                 }
-                var3 = evaluatePhrase(var3)
-                if (typeof var3 == "string")
-                    var3 = "\"" + var3 + "\""
+                teamPsuedoVar3 = evaluatePhrase(teamPsuedoVar3)
+                if (typeof teamPsuedoVar3 == "string")
+                    teamPsuedoVar3 = "\"" + teamPsuedoVar3 + "\""
                 //console.log(typeof var3)
-                if (var2 == undefined || var3 == undefined) {
-                    error("Syntax Error on line " + (i + 1) + ".");
-                } else if (var2.includes("[") || var2.includes("]")) {
+                if (teamPsuedoVar2 == undefined || teamPsuedoVar3 == undefined) {
+                    error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
+                } else if (teamPsuedoVar2.includes("[") || teamPsuedoVar2.includes("]")) {
                     //console.log(var2 + "," + var3)
-                    updateVariable(var2, var3);
-                } else if ((checkVariableExistance(var1)) === false) {
-                    if (checkConstant(var2)) {
-                        error("You cannot change the value of the constant variable " + var2)
+                    updateVariable(teamPsuedoVar2, teamPsuedoVar3);
+                } else if ((checkVariableExistance(teamPsuedoVar1)) === false) {
+                    if (checkConstant(teamPsuedoVar2)) {
+                        error("You cannot change the value of the constant variable " + teamPsuedoVar2)
                     }
                     else {
-                        updateVariable(var2, var3);
+                        updateVariable(teamPsuedoVar2, teamPsuedoVar3);
                         //Eval updates the variable in the background
-                        eval(var2 + " = " + var3)
+                        eval(teamPsuedoVar2 + " = " + teamPsuedoVar3)
                     }
                 } else {
                     error("Variable does not exist");
                 }
 
             } else {
-                error("Syntax Error on line " + (i + 1) + ".");
+                error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
             }
 
-        } else if (current.startsWith("Input ")) {
-            var input1 = current.substring(6);
-            if (input1 == "") {
-                alert("Syntax Error on line " + (i + 1) + ".");
-            } else if (checkVariableExistance(input1)) {
-                var input2 = prompt(); // Need to change from prompt
-                updateVariable(input1, input2);
+        } else if (teamPsuedoCurrent.startsWith("Input ")) {
+            var teamPsuedoVar2 = teamPsuedoCurrent.substring(6);
+            teamPsuedoVar2 = teamPsuedoVar2.trim()
+            if (teamPsuedoVar2 == "") {
+                alert("Syntax Error on line " + (teamPsuedoI + 1) + ".");
+            }
+            var teamPsuedoVar3 = prompt(); // Need to change from prompt
+            teamPsuedoVar3 = evaluatePhrase(teamPsuedoVar3)
+            console.log("var2 = " + teamPsuedoVar2)
+            console.log("var3 = " + teamPsuedoVar3)
+            if (typeof teamPsuedoVar3 == "string")
+                teamPsuedoVar3 = "\"" + teamPsuedoVar3 + "\""
+            //console.log(typeof var3)
+            if (teamPsuedoVar2 == undefined || teamPsuedoVar3 == undefined) {
+                error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
+            } else if (teamPsuedoVar2.includes("[") || teamPsuedoVar2.includes("]")) {
+                //console.log(var2 + "," + var3)
+                updateVariable(teamPsuedoVar2, teamPsuedoVar3);
+            } else if ((checkVariableExistance(teamPsuedoVar2)) != false) {
+                if (checkConstant(teamPsuedoVar2)) {
+                    error("You cannot change the value of the constant variable " + teamPsuedoVar2)
+                }
+                else {
+                    updateVariable(teamPsuedoVar2, teamPsuedoVar3);
+                    //Eval updates the variable in the background
+                    eval(teamPsuedoVar2 + " = " + teamPsuedoVar3)
+                }
             } else {
                 error("Error: Variable does not exist");
             }
 
-        } else if (current.startsWith("If ")) {
-            var ifCond = current.substring(3).trim()
+        } else if (teamPsuedoCurrent.startsWith("If ")) {
+            var ifCond = teamPsuedoCurrent.substring(3).trim()
             if (ifCond.endsWith("Then")) {
                 ifCond = ifCond.slice(0, ifCond.length - 4)
                 inIf = true
@@ -463,97 +483,97 @@ function executeCode(line) {
                 error("If statement conditions must be followed with \"Then\"")
             }
 
-        } else if (current.startsWith("Select ")) {
+        } else if (teamPsuedoCurrent.startsWith("Select ")) {
             finishedCase = true
             foundCase = false
-            selectCond = current.substring(7).trim()
+            selectCond = teamPsuedoCurrent.substring(7).trim()
             compareEx = evaluatePhrase(selectCond.toString()).toString()
             inSelect = true
             //console.log(selectCond)
 
-        } else if (current.startsWith("While ")) {
-            evaluate = current.substring(6);
+        } else if (teamPsuedoCurrent.startsWith("While ")) {
+            evaluate = teamPsuedoCurrent.substring(6);
             //console.log(evaluate);
-            result = tryEval(evaluate);
-            console.log(result);
-            console.log(typeof (result))
-            if (result) {
+            teamPsuedoResult = tryEval(evaluate);
+            console.log(teamPsuedoResult);
+            console.log(typeof (teamPsuedoResult))
+            if (teamPsuedoResult) {
                 // Do nothing
             } else {
-                while (!code[i].startsWith("End While")) {
-                    i++;
+                while (!teamPsuedoCode[teamPsuedoI].startsWith("End While")) {
+                    teamPsuedoI++;
                 }
             }
-        } else if (current.startsWith("End While")) {
+        } else if (teamPsuedoCurrent.startsWith("End While")) {
             //temp
-            i = getLoop(i);
+            teamPsuedoI = getLoop(teamPsuedoI);
 
-        } else if (current.startsWith("Do")) {
+        } else if (teamPsuedoCurrent.startsWith("Do")) {
             //Nothing
-        } else if (current.startsWith("End Do While")) {
-            evaluate = current.substring(13);
-            result = tryEval(evaluate);
-            console.log(result);
-            console.log(typeof (result))
-            if (result) {
-                i = getLoop(i);
+        } else if (teamPsuedoCurrent.startsWith("End Do While")) {
+            evaluate = teamPsuedoCurrent.substring(13);
+            teamPsuedoResult = tryEval(evaluate);
+            console.log(teamPsuedoResult);
+            console.log(typeof (teamPsuedoResult))
+            if (teamPsuedoResult) {
+                teamPsuedoI = getLoop(teamPsuedoI);
             }
-        } else if (current.startsWith("End Module")) {
+        } else if (teamPsuedoCurrent.startsWith("End Module")) {
             return;
-        } else if (current.startsWith("Module ")) {
+        } else if (teamPsuedoCurrent.startsWith("Module ")) {
             console.log("you should never get this");
             //Do nothing
-        } else if (current.startsWith("Call ")) {
-            current = current.substring(5);
-            current = current.split("(")[0];
-            current = current.trim();
+        } else if (teamPsuedoCurrent.startsWith("Call ")) {
+            teamPsuedoCurrent = teamPsuedoCurrent.substring(5);
+            teamPsuedoCurrent = teamPsuedoCurrent.split("(")[0];
+            teamPsuedoCurrent = teamPsuedoCurrent.trim();
 
-            var start = -1;
+            var teamPsuedoStart = -1;
 
-            for (var p = 0; p < functions.length; p++) {
-                if (functions[p][0].startsWith(current)) {
-                    start = functions[p][1];
+            for (var teamPsuedoP = 0; teamPsuedoP < teamPsuedoFunctions.length; teamPsuedoP++) {
+                if (teamPsuedoFunctions[teamPsuedoP][0].startsWith(teamPsuedoCurrent)) {
+                    teamPsuedoStart = teamPsuedoFunctions[teamPsuedoP][1];
                     break;
                 }
             }
 
             var tempVarStorage = [];
 
-            if (start != 1) {
+            if (teamPsuedoStart != 1) {
                 // Store Variables temporarily in a holding variable
-                for (var p = 0; p < variables.length; p++) {
-                    tempVarStorage.push(variables[p]);
+                for (var teamPsuedoP = 0; teamPsuedoP < teamPsuedovariables.length; teamPsuedoP++) {
+                    tempVarStorage.push(teamPsuedovariables[teamPsuedoP]);
                 }
 
                 // Run new module
-                executeCode(start);
+                executeCode(teamPsuedoStart);
 
                 // Add Variables back out of temp storage
-                variables = [];
-                for (var p = 0; p < tempVarStorage.length; p++) {
-                    variables.push(tempVarStorage[p]);
+                teamPsuedovariables = [];
+                for (var teamPsuedoP = 0; teamPsuedoP < tempVarStorage.length; teamPsuedoP++) {
+                    teamPsuedovariables.push(tempVarStorage[teamPsuedoP]);
                 }
             } else {
-                error(current + " is not a defined Module.");
+                error(teamPsuedoCurrent + " is not a defined Module.");
             }
 
         } else {
-            error("Line " + (i + 1) + " has invalid syntax.");
+            error("Line " + (teamPsuedoI + 1) + " has invalid syntax.");
         }
 
         // Output the Current variables and their respective types and values
         document.getElementById('variables').innerHTML = "";
-        for (var j = 0; j < variables.length; j++) {
-            if (variables[j][2] == 0) {
-                var temp = "Integer: " + variables[j][0] + " = " + variables[j][1] + "\n"
-            } else if (variables[j][2] == 1) {
-                var temp = "Real: " + variables[j][0] + " = " + variables[j][1] + "\n"
-            } else if (variables[j][2] == 2) {
-                var temp = "String: " + variables[j][0] + " = " + variables[j][1] + "\n"
-            } else if (variables[j][2] == 3) {
-                var temp = "Character: " + variables[j][0] + " = " + variables[j][1] + "\n"
-            } else if (variables[j][2] == 4) {
-                var temp = "Boolean: " + variables[j][0] + " = " + variables[j][1] + "\n"
+        for (var teamPsuedoJ = 0; teamPsuedoJ < teamPsuedovariables.length; teamPsuedoJ++) {
+            if (teamPsuedovariables[teamPsuedoJ][2] == 0) {
+                var temp = "Integer: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
+            } else if (teamPsuedovariables[teamPsuedoJ][2] == 1) {
+                var temp = "Real: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
+            } else if (teamPsuedovariables[teamPsuedoJ][2] == 2) {
+                var temp = "String: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
+            } else if (teamPsuedovariables[teamPsuedoJ][2] == 3) {
+                var temp = "Character: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
+            } else if (teamPsuedovariables[teamPsuedoJ][2] == 4) {
+                var temp = "Boolean: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
             }
 
             document.getElementById('variables').innerHTML += temp;
@@ -563,15 +583,15 @@ function executeCode(line) {
     console.log("Done")
 }
 
-function replaceVariables(string) {
+function replaceVariables(teamPsuedoString) {
     // Need to work on this
-    return string
+    return teamPsuedoString
 }
 
 function getVariable(varName) {
-    for (var i = 0; i < variables.length; i++) {
-        if (variables[i][0] == varName) {
-            return variables[i][1];
+    for (var teamPsuedoI = 0; teamPsuedoI < teamPsuedovariables.length; teamPsuedoI++) {
+        if (teamPsuedovariables[teamPsuedoI][0] == varName) {
+            return teamPsuedovariables[teamPsuedoI][1];
         }
     }
     error("The variable " + varName + " is not declared.");
@@ -579,9 +599,9 @@ function getVariable(varName) {
 
 function checkConstant(varName) {
     console.log("var1 " + varName)
-    for (var i = 0; i < variables.length; i++) {
-        if (variables[i][0] == varName) {
-            if (variables[i][4] == 1) {
+    for (var teamPsuedoI = 0; teamPsuedoI < teamPsuedovariables.length; teamPsuedoI++) {
+        if (teamPsuedovariables[teamPsuedoI][0] == varName) {
+            if (teamPsuedovariables[teamPsuedoI][4] == 1) {
                 return true
             }
             else {
@@ -593,25 +613,25 @@ function checkConstant(varName) {
 }
 
 function getVariableType(varName) {
-    for (var i = 0; i < variables.length; i++) {
-        if (variables[i][0] == varName) {
-            //console.log("Type: " + variables[i][2])
-            return variables[i][2];
+    for (var teamPsuedoI = 0; teamPsuedoI < teamPsuedovariables.length; teamPsuedoI++) {
+        if (teamPsuedovariables[teamPsuedoI][0] == varName) {
+            //console.log("Type: " + variables[teamPsuedoI][2])
+            return teamPsuedovariables[teamPsuedoI][2];
         }
     }
     error("The variable " + varName + " is not declared.");
 }
 
-function updateVariable(varName, value) {
+function updateVariable(varName, teamPsuedoValue) {
     var isArray = false
-    for (var i = 0; i < variables.length; i++) {
+    for (var teamPsuedoI = 0; teamPsuedoI < teamPsuedovariables.length; teamPsuedoI++) {
 
         if (varName.includes("[") && varName.includes("]")) {
-            for (x = 0; x < varName.length; x++) {
-                if (varName[x] == "[") {
-                    var index = varName.slice(x + 1, varName.length - 1)
-                    varName = varName.slice(0, x)
-                    index = evaluatePhrase(index)
+            for (teamPsuedoX = 0; teamPsuedoX < varName.length; teamPsuedoX++) {
+                if (varName[teamPsuedoX] == "[") {
+                    var teamPsuedoIndex = varName.slice(teamPsuedoX + 1, varName.length - 1)
+                    varName = varName.slice(0, teamPsuedoX)
+                    teamPsuedoIndex = evaluatePhrase(teamPsuedoIndex)
                     //console.log(index + ", " + varName)
                 }
             }
@@ -621,29 +641,29 @@ function updateVariable(varName, value) {
             error("Arrays values must be set using []. At least one bracket is missing")
         }
 
-        if (variables[i][0] === varName) {
+        if (teamPsuedovariables[teamPsuedoI][0] === varName) {
             //Checks if the array will be in bounds
             if (isArray) {
-                if (index >= variables[i][3]) {
-                    error("Array " + varName + " is out of bounds at index " + index)
+                if (teamPsuedoIndex >= teamPsuedovariables[teamPsuedoI][3]) {
+                    error("Array " + varName + " is out of bounds at index " + teamPsuedoIndex)
                 }
             }
 
-            if (variables[i][2] == 0) {
-                if (isInteger(value) || isReal(value)) {
+            if (teamPsuedovariables[teamPsuedoI][2] == 0) {
+                if (isInteger(teamPsuedoValue) || isReal(teamPsuedoValue)) {
                     //console.log("int " + value)
                     try {
-                        value = value.split(".")[0];
+                        teamPsuedoValue = teamPsuedoValue.split(".")[0];
                     }
                     catch{
-                        value = Math.floor(value)
+                        teamPsuedoValue = Math.floor(teamPsuedoValue)
                     }
                     try {
                         if (!isArray)
-                            variables[i][1] = value;
+                            teamPsuedovariables[teamPsuedoI][1] = teamPsuedoValue;
                         else {
-                            variables[i][1][index] = value
-                            tryEval(varName + "[" + index + "]= " + value)
+                            teamPsuedovariables[teamPsuedoI][1][teamPsuedoIndex] = teamPsuedoValue
+                            tryEval(varName + "[" + teamPsuedoIndex + "]= " + teamPsuedoValue)
                         }
                     }
                     catch {
@@ -653,61 +673,61 @@ function updateVariable(varName, value) {
                 } else {
                     error(varName + " is not an Integer value.") //mention what line number we are on?
                 }
-            } else if (variables[i][2] == 1) {
+            } else if (teamPsuedovariables[teamPsuedoI][2] == 1) {
                 //console.log("v " + value)
-                if (isReal(value)) {
+                if (isReal(teamPsuedoValue)) {
                     if (!isArray)
-                        variables[i][1] = value;
+                        teamPsuedovariables[teamPsuedoI][1] = teamPsuedoValue;
                     else {
-                        variables[i][1][index] = value
-                        tryEval(varName + "[" + index + "]= " + value)
+                        teamPsuedovariables[teamPsuedoI][1][teamPsuedoIndex] = teamPsuedoValue
+                        tryEval(varName + "[" + teamPsuedoIndex + "]= " + teamPsuedoValue)
                     }
-                } else if (isInteger(value)) {
-                    if (!value.toString().includes("."))
-                        value = value + "."
+                } else if (isInteger(teamPsuedoValue)) {
+                    if (!teamPsuedoValue.toString().includes("."))
+                        teamPsuedoValue = teamPsuedoValue + "."
                     if (!isArray)
-                        variables[i][1] = value;
+                        teamPsuedovariables[teamPsuedoI][1] = teamPsuedoValue;
                     else {
-                        variables[i][1][index] = value
+                        teamPsuedovariables[teamPsuedoI][1][teamPsuedoIndex] = teamPsuedoValue
                         //console.log((varName + "[" + index + "]= " + value))
-                        tryEval(varName + "[" + index + "]= " + value)
+                        tryEval(varName + "[" + teamPsuedoIndex + "]= " + teamPsuedoValue)
                     }
                 } else {
                     error(varName + " is not a Real value") //mention what line number we are on?
                 }
-            } else if (variables[i][2] == 2) {
+            } else if (teamPsuedovariables[teamPsuedoI][2] == 2) {
                 if (!isArray)
-                    variables[i][1] = value;
+                    teamPsuedovariables[teamPsuedoI][1] = teamPsuedoValue;
                 else {
-                    //console.log(value + ", i:" + index)
-                    variables[i][1][index] = value
-                    tryEval(varName + "[" + index + "]= " + value)
+                    //console.log(value + ", teamPsuedoI:" + index)
+                    teamPsuedovariables[teamPsuedoI][1][teamPsuedoIndex] = teamPsuedoValue
+                    tryEval(varName + "[" + teamPsuedoIndex + "]= " + teamPsuedoValue)
                 }
-            } else if (variables[i][2] == 3) {
-                value = value.toString();
-                value = value.trim();
-                value = value.charAt(0);
+            } else if (teamPsuedovariables[teamPsuedoI][2] == 3) {
+                teamPsuedoValue = teamPsuedoValue.toString();
+                teamPsuedoValue = teamPsuedoValue.trim();
+                teamPsuedoValue = teamPsuedoValue.charAt(0);
                 if (!isArray)
-                    variables[i][1] = value;
+                    teamPsuedovariables[teamPsuedoI][1] = teamPsuedoValue;
                 else {
-                    variables[i][1][index] = value
+                    teamPsuedovariables[teamPsuedoI][1][teamPsuedoIndex] = teamPsuedoValue
                     //tryEval(varName + "[" + index + "]= " + value)
                 }
-            } else if (variables[i][2] == 4) {
-                if (value == "true" || value == true) {
+            } else if (teamPsuedovariables[teamPsuedoI][2] == 4) {
+                if (teamPsuedoValue == "true" || teamPsuedoValue == true) {
                     if (!isArray)
-                        variables[i][1] = value;
+                        teamPsuedovariables[teamPsuedoI][1] = teamPsuedoValue;
                     else {
-                        variables[i][1][index] = value
-                        tryEval(varName + "[" + index + "]= " + value)
+                        teamPsuedovariables[teamPsuedoI][1][teamPsuedoIndex] = teamPsuedoValue
+                        tryEval(varName + "[" + teamPsuedoIndex + "]= " + teamPsuedoValue)
                     }
                 }
-                else if (value == "false" || value == false) {
+                else if (teamPsuedoValue == "false" || teamPsuedoValue == false) {
                     if (!isArray)
-                        variables[i][1] = value;
+                        teamPsuedovariables[teamPsuedoI][1] = teamPsuedoValue;
                     else {
-                        variables[i][1][index] = value
-                        tryEval(varName + "[" + index + "]= " + value)
+                        teamPsuedovariables[teamPsuedoI][1][teamPsuedoIndex] = teamPsuedoValue
+                        tryEval(varName + "[" + teamPsuedoIndex + "]= " + teamPsuedoValue)
                     }
                 }
                 else {
@@ -725,11 +745,11 @@ function updateVariable(varName, value) {
 
 // If variable exists return true. Otherwise return false
 function checkVariableExistance(varName) {
-    if (variables.length == 0) {
+    if (teamPsuedovariables.length == 0) {
         return false;
     }
-    for (var i = 0; i < variables.length; i++) {
-        if (variables[i][0] === varName) {
+    for (var teamPsuedoI = 0; teamPsuedoI < teamPsuedovariables.length; teamPsuedoI++) {
+        if (teamPsuedovariables[teamPsuedoI][0] === varName) {
             return true;
         }
     }
@@ -765,7 +785,7 @@ function tryEval(code) {
             return
         }
         if (e instanceof ReferenceError) {
-            error("There was an undefined reference error. These errors are often caused by variables being referenced that don't exist or are refered to with an incorrect method.")
+            error("There was an undefined reference error. These errors are often caused by using Strings without quotation marks or variables being referenced that don't exist or are refered to with an incorrect method.")
             return
         }
         if (e instanceof TypeError) {
@@ -784,11 +804,11 @@ function formatEquals(var1) {
 }
 
 function isInteger(var1) {
-    for (var i = 0; i < var1.length; i++) {
+    for (var teamPsuedoI = 0; teamPsuedoI < var1.length; teamPsuedoI++) {
         //console.log()
         if (var1[0] == "-")
-            i++
-        if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
+            teamPsuedoI++
+        if (var1[teamPsuedoI] === "0" || var1[teamPsuedoI] === "1" || var1[teamPsuedoI] === "2" || var1[teamPsuedoI] === "3" || var1[teamPsuedoI] === "4" || var1[teamPsuedoI] === "5" || var1[teamPsuedoI] === "6" || var1[teamPsuedoI] === "7" || var1[teamPsuedoI] === "8" || var1[teamPsuedoI] === "9") {
             //Do nothing
         } else {
             return false;
@@ -799,15 +819,15 @@ function isInteger(var1) {
 
 function isReal(var1) {
     var numOfDots = 0;
-    for (var i = 0; i < var1.length; i++) {
+    for (var teamPsuedoI = 0; teamPsuedoI < var1.length; teamPsuedoI++) {
         if (var1[0] == "-")
-            i++
-        if (var1[i] === "0" || var1[i] === "1" || var1[i] === "2" || var1[i] === "3" || var1[i] === "4" || var1[i] === "5" || var1[i] === "6" || var1[i] === "7" || var1[i] === "8" || var1[i] === "9") {
+            teamPsuedoI++
+        if (var1[teamPsuedoI] === "0" || var1[teamPsuedoI] === "1" || var1[teamPsuedoI] === "2" || var1[teamPsuedoI] === "3" || var1[teamPsuedoI] === "4" || var1[teamPsuedoI] === "5" || var1[teamPsuedoI] === "6" || var1[teamPsuedoI] === "7" || var1[teamPsuedoI] === "8" || var1[teamPsuedoI] === "9") {
             //Do nothing
-            if (var1[i] === "-0" || var1[i] === "-1" || var1[i] === "-2" || var1[i] === "-3" || var1[i] === "-4" || var1[i] === "-5" || var1[i] === "-6" || var1[i] === "-7" || var1[i] === "-8" || var1[i] === "-9" && !leftSide) {
+            if (var1[teamPsuedoI] === "-0" || var1[teamPsuedoI] === "-1" || var1[teamPsuedoI] === "-2" || var1[teamPsuedoI] === "-3" || var1[teamPsuedoI] === "-4" || var1[teamPsuedoI] === "-5" || var1[teamPsuedoI] === "-6" || var1[teamPsuedoI] === "-7" || var1[teamPsuedoI] === "-8" || var1[teamPsuedoI] === "-9" && !leftSide) {
                 error("You cannot have a negative in the decimal spot")
             }
-        } else if (var1[i] === ".") {
+        } else if (var1[teamPsuedoI] === ".") {
             if (numOfDots < 1) {
                 numOfDots = numOfDots + 1;
             } else {
@@ -930,21 +950,21 @@ function evaluatePhrase(teamPseudoPhrase) {
 }
 
 function getConditionResult(phrase) {
-    result = evaluatePhrase(phrase)
-    if (result == true)
+    teamPsuedoResult = evaluatePhrase(phrase)
+    if (teamPsuedoResult == true)
         return (true)
-    else if (result == false)
+    else if (teamPsuedoResult == false)
         return (false)
     else
-        error("The condition " + phrase + " must result in either true or false")
+        error("The condition " + phrase + " must teamPsuedoResult in either true or false")
 }
 
 function checkValidName(name) {
     bracket = name.length
 
-    for (x = 0; x < name.length; x++) {
-        if (name[x] == "[") {
-            bracket = x
+    for (teamPsuedoX = 0; teamPsuedoX < name.length; teamPsuedoX++) {
+        if (name[teamPsuedoX] == "[") {
+            bracket = teamPsuedoX
             break
         }
     }
@@ -1019,11 +1039,11 @@ function checkValidName(name) {
         error("false is a reserved word that can't be used in variable names")
 }
 
-function getLoop(i) {
+function getLoop(teamPsuedoI) {
     var p = 0;
-    while (p < loops.length) {
-        if (loops[p][1] == i) {
-            var temp = ((loops[p][0]) - 1);
+    while (p < teamPsuedoLoops.length) {
+        if (teamPsuedoLoops[p][1] == teamPsuedoI) {
+            var temp = ((teamPsuedoLoops[p][0]) - 1);
             return temp;
         }
         p++;
@@ -1042,7 +1062,7 @@ function openFile(func) {
         }
         var reader = new FileReader();
         reader.onload = function (e) {
-            var contents = e.target.result;
+            var contents = e.target.teamPsuedoResult;
             fileInput.func(contents);
             document.body.removeChild(fileInput);
         }
@@ -1087,13 +1107,11 @@ function copy() {
 function toggleHelp() {
     var help = document.querySelector("iframe");
     var question = document.querySelector("#help-btn");
-    if(help.classList.contains("show"))
-    {
+    if (help.classList.contains("show")) {
         help.classList.remove("show");
         question.classList.remove("show");
     }
-    else
-    {
+    else {
         help.classList.add("show");
         question.classList.add("show");
     }
