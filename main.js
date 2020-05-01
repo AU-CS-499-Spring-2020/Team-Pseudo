@@ -2,7 +2,7 @@
 var teamPsuedovariables = []
 var teamPsuedoLoops = []
 var teamPsuedoFunctions = []
-var Ifs = []
+var TeamPseudoIfs = []
 
 function main() {
     document.getElementById('console').innerHTML = "";
@@ -82,44 +82,44 @@ function executeCode(line) {
         teamPsuedoCurrent = teamPsuedoCurrent.split("//")[0];
 
         //Checks if the line is inside an if statement
-        if (Ifs.length > 0) {
+        if (TeamPseudoIfs.length > 0) {
             testCond = teamPsuedoCurrent.trim()
             console.log("test cond: " + testCond)
             if (testCond == "End If") {
-                Ifs.pop()
-                console.log("Ifs after pop: " + Ifs)
-                if (Ifs.length > 0) {
-                    if (Ifs[Ifs.length - 1][1] == false) {
-                        teamPsuedoResult = Ifs[Ifs.length - 1][0]
+                TeamPseudoIfs.pop()
+                console.log("Ifs after pop: " + TeamPseudoIfs)
+                if (TeamPseudoIfs.length > 0) {
+                    if (TeamPseudoIfs[TeamPseudoIfs.length - 1][1] == false) {
+                        teamPsuedoResult = TeamPseudoIfs[TeamPseudoIfs.length - 1][0]
                     }
-                    else if (Ifs[Ifs.length - 1][1] == true) {
-                        teamPsuedoResult = !Ifs[Ifs.length - 1][0]
+                    else if (TeamPseudoIfs[TeamPseudoIfs.length - 1][1] == true) {
+                        teamPsuedoResult = !TeamPseudoIfs[TeamPseudoIfs.length - 1][0]
                     }
                 }
                 continue
             }
             if (testCond.slice(0, 2) == "If" && teamPsuedoResult == false) {
-                if (Ifs[Ifs.length - 1][1] == false) {
-                    if (Ifs[Ifs.length - 1][0] == false)
-                        Ifs.push(["skip",])
-                    console.log("Ifs skip: " + Ifs)
+                if (TeamPseudoIfs[TeamPseudoIfs.length - 1][1] == false) {
+                    if (TeamPseudoIfs[TeamPseudoIfs.length - 1][0] == false)
+                        TeamPseudoIfs.push(["skip",])
+                    console.log("Ifs skip: " + TeamPseudoIfs)
                     continue
                 }
-                else if (Ifs[Ifs.length - 1][1] == true) {
-                    if (Ifs[Ifs.length - 1][0] == true)
-                        Ifs.push(["skip",])
-                    console.log("Ifs skip: " + Ifs)
+                else if (TeamPseudoIfs[TeamPseudoIfs.length - 1][1] == true) {
+                    if (TeamPseudoIfs[TeamPseudoIfs.length - 1][0] == true)
+                        TeamPseudoIfs.push(["skip",])
+                    console.log("Ifs skip: " + TeamPseudoIfs)
                     continue
                 }
             }
-            else if (testCond == "Else" && Ifs[Ifs.length - 1][0] == true) {
+            else if (testCond == "Else" && TeamPseudoIfs[TeamPseudoIfs.length - 1][0] == true) {
                 teamPsuedoResult = false
-                Ifs[Ifs.length - 1][1] = true
+                TeamPseudoIfs[TeamPseudoIfs.length - 1][1] = true
                 continue
             }
-            else if (testCond == "Else" && Ifs[Ifs.length - 1][0] == false) {
+            else if (testCond == "Else" && TeamPseudoIfs[TeamPseudoIfs.length - 1][0] == false) {
                 teamPsuedoResult = true
-                Ifs[Ifs.length - 1][1] = true
+                TeamPseudoIfs[TeamPseudoIfs.length - 1][1] = true
                 continue
             }
             else if (testCond == "Skip") {
@@ -505,8 +505,8 @@ function executeCode(line) {
                 ifCond = ifCond.slice(0, ifCond.length - 4)
                 inIf = inIf + 1
                 //console.log(ifCond)
-                Ifs.push([getConditionResult(ifCond.toString()), false])
-                console.log("Ifs: " + Ifs)
+                TeamPseudoIfs.push([getConditionResult(ifCond.toString()), false])
+                console.log("Ifs: " + TeamPseudoIfs)
             }
             else {
                 error("If statement conditions must be followed with \"Then\"")
