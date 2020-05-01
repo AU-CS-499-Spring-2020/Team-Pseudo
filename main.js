@@ -53,22 +53,23 @@ function executeCode(line) {
     var teamPsuedoCode = document.getElementById('code').value.split("\n");
 
     // Find all of the loops and add them to a list
-    var tempLoops = [];
-    for (var teamPsuedoP = 0; teamPsuedoP < teamPsuedoCode.length; teamPsuedoP++) {
-        teamPsuedoCode[teamPsuedoP] = teamPsuedoCode[teamPsuedoP].trim();
-        if (teamPsuedoCode[teamPsuedoP].startsWith("While") || teamPsuedoCode[teamPsuedoP].startsWith("Do")) {
-            tempLoops.push(teamPsuedoP);
-        } else if (teamPsuedoCode[teamPsuedoP].startsWith("End While") || teamPsuedoCode[teamPsuedoP].startsWith("End Do While")) {
-            if (tempLoops.length != 0) {
-                teamPsuedoLoops.push([tempLoops.pop(), teamPsuedoP]);
-            } else {
-                error("Issue with too few While Statements");
-            }
-        }
-    }
-    if (tempLoops.length != 0) {
-        error("Issue with too many While Statements");
-    }
+    // var tempLoops = [];
+    // for (var teamPsuedoP = 0; teamPsuedoP < teamPsuedoCode.length; teamPsuedoP++) {
+    //     teamPsuedoCode[teamPsuedoP] = teamPsuedoCode[teamPsuedoP].trim();
+    //     if (teamPsuedoCode[teamPsuedoP].startsWith("While") || teamPsuedoCode[teamPsuedoP].startsWith("Do")) {
+    //         tempLoops.push(teamPsuedoP + 1);
+    //     } else if (teamPsuedoCode[teamPsuedoP].startsWith("End While") || teamPsuedoCode[teamPsuedoP].startsWith("End Do While")) {
+    //         if (tempLoops.length != 0) {
+    //             teamPsuedoLoops.push([tempLoops.pop(), teamPsuedoP+1]);
+    //         } else {
+    //             error("Issue with too few While Statements");
+    //         }
+    //     }
+    //     console.log("loops: " + teamPsuedoLoops)
+    // }
+    // if (tempLoops.length != 0) {
+    //     error("Issue with too many While Statements");
+    // }
 
     // The fun stuff
     for (var teamPsuedoI = line; teamPsuedoI < teamPsuedoCode.length; teamPsuedoI++) {
@@ -81,13 +82,84 @@ function executeCode(line) {
         // Remove any comments that the user puts into the code
         teamPsuedoCurrent = teamPsuedoCurrent.split("//")[0];
 
+        //Checks if the loop is supposed to execute
+        if(teamPsuedoLoops.length > 0) {
+            workingLoop = teamPsuedoLoops.pop(teamPsuedoLoops.length)
+            teamPsuedoLoops.push(workingLoop)
+            console.log("work loop: " + workingLoop)
+            console.log("loops: " + teamPsuedoLoops)
+            console.log(workingLoop[3])
+            if (workingLoop[3] == false) {
+                console.log("in false")
+                loopEnd = false
+                currentLoop = teamPsuedoLoops.length
+                loopType = workingLoop[1]
+                while(!loopEnd) {
+                    console.log("move to " + teamPsuedoI)
+                    console.log("curent: " + teamPsuedoCurrent)
+                    console.log(teamPsuedoLoops.length)
+                    if(teamPsuedoCurrent.startsWith("End While")) {
+                        if ((teamPsuedoLoops.length == currentLoop) && (loopType == "while")) {
+                            loopEnd = true
+                            teamPsuedoLoops.pop()
+                            console.log("while loop end true")
+                            console.log(teamPsuedoI)
+                            //teamPsuedoI++
+                            //teamPsuedoCurrent = teamPsuedoCode[teamPsuedoI].replace(/^\s+/g, '');
+                            console.log(teamPsuedoLoops)
+                            console.log(teamPsuedoCurrent)
+                            
+                        }
+                        else if (teamPsuedoLoops.length == currentLoop) {
+                            error("There's a missing End While command")
+                        }
+                        else {
+                            teamPsuedoLoops.pop()
+                        }
+                    }
+                    else if (teamPsuedoCurrent.startsWith("End Do While")) {
+                        if ((teamPsuedoLoops.length == currentLoop) && (loopType == "do")) {
+                            loopEnd = true
+                            teamPsuedoLoops.pop()
+                            console.log("do loop end true")
+                        }
+                        else if (teamPsuedoLoops.length == currentLoop) {
+                            error("There's a missing End Do While command")
+                        }
+                        else {
+                            teamPsuedoLoops.pop()
+                        }
+                    }
+                    else if (teamPsuedoCurrent.startsWith("End For")) {
+                        if ((teamPsuedoLoops.length == currentLoop) && (loopType == "for")) {
+                            loopEnd = true
+                            teamPsuedoLoops.pop()
+                            console.log("for loop end true")
+                        }
+                        else if (teamPsuedoLoops.length == currentLoop) {
+                            error("There's a missing End For command")
+                        }
+                        else {
+                            teamPsuedoLoops.pop()
+                        }
+                    }
+                    else if (teamPsuedoCurrent.startsWith("While ")) {
+                    console.log("added while: " + teamPsuedoLoops)
+                        teamPsuedoLoops.push([teamPsuedoI, "while", teamPsuedoCurrent.substring(6), false])
+                    }
+                    teamPsuedoI++
+                    teamPsuedoCurrent = teamPsuedoCode[teamPsuedoI].replace(/^\s+/g, '');
+                    console.log("leaving at: " + teamPsuedoI + ": " + teamPsuedoCurrent)
+                }
+
+            }
+        }
+
         //Checks if the line is inside an if statement
         if (TeamPseudoIfs.length > 0) {
             testCond = teamPsuedoCurrent.trim()
-            console.log("test cond: " + testCond)
             if (testCond == "End If") {
                 TeamPseudoIfs.pop()
-                console.log("Ifs after pop: " + TeamPseudoIfs)
                 if (TeamPseudoIfs.length > 0) {
                     if (TeamPseudoIfs[TeamPseudoIfs.length - 1][1] == false) {
                         teamPsuedoResult = TeamPseudoIfs[TeamPseudoIfs.length - 1][0]
@@ -102,13 +174,11 @@ function executeCode(line) {
                 if (TeamPseudoIfs[TeamPseudoIfs.length - 1][1] == false) {
                     if (TeamPseudoIfs[TeamPseudoIfs.length - 1][0] == false)
                         TeamPseudoIfs.push(["skip",])
-                    console.log("Ifs skip: " + TeamPseudoIfs)
                     continue
                 }
                 else if (TeamPseudoIfs[TeamPseudoIfs.length - 1][1] == true) {
                     if (TeamPseudoIfs[TeamPseudoIfs.length - 1][0] == true)
                         TeamPseudoIfs.push(["skip",])
-                    console.log("Ifs skip: " + TeamPseudoIfs)
                     continue
                 }
             }
@@ -506,7 +576,6 @@ function executeCode(line) {
                 inIf = inIf + 1
                 //console.log(ifCond)
                 TeamPseudoIfs.push([getConditionResult(ifCond.toString()), false])
-                console.log("Ifs: " + TeamPseudoIfs)
             }
             else {
                 error("If statement conditions must be followed with \"Then\"")
@@ -521,21 +590,44 @@ function executeCode(line) {
             //console.log(selectCond)
 
         } else if (teamPsuedoCurrent.startsWith("While ")) {
+            added = false
             evaluate = teamPsuedoCurrent.substring(6);
             //console.log(evaluate);
             teamPsuedoResult = tryEval(evaluate);
-            console.log(teamPsuedoResult);
-            console.log(typeof (teamPsuedoResult))
-            if (teamPsuedoResult) {
-                // Do nothing
-            } else {
-                while (!teamPsuedoCode[teamPsuedoI].startsWith("End While")) {
-                    teamPsuedoI++;
+            console.log("results: " + teamPsuedoResult);
+            console.log("condition: " + teamPsuedoCurrent.substring(6))
+
+            for (x = 0; x < teamPsuedoLoops.length; x++) {
+                if (teamPsuedoLoops[x][0] == teamPsuedoI) {
+                    added = true
                 }
             }
+            if (!added) {
+                teamPsuedoLoops.push([teamPsuedoI, "while", teamPsuedoCurrent.substring(6), teamPsuedoResult])
+            }
+            console.log("Loops: " + teamPsuedoLoops)
+            console.log("Loops: lengths " + teamPsuedoLoops.length)
         } else if (teamPsuedoCurrent.startsWith("End While")) {
             //temp
-            teamPsuedoI = getLoop(teamPsuedoI);
+            //teamPsuedoI = getLoop(teamPsuedoI);
+            console.log(teamPsuedoLoops + " i: " + teamPsuedoCurrent)
+            currentLoop = teamPsuedoLoops.pop()
+            console.log("current loop:" + currentLoop)
+            if(currentLoop[1] == "while") {
+                if(tryEval(currentLoop[2]) == true) {
+                    currentLoop[3] = true
+                    teamPsuedoLoops.push(currentLoop)
+                    teamPsuedoI = currentLoop[0]
+                    console.log("Loops: " + teamPsuedoLoops)
+                    console.log("Going to: " + teamPsuedoI)
+                }
+                else {
+                    currentLoop[3] = false
+                }
+            }
+            else {
+                error("There is a missing End While keyword")
+            }
 
         } else if (teamPsuedoCurrent.startsWith("Do")) {
             //Nothing
@@ -1068,17 +1160,17 @@ function checkValidName(name) {
         error("false is a reserved word that can't be used in variable names")
 }
 
-function getLoop(teamPsuedoI) {
-    var p = 0;
-    while (p < teamPsuedoLoops.length) {
-        if (teamPsuedoLoops[p][1] == teamPsuedoI) {
-            var temp = ((teamPsuedoLoops[p][0]) - 1);
-            return temp;
-        }
-        p++;
-    }
-    error("Loop return point not found.");
-}
+// function getLoop(teamPsuedoI) {
+//     var p = 0;
+//     while (p < teamPsuedoLoops.length) {
+//         if (teamPsuedoLoops[p][1] == teamPsuedoI) {
+//             var temp = ((teamPsuedoLoops[p][0]) - 1);
+//             return temp;
+//         }
+//         p++;
+//     }
+//     error("Loop return point not found.");
+// }
 
 // Code for front end features only below here.
 
