@@ -2,6 +2,7 @@
 var teamPsuedovariables = []
 var teamPsuedoLoops = []
 var teamPsuedoFunctions = []
+var Ifs = []
 
 function main() {
     document.getElementById('console').innerHTML = "";
@@ -41,7 +42,7 @@ function executeCode(line) {
     // Reset variables, loops, and ifs everytime the program is run.
     teamPsuedovariables = [];
     teamPsuedoLoops = [];
-    inIf = false
+    inIf = 0
     inSelect = false
     selectCond = null
     foundCase = false
@@ -81,20 +82,48 @@ function executeCode(line) {
         teamPsuedoCurrent = teamPsuedoCurrent.split("//")[0];
 
         //Checks if the line is inside an if statement
-        if (inIf) {
+        if (Ifs.length > 0) {
             testCond = teamPsuedoCurrent.trim()
-            //console.log(testCond)
+            console.log("test cond: " + testCond)
             if (testCond == "End If") {
-                inIf = false
-                teamPsuedoResult = null
+                Ifs.pop()
+                console.log("Ifs after pop: " + Ifs)
+                if (Ifs.length > 0) {
+                    if (Ifs[Ifs.length - 1][1] == false) {
+                        teamPsuedoResult = Ifs[Ifs.length - 1][0]
+                    }
+                    else if (Ifs[Ifs.length - 1][1] == true) {
+                        teamPsuedoResult = !Ifs[Ifs.length - 1][0]
+                    }
+                }
                 continue
             }
-            else if (testCond == "Else" && teamPsuedoResult == true) {
+            if (testCond.slice(0, 2) == "If" && teamPsuedoResult == false) {
+                if (Ifs[Ifs.length - 1][1] == false) {
+                    if (Ifs[Ifs.length - 1][0] == false)
+                        Ifs.push(["skip",])
+                    console.log("Ifs skip: " + Ifs)
+                    continue
+                }
+                else if (Ifs[Ifs.length - 1][1] == true) {
+                    if (Ifs[Ifs.length - 1][0] == true)
+                        Ifs.push(["skip",])
+                    console.log("Ifs skip: " + Ifs)
+                    continue
+                }
+            }
+            else if (testCond == "Else" && Ifs[Ifs.length - 1][0] == true) {
                 teamPsuedoResult = false
+                Ifs[Ifs.length - 1][1] = true
                 continue
             }
-            else if (testCond == "Else" && teamPsuedoResult == false) {
+            else if (testCond == "Else" && Ifs[Ifs.length - 1][0] == false) {
                 teamPsuedoResult = true
+                Ifs[Ifs.length - 1][1] = true
+                continue
+            }
+            else if (testCond == "Skip") {
+                teamPsuedoResult = false
                 continue
             }
             else if (teamPsuedoResult == false) {
@@ -474,10 +503,10 @@ function executeCode(line) {
             var ifCond = teamPsuedoCurrent.substring(3).trim()
             if (ifCond.endsWith("Then")) {
                 ifCond = ifCond.slice(0, ifCond.length - 4)
-                inIf = true
+                inIf = inIf + 1
                 //console.log(ifCond)
-                ifResult = getConditionResult(ifCond.toString())
-                //console.log(ifResult)
+                Ifs.push([getConditionResult(ifCond.toString()), false])
+                console.log("Ifs: " + Ifs)
             }
             else {
                 error("If statement conditions must be followed with \"Then\"")
@@ -1120,33 +1149,33 @@ function toggleHelp() {
 //Allows user to download output text
 $(document).ready(function () {
 
-        function saveTextAsFile() {
-            var textToWrite = document.getElementById("console").value;
-            var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+    function saveTextAsFile() {
+        var textToWrite = document.getElementById("console").value;
+        var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
 
-            var fileNameToSaveAs = prompt("Enter the filename you wish to save your output to", "");
-            if (fileNameToSaveAs === ""){
-              fileNameToSaveAs = "PseudoOutput"
-            }
-
-            var downloadLink = document.createElement("a");
-
-            downloadLink.download = fileNameToSaveAs;
-            downloadLink.innerHTML = "link";
-            window.URL = window.URL || window.webkitURL;
-            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-            downloadLink.onclick = destroyClickedElement;
-            downloadLink.style.display = "none";
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
+        var fileNameToSaveAs = prompt("Enter the filename you wish to save your output to", "");
+        if (fileNameToSaveAs === "") {
+            fileNameToSaveAs = "PseudoOutput"
         }
 
-        function destroyClickedElement(event) {
-            document.body.removeChild(event.target);
-        }
+        var downloadLink = document.createElement("a");
 
-        $("#save-to-file").click(function (e) {
-            e.preventDefault();
-            saveTextAsFile();
-        });
- });
+        downloadLink.download = fileNameToSaveAs;
+        downloadLink.innerHTML = "link";
+        window.URL = window.URL || window.webkitURL;
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+
+    function destroyClickedElement(event) {
+        document.body.removeChild(event.target);
+    }
+
+    $("#save-to-file").click(function (e) {
+        e.preventDefault();
+        saveTextAsFile();
+    });
+});
