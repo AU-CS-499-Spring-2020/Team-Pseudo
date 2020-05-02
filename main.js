@@ -3,6 +3,7 @@ var teamPsuedovariables = []
 var teamPsuedoLoops = []
 var teamPsuedoFunctions = []
 var TeamPseudoIfs = []
+var TeamPseudoForVars = []
 
 function main() {
     document.getElementById('console').innerHTML = "";
@@ -83,7 +84,7 @@ function executeCode(line) {
         teamPsuedoCurrent = teamPsuedoCurrent.split("//")[0];
 
         //Checks if the loop is supposed to execute
-        if(teamPsuedoLoops.length > 0) {
+        if (teamPsuedoLoops.length > 0) {
             workingLoop = teamPsuedoLoops.pop(teamPsuedoLoops.length)
             teamPsuedoLoops.push(workingLoop)
             console.log("work loop: " + workingLoop)
@@ -94,11 +95,11 @@ function executeCode(line) {
                 loopEnd = false
                 currentLoop = teamPsuedoLoops.length
                 loopType = workingLoop[1]
-                while(!loopEnd) {
+                while (!loopEnd) {
                     console.log("move to " + teamPsuedoI)
                     console.log("curent: " + teamPsuedoCurrent)
                     console.log(teamPsuedoLoops.length)
-                    if(teamPsuedoCurrent.startsWith("End While")) {
+                    if (teamPsuedoCurrent.startsWith("End While")) {
                         if ((teamPsuedoLoops.length == currentLoop) && (loopType == "while")) {
                             loopEnd = true
                             teamPsuedoLoops.pop()
@@ -106,7 +107,7 @@ function executeCode(line) {
                             console.log(teamPsuedoI)
                             console.log(teamPsuedoLoops)
                             console.log(teamPsuedoCurrent)
-                            
+
                         }
                         else if (teamPsuedoLoops.length == currentLoop) {
                             error("There's a missing End While command")
@@ -142,13 +143,17 @@ function executeCode(line) {
                         }
                     }
                     else if (teamPsuedoCurrent.startsWith("While ")) {
-                    console.log("added while: " + teamPsuedoLoops)
+                        console.log("added while: " + teamPsuedoLoops)
                         teamPsuedoLoops.push([teamPsuedoI, "while", teamPsuedoCurrent.substring(6), false])
                     }
                     else if (teamPsuedoCurrent.startsWith("Do ")) {
                         console.log("added do: " + teamPsuedoLoops)
-                            teamPsuedoLoops.push([teamPsuedoI, "do", teamPsuedoCurrent.substring(3), false])
-                        }
+                        teamPsuedoLoops.push([teamPsuedoI, "do", teamPsuedoCurrent.substring(3), false])
+                    }
+                    else if (teamPsuedoCurrent.startsWith("For ")) {
+                        console.log("added do: " + teamPsuedoLoops)
+                        teamPsuedoLoops.push([teamPsuedoI, "for", "1 == 0", false, "var", 1])
+                    }
                     teamPsuedoI++
                     teamPsuedoCurrent = teamPsuedoCode[teamPsuedoI].replace(/^\s+/g, '');
                     console.log("leaving at: " + teamPsuedoI + ": " + teamPsuedoCurrent)
@@ -156,6 +161,14 @@ function executeCode(line) {
 
             }
         }
+        // if(teamPsuedoLoops.length == 0) {
+        //     console.log("no loops: " + teamPsuedoLoops)
+        //     for (teamPseudoL = 0;teamPseudoL < TeamPseudoForVars.length; teamPseudoL++) {
+        //         var removeIndex = checkVariableIndex(TeamPseudoForVars[teamPseudoL])
+        //         teamPsuedovariables = teamPsuedovariables.splice[removeIndex, 1]
+        //         var teamPsuedovariables = teamPsuedovariables.filter(function (el) { return el; });
+        //     }
+        // }
 
         //Checks if the line is inside an if statement
         if (TeamPseudoIfs.length > 0) {
@@ -615,8 +628,8 @@ function executeCode(line) {
             console.log(teamPsuedoLoops + " i: " + teamPsuedoCurrent)
             currentLoop = teamPsuedoLoops.pop()
             console.log("current loop:" + currentLoop)
-            if(currentLoop[1] == "while") {
-                if(tryEval(currentLoop[2]) == true) {
+            if (currentLoop[1] == "while") {
+                if (tryEval(currentLoop[2]) == true) {
                     currentLoop[3] = true
                     teamPsuedoLoops.push(currentLoop)
                     teamPsuedoI = currentLoop[0]
@@ -627,8 +640,174 @@ function executeCode(line) {
                     currentLoop[3] = false
                 }
             }
+        } else if (teamPsuedoCurrent.startsWith("For ")) {
+
+            try {
+
+                var teamPsuedoVar1 = teamPsuedoCurrent.substring(4);
+                var teamPsuedoStep = 1
+                var teamPsuedoVarType = 0
+                if (teamPsuedoCurrent.includes("=")) {
+                    teamPsuedoVar1 = formatEquals(teamPsuedoVar1)
+                    for (teamPsuedoX = 0; teamPsuedoX < teamPsuedoVar1.length; teamPsuedoX++) {
+                        if (teamPsuedoVar1[teamPsuedoX] == "=") {
+                            var teamPsuedoVar2 = teamPsuedoVar1.slice(0, teamPsuedoX) //Var Name
+                            var teamPsuedoSplit = teamPsuedoVar1.slice(teamPsuedoX + 1, teamPsuedoVar1.length) //Var Value
+                            teamPsuedoX = teamPsuedoVar1.length
+                        }
+                    }
+                }
+                console.log("phrase: " + teamPsuedoSplit.split("To"))
+                var teamPsuedoSplit = teamPsuedoSplit.split(" To ")
+                var teamPsuedoVar3 = teamPsuedoSplit[0].trim()
+                var maxValue = teamPsuedoSplit[1]
+                console.log()
+                if (maxValue.includes(" Step ")) {
+                    teamPsuedoSplit = maxValue.split(" Step ")
+                    maxValue = teamPsuedoSplit[0].trim()
+                    teamPsuedoStep = teamPsuedoSplit[1].trim()
+                }
+
+                console.log("name: " + teamPsuedoVar2)
+                console.log("max: " + maxValue)
+                console.log("start: " + teamPsuedoVar3)
+                console.log("step: " + teamPsuedoVar3)
+
+                teamPsuedoVar3 = evaluatePhrase(teamPsuedoVar3).toString()
+                console.log("name " + teamPsuedoVar2);
+                console.log("value " + teamPsuedoVar3);
+
+                //Makes sure the variable name is valid
+                checkValidName(teamPsuedoVar2)
+
+                if (teamPsuedoVar2 == undefined || teamPsuedoVar3 == undefined) {
+                    error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
+                } else if ((checkVariableExistance(teamPsuedoVar2)) === true) {
+                    error("Variable " + teamPsuedoVar2 + " already exists");
+                } else {
+                    if (teamPsuedoVarType == 0) {
+                        if (isInteger(teamPsuedoVar3) || isReal(teamPsuedoVar3)) {
+                            teamPsuedoVar3 = teamPsuedoVar3.split(".")[0];
+                            teamPsuedovariables.push([teamPsuedoVar2, teamPsuedoVar3, teamPsuedoVarType]);
+                        } else {
+                            error(teamPsuedoVar2 + " is not an Integer value")
+                        }
+                    } else {
+                        error("Your For loop variable must be an Integer");
+                    }
+                    //Eval creates the variable in the background
+                    tryEval(teamPsuedoVar2 + " = " + teamPsuedoVar3)
+                }
+            }
+            catch (e) {
+                error("Make sure your For loop declaration follows the form: For counterVariable = startingValue To maxValue")
+
+            }
+
+            added = false
+            evaluate = teamPsuedoVar2 + " <= " + maxValue;
+            console.log(evaluate);
+            teamPsuedoResult = tryEval(evaluate);
+            console.log("results: " + teamPsuedoResult);
+            console.log("condition: " + evaluate)
+
+            for (x = 0; x < teamPsuedoLoops.length; x++) {
+                if (teamPsuedoLoops[x][0] == teamPsuedoI) {
+                    added = true
+                }
+            }
+            if (!added) {
+                teamPsuedoLoops.push([teamPsuedoI, "for", evaluate, teamPsuedoResult, teamPsuedoVar2, teamPsuedoStep])
+                TeamPseudoForVars.push(teamPsuedoVar2)
+                console.log("delete vars: " + TeamPseudoForVars)
+            }
+            console.log("Loops: " + teamPsuedoLoops)
+            console.log("Loops: lengths " + teamPsuedoLoops.length)
+
+        }
+
+
+        // else if (teamPsuedoCurrent.startsWith("Set ")) {
+        // if (teamPsuedoCurrent.includes("=")) {
+        //     var teamPsuedoVar1 = teamPsuedoCurrent.substring(4);
+        //     teamPsuedoVar1 = formatEquals(teamPsuedoVar1);
+        //     for (teamPsuedoX = 0; teamPsuedoX < teamPsuedoVar1.length; teamPsuedoX++) {
+        //         if (teamPsuedoVar1[teamPsuedoX] == "=") {
+        //             var teamPsuedoVar2 = teamPsuedoVar1.slice(0, teamPsuedoX) //Var Name
+        //             var teamPsuedoVar3 = teamPsuedoVar1.slice(teamPsuedoX + 1, teamPsuedoVar1.length) //Var Value
+        //             teamPsuedoX = teamPsuedoVar1.length
+        //         }
+        //     }
+        //     teamPsuedoVar3 = evaluatePhrase(teamPsuedoVar3)
+        //     if (typeof teamPsuedoVar3 == "string")
+        //         teamPsuedoVar3 = "\"" + teamPsuedoVar3 + "\""
+        //     //console.log(typeof var3)
+        //     if (teamPsuedoVar2 == undefined || teamPsuedoVar3 == undefined) {
+        //         error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
+        //     } else if (teamPsuedoVar2.includes("[") || teamPsuedoVar2.includes("]")) {
+        //         //console.log(var2 + "," + var3)
+        //         updateVariable(teamPsuedoVar2, teamPsuedoVar3);
+        //     } else if ((checkVariableExistance(teamPsuedoVar1)) === false) {
+        //         if (checkConstant(teamPsuedoVar2)) {
+        //             error("You cannot change the value of the constant variable " + teamPsuedoVar2)
+        //         }
+        //         else {
+        //             updateVariable(teamPsuedoVar2, teamPsuedoVar3);
+        //             //Eval updates the variable in the background
+        //             eval(teamPsuedoVar2 + " = " + teamPsuedoVar3)
+        //         }
+        //     } else {
+        //         error("Variable does not exist");
+        //     }
+
+        // } else {
+        //     error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
+        // }
+
+        // }
+        else if (teamPsuedoCurrent.startsWith("End For")) {
+            console.log(teamPsuedoLoops + " i: " + teamPsuedoCurrent)
+            currentLoop = teamPsuedoLoops.pop()
+            console.log("current loop:" + currentLoop)
+            if (currentLoop[1] == "for") {
+                var teamPsuedoVar2 = currentLoop[4]; //Var Name
+                var teamPsuedoVar3 = teamPsuedoVar2 + " + " + currentLoop[5] //Var Value
+                teamPsuedoX = teamPsuedoVar1.length
+
+                console.log(teamPsuedoVar3)
+                teamPsuedoVar3 = evaluatePhrase(teamPsuedoVar3)
+                console.log(teamPsuedoVar3)
+
+                console.log("current loop:" + currentLoop)
+
+                updateVariable(teamPsuedoVar2, teamPsuedoVar3);
+                //Eval updates the variable in the background
+                eval(teamPsuedoVar2 + " = " + teamPsuedoVar3)
+
+                console.log("Loops U: " + teamPsuedoLoops)
+
+                if (tryEval(currentLoop[2]) == true) {
+                    currentLoop[3] = true
+                    teamPsuedoLoops.push(currentLoop)
+                    teamPsuedoI = currentLoop[0]
+                    console.log("Loops: " + teamPsuedoLoops)
+                    console.log("Going to: " + teamPsuedoI)
+
+                }
+                else if (tryEval(currentLoop[2]) == false) {
+                    currentLoop[3] = false
+                    console.log("b: " + teamPsuedovariables)
+                    //var removeIndex = checkVariableIndex(teamPsuedoVar2)
+                    //console.log(removeIndex)
+                    //delete teamPsuedovariables[0]
+                    //teamPsuedovariables = teamPsuedovariables.splice[removeIndex, 1]
+                    //var teamPsuedovariables = teamPsuedovariables.filter(function (el) { return el; });
+                    console.log("a: " + teamPsuedovariables)
+                }
+
+            }
             else {
-                error("There is a missing End While keyword")
+                error("There is a missing End For keyword")
             }
 
         } else if (teamPsuedoCurrent.startsWith("Do While ")) {
@@ -653,8 +832,8 @@ function executeCode(line) {
             console.log(teamPsuedoLoops + " i: " + teamPsuedoCurrent)
             currentLoop = teamPsuedoLoops.pop()
             console.log("current loop:" + currentLoop)
-            if(currentLoop[1] == "do") {
-                if(tryEval(currentLoop[2]) == true) {
+            if (currentLoop[1] == "do") {
+                if (tryEval(currentLoop[2]) == true) {
                     currentLoop[3] = true
                     teamPsuedoLoops.push(currentLoop)
                     teamPsuedoI = currentLoop[0]
@@ -715,20 +894,27 @@ function executeCode(line) {
         // Output the Current variables and their respective types and values
         document.getElementById('variables').innerHTML = "";
         for (var teamPsuedoJ = 0; teamPsuedoJ < teamPsuedovariables.length; teamPsuedoJ++) {
-            if (teamPsuedovariables[teamPsuedoJ][2] == 0) {
-                var temp = "Integer: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
-            } else if (teamPsuedovariables[teamPsuedoJ][2] == 1) {
-                var temp = "Real: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
-            } else if (teamPsuedovariables[teamPsuedoJ][2] == 2) {
-                var temp = "String: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
-            } else if (teamPsuedovariables[teamPsuedoJ][2] == 3) {
-                var temp = "Character: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
-            } else if (teamPsuedovariables[teamPsuedoJ][2] == 4) {
-                var temp = "Boolean: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
+            var found = false
+            for (teamPseudoL = 0; teamPseudoL < TeamPseudoForVars.length; teamPseudoL++) {
+                if (teamPsuedovariables[teamPsuedoJ][0] == TeamPseudoForVars[teamPseudoL]) {
+                    found = true
+                }
             }
-
-            document.getElementById('variables').innerHTML += temp;
-
+            if (!found) {
+                if (teamPsuedovariables[teamPsuedoJ][2] == 0) {
+                    var temp = "Integer: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
+                } else if (teamPsuedovariables[teamPsuedoJ][2] == 1) {
+                    var temp = "Real: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
+                } else if (teamPsuedovariables[teamPsuedoJ][2] == 2) {
+                    var temp = "String: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
+                } else if (teamPsuedovariables[teamPsuedoJ][2] == 3) {
+                    var temp = "Character: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
+                } else if (teamPsuedovariables[teamPsuedoJ][2] == 4) {
+                    var temp = "Boolean: " + teamPsuedovariables[teamPsuedoJ][0] + " = " + teamPsuedovariables[teamPsuedoJ][1] + "\n"
+                }
+                document.getElementById('variables').innerHTML += temp;
+            }
+            
         }
     }
     console.log("Done")
@@ -902,6 +1088,18 @@ function checkVariableExistance(varName) {
     for (var teamPsuedoI = 0; teamPsuedoI < teamPsuedovariables.length; teamPsuedoI++) {
         if (teamPsuedovariables[teamPsuedoI][0] === varName) {
             return true;
+        }
+    }
+    return false;
+}
+
+function checkVariableIndex(varName) {
+    if (teamPsuedovariables.length == 0) {
+        return false;
+    }
+    for (var teamPsuedoI = 0; teamPsuedoI < teamPsuedovariables.length; teamPsuedoI++) {
+        if (teamPsuedovariables[teamPsuedoI][0] === varName) {
+            return teamPsuedoI;
         }
     }
     return false;
@@ -1176,6 +1374,10 @@ function checkValidName(name) {
         error("Select is a reserved word that can't be used in variable names")
     if (name == "Case")
         error("Case is a reserved word that can't be used in variable names")
+    if (name == "Step")
+        error("Step is a reserved word that can't be used in variable names")
+    if (name == "To")
+        error("To is a reserved word that can't be used in variable names")
     if (name == "Default")
         error("Default is a reserved word that can't be used in variable names")
     if (name == "Set")
@@ -1189,18 +1391,6 @@ function checkValidName(name) {
     if (name == "false")
         error("false is a reserved word that can't be used in variable names")
 }
-
-// function getLoop(teamPsuedoI) {
-//     var p = 0;
-//     while (p < teamPsuedoLoops.length) {
-//         if (teamPsuedoLoops[p][1] == teamPsuedoI) {
-//             var temp = ((teamPsuedoLoops[p][0]) - 1);
-//             return temp;
-//         }
-//         p++;
-//     }
-//     error("Loop return point not found.");
-// }
 
 // Code for front end features only below here.
 
