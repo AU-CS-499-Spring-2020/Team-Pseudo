@@ -107,4 +107,10 @@ Kurtis implemented the save button which now allows users to save output to a tx
 Met as a group to record and edit the URCA presentation video.
 
 ### 4/24/2020, 11:30 PM - 12:30 AM - Fixed Input Type Checking
-Got the Input command working with type checking. Refactored variable names to fix a naming bug in the editor.
+Josiah got the Input command working with type checking. Refactored variable names to fix a naming bug in the editor.
+
+### 4/30/2020, 12:00 AM - 2:30 AM - Added If Else statement nesting
+Josiah figured out a way to get If Else statements to work while nested.
+
+### 5/1/2020, 2:00 PM - 6:00 PM and 7:00PM - 11:00 PM - Reworked and Added loops
+Josiah redid While loops from scratch to allow for nesting loops. Redid Do While loops from scratch as well to allow nesting. Added in For loops, allowing for variable creation with type checking and an optional increment step size modifier. For loops are also able to be nested within other loops.
