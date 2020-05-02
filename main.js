@@ -612,8 +612,8 @@ function executeCode(line) {
             console.log("results: " + teamPsuedoResult);
             console.log("condition: " + teamPsuedoCurrent.substring(6))
 
-            for (x = 0; x < teamPsuedoLoops.length; x++) {
-                if (teamPsuedoLoops[x][0] == teamPsuedoI) {
+            for (teamPseudoX = 0; teamPseudoX < teamPsuedoLoops.length; teamPseudoX++) {
+                if (teamPsuedoLoops[teamPseudoX][0] == teamPsuedoI) {
                     added = true
                 }
             }
@@ -642,7 +642,7 @@ function executeCode(line) {
             }
         } else if (teamPsuedoCurrent.startsWith("For ")) {
 
-            try {
+            // try {
 
                 var teamPsuedoVar1 = teamPsuedoCurrent.substring(4);
                 var teamPsuedoStep = 1
@@ -661,7 +661,7 @@ function executeCode(line) {
                 var teamPsuedoSplit = teamPsuedoSplit.split(" To ")
                 var teamPsuedoVar3 = teamPsuedoSplit[0].trim()
                 var maxValue = teamPsuedoSplit[1]
-                console.log()
+                console.log(maxValue)
                 if (maxValue.includes(" Step ")) {
                     teamPsuedoSplit = maxValue.split(" Step ")
                     maxValue = teamPsuedoSplit[0].trim()
@@ -683,7 +683,8 @@ function executeCode(line) {
                 if (teamPsuedoVar2 == undefined || teamPsuedoVar3 == undefined) {
                     error("Syntax Error on line " + (teamPsuedoI + 1) + ".");
                 } else if ((checkVariableExistance(teamPsuedoVar2)) === true) {
-                    error("Variable " + teamPsuedoVar2 + " already exists");
+                    updateVariable(teamPsuedoVar2, teamPsuedoVar3);
+                    tryEval(teamPsuedoVar2 + " = " + teamPsuedoVar3)
                 } else {
                     if (teamPsuedoVarType == 0) {
                         if (isInteger(teamPsuedoVar3) || isReal(teamPsuedoVar3)) {
@@ -698,11 +699,11 @@ function executeCode(line) {
                     //Eval creates the variable in the background
                     tryEval(teamPsuedoVar2 + " = " + teamPsuedoVar3)
                 }
-            }
-            catch (e) {
-                error("Make sure your For loop declaration follows the form: For counterVariable = startingValue To maxValue")
+            // }
+            // catch (e) {
+            //     error("Make sure your For loop declaration follows the form: For counterVariable = startingValue To maxValue")
 
-            }
+            // }
 
             added = false
             evaluate = teamPsuedoVar2 + " <= " + maxValue;
@@ -711,8 +712,8 @@ function executeCode(line) {
             console.log("results: " + teamPsuedoResult);
             console.log("condition: " + evaluate)
 
-            for (x = 0; x < teamPsuedoLoops.length; x++) {
-                if (teamPsuedoLoops[x][0] == teamPsuedoI) {
+            for (teamPseudoX = 0; teamPseudoX < teamPsuedoLoops.length; teamPseudoX++) {
+                if (teamPsuedoLoops[teamPseudoX][0] == teamPsuedoI) {
                     added = true
                 }
             }
@@ -779,10 +780,16 @@ function executeCode(line) {
                 console.log(teamPsuedoVar3)
 
                 console.log("current loop:" + currentLoop)
+                console.log("eval1: " + currentLoop[2] + ": " + tryEval(currentLoop[2]))
+
+                console.log("var: " + teamPsuedoVar2)
+                console.log(teamPsuedoVar2 + " + " + currentLoop[5])
 
                 updateVariable(teamPsuedoVar2, teamPsuedoVar3);
                 //Eval updates the variable in the background
                 eval(teamPsuedoVar2 + " = " + teamPsuedoVar3)
+
+                console.log("eval1: " + currentLoop[2] + ": " + tryEval(currentLoop[2]))
 
                 console.log("Loops U: " + teamPsuedoLoops)
 
@@ -818,8 +825,8 @@ function executeCode(line) {
             console.log("results: " + teamPsuedoResult);
             console.log("condition: " + teamPsuedoCurrent.substring(9))
 
-            for (x = 0; x < teamPsuedoLoops.length; x++) {
-                if (teamPsuedoLoops[x][0] == teamPsuedoI) {
+            for (teamPseudoX = 0; teamPseudoX < teamPsuedoLoops.length; teamPseudoX++) {
+                if (teamPsuedoLoops[teamPseudoX][0] == teamPsuedoI) {
                     added = true
                 }
             }
