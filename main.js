@@ -104,8 +104,6 @@ function executeCode(line) {
                             teamPsuedoLoops.pop()
                             console.log("while loop end true")
                             console.log(teamPsuedoI)
-                            //teamPsuedoI++
-                            //teamPsuedoCurrent = teamPsuedoCode[teamPsuedoI].replace(/^\s+/g, '');
                             console.log(teamPsuedoLoops)
                             console.log(teamPsuedoCurrent)
                             
@@ -147,6 +145,10 @@ function executeCode(line) {
                     console.log("added while: " + teamPsuedoLoops)
                         teamPsuedoLoops.push([teamPsuedoI, "while", teamPsuedoCurrent.substring(6), false])
                     }
+                    else if (teamPsuedoCurrent.startsWith("Do ")) {
+                        console.log("added do: " + teamPsuedoLoops)
+                            teamPsuedoLoops.push([teamPsuedoI, "do", teamPsuedoCurrent.substring(3), false])
+                        }
                     teamPsuedoI++
                     teamPsuedoCurrent = teamPsuedoCode[teamPsuedoI].replace(/^\s+/g, '');
                     console.log("leaving at: " + teamPsuedoI + ": " + teamPsuedoCurrent)
@@ -629,16 +631,44 @@ function executeCode(line) {
                 error("There is a missing End While keyword")
             }
 
-        } else if (teamPsuedoCurrent.startsWith("Do")) {
-            //Nothing
-        } else if (teamPsuedoCurrent.startsWith("End Do While")) {
-            evaluate = teamPsuedoCurrent.substring(13);
+        } else if (teamPsuedoCurrent.startsWith("Do While ")) {
+            added = false
+            evaluate = teamPsuedoCurrent.substring(9);
+            //console.log(evaluate);
             teamPsuedoResult = tryEval(evaluate);
-            console.log(teamPsuedoResult);
-            console.log(typeof (teamPsuedoResult))
-            if (teamPsuedoResult) {
-                teamPsuedoI = getLoop(teamPsuedoI);
+            console.log("results: " + teamPsuedoResult);
+            console.log("condition: " + teamPsuedoCurrent.substring(9))
+
+            for (x = 0; x < teamPsuedoLoops.length; x++) {
+                if (teamPsuedoLoops[x][0] == teamPsuedoI) {
+                    added = true
+                }
             }
+            if (!added) {
+                teamPsuedoLoops.push([teamPsuedoI, "do", teamPsuedoCurrent.substring(9), true])
+            }
+            console.log("Loops: " + teamPsuedoLoops)
+            console.log("Loops: lengths " + teamPsuedoLoops.length)
+        } else if (teamPsuedoCurrent.startsWith("End Do While")) {
+            console.log(teamPsuedoLoops + " i: " + teamPsuedoCurrent)
+            currentLoop = teamPsuedoLoops.pop()
+            console.log("current loop:" + currentLoop)
+            if(currentLoop[1] == "do") {
+                if(tryEval(currentLoop[2]) == true) {
+                    currentLoop[3] = true
+                    teamPsuedoLoops.push(currentLoop)
+                    teamPsuedoI = currentLoop[0]
+                    console.log("Loops: " + teamPsuedoLoops)
+                    console.log("Going to: " + teamPsuedoI)
+                }
+                else {
+                    currentLoop[3] = false
+                }
+            }
+            else {
+                error("There is a missing End Do While keyword")
+            }
+
         } else if (teamPsuedoCurrent.startsWith("End Module")) {
             return;
         } else if (teamPsuedoCurrent.startsWith("Module ")) {
