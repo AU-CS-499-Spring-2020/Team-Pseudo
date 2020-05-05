@@ -113,3 +113,6 @@ Josiah figured out a way to get If Else statements to work while nested.
 
 ### 5/1/2020, 2:00 PM - 6:00 PM and 7:00PM - 11:00 PM - Reworked and Added loops
 Josiah redid While loops from scratch to allow for nesting loops. Redid Do While loops from scratch as well to allow nesting. Added in For loops, allowing for variable creation with type checking and an optional increment step size modifier. For loops are also able to be nested within other loops.
+
+### 5/5/2020 1:00 PM - 1:30 PM - Finalize everything
+Jonathan minified the javascript files that we use to make everything faster.  Also added a .gitignore file to ignore the node files that we use.

@@ -1,0 +1,23 @@
+{
+  "name": "Team-Pseudo",
+  "version": "1.0.0",
+  "description": "CS 101 pseudocode editor webpage",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimender2/Team-Pseudo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jimender2/Team-Pseudo/issues"
+  },
+  "homepage": "https://github.com/jimender2/Team-Pseudo#readme",
+  "dependencies": {
+    "terser": "^4.6.13"
+  }
+}
