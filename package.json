@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/jimender2/Team-Pseudo#readme",
   "dependencies": {
-    "terser": "^4.6.13"
+    "terser": "^4.8.1"
   }
 }
